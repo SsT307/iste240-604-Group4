@@ -1,16 +1,17 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* This makes it easier for us to control customization */
 :root {
     --main-fonts: 'Monserrat', 'Century Gothic', sans-serif;
     --dark-text: #0761a7;
     --light-text: #1976D2;
 }
 
+/* Main style */
 body {
     font-family: var(--main-fonts);
     height: 100vh;
@@ -23,7 +24,9 @@ body {
     height: 100vh;
 }
 
-/* Left Section - Login Form */
+/* ------------------- Left Section - Login Form ----------------- */
+
+/* Left half of the page */
 .login-section {
     flex: 1;
     background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
@@ -33,6 +36,7 @@ body {
     padding: 40px;
 }
 
+/* White card with the login form elements */
 .login-content {
     background: white;
     padding: 60px 50px;
@@ -43,6 +47,8 @@ body {
 }
 
 /* ------------------- Logo Section */
+
+/* Contains BOTH logo icon and text - put them side by side */
 .logo {
     display: flex;
     align-items: center;
@@ -50,11 +56,13 @@ body {
     margin-bottom: 40px;
 }
 
+/* Icon style */
 .logo-icon {
     width: 50px;
     height: 50px;
 }
 
+/* Title text "MedPRO" style */
 .logo-text {
     color: var(--dark-text);
     font-size: 32px;
@@ -62,11 +70,13 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* Welcome Text */
+/* ------------------- Welcome Text */
+/* Heading & Subtext */
 .welcome-text {
     margin-bottom: 40px;
 }
 
+/* Main heading */
 .welcome-text h2 {
     color: var(--dark-text);
     font-size: 36px;
@@ -75,21 +85,25 @@ body {
     font-weight: bold;
 }
 
+/* Subtext */
 .welcome-text p {
     color: var(--light-text);
     font-size: 16px;
     font-weight: 400;
 }
 
-/* Form Styles */
+/* ------------------- Form Style */
+/* Container - Holds email & password input */
 .login-form {
     margin-bottom: 30px;
 }
 
+/* Input field container */
 .form-group {
     margin-bottom: 20px;
 }
 
+/* Input field styling */
 .form-group input {
     width: 100%;
     padding: 16px 20px;
@@ -102,25 +116,29 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Placeholder text for the inputs */
 .form-group input::placeholder {
     color: #b4b4b4;
     font-size: 13px;
     letter-spacing: 1px;
 }
 
+/* What happens to the input feild when user clicks on it*/
 .form-group input:focus {
     outline: none;
     background: #d9d9d9;
     box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
 }
 
-/* Forgot Password Link */
+/* ------------------- Forgot Password Link */
+/* Container positioned to the right */
 .forgot-password {
     text-align: right;
     margin-bottom: 25px;
     margin-top: -5px;
 }
 
+/* Link styling */
 .forgot-password a {
     color: #acacac;
     font-size: 12px;
@@ -128,11 +146,13 @@ body {
     transition: color 0.3s ease;
 }
 
+/* Link when person hovers over it */
 .forgot-password a:hover {
     color: var(--light-text);
 }
 
-/* Login Button */
+/* ------------------- Login Button */
+/* Login button style */
 .login-btn {
     width: 100%;
     padding: 16px;
@@ -148,26 +168,31 @@ body {
     margin-bottom: 20px;
 }
 
+/* Button when person hovers over it */
 .login-btn:hover {
     background: #1565C0;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
 }
 
+/* Button clicked ! */
 .login-btn:active {
     transform: translateY(0);
 }
 
-/* Signup Link */
+/* ------------------- Signup Link */
+/* Container for signup link and text */
 .signup-link {
     text-align: center;
 }
 
+/* Style regular text - without link */
 .signup-link p {
     color: #737373;
     font-size: 14px;
 }
 
+/* Clickable link styling */
 .signup-link a {
     color: var(--light-text);
     text-decoration: none;
@@ -175,12 +200,14 @@ body {
     transition: color 0.3s ease;
 }
 
+/* Link when person hovers over it */
 .signup-link a:hover {
     color: #1565C0;
     text-decoration: underline;
 }
 
-/* Right Section - Info Panel */
+/* ------------------- Right Section - Info Panel ----------------- */
+/* Right half of the page design */
 .info-section {
     flex: 1;
     background: linear-gradient(135deg, #77aaba 0%, var(--light-text) 100%);
@@ -191,6 +218,7 @@ body {
     position: relative;
 }
 
+/* For the 3D effect -- animated background*/
 #particles-js {
     position: absolute;
     width: 100%;
@@ -200,6 +228,7 @@ body {
     z-index: 1;
 }
 
+/* Creates the line between the left and right section */
 .info-section::before {
     content: ' ';
     position: absolute;
@@ -211,12 +240,14 @@ body {
     opacity: 100%;
 }
 
+/* Text container */
 .info-content {
     color: white;
     max-width: 400px;
     padding-left: 40px;
 }
 
+/* Heading text */
 .info-content h2 {
     font-size: 56px;
     font-weight: 600;
@@ -224,6 +255,7 @@ body {
     line-height: 1.2;
 }
 
+/* Information paragraph with text on the project details */
 .info-content p {
     font-size: 15px;
     line-height: 1.6;
@@ -231,27 +263,34 @@ body {
     opacity: 0.95;
 }
 
-/* Responsive Design */
+/* ------------------- Responsive Design */
+/* Tablet-like Size - Screen SMALLER than 968px */
 @media (max-width: 968px) {
+    /* Stack the left and right on top of each other*/
     .container {
         flex-direction: column;
     }
 
+    /* Remove flex: 1 so sections to remove split 50/50 */
     .login-section,
     .info-section {
         flex: none;
     }
 
+    /* Login section is bigger - 60% */
     .login-section {
         height: auto;
         min-height: 60vh;
     }
 
+    /* Info section with only 40% of the screen height */
     .info-section {
         height: 40vh;
         padding: 40px;
     }
 
+    /* Change bar seperating the info panel and login
+        form from vertical to horizontal */
     .info-section::before {
         width: 100%;
         height: 40px;
@@ -260,6 +299,7 @@ body {
         right: 0;
     }
 
+    /* Text position & sizing below */
     .info-content {
         padding-left: 0;
         padding-top: 20px;
@@ -274,7 +314,9 @@ body {
     }
 }
 
+/* Phone size -- Screen SMALLER than 480px */
 @media (max-width: 480px) {
+    /* Reducing size of login card, and the text below */
     .login-content {
         padding: 40px 30px;
     }
