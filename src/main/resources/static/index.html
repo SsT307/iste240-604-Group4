@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedPRO - Login</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Three.js (required for Vanta) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Vanta Cells -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- Left Section - Login Form -->
+    <div class="login-section">
+        <div class="login-content">
+            <div class="logo">
+                <img class="logo-icon" src="medPro_logo1.png" alt="MedPro Logo">
+                <h1 class="logo-text">MedPRO</h1>
+            </div>
+
+            <div class="welcome-text">
+                <h2>Welcome Back!</h2>
+                <p>Log in to start viewing.</p>
+            </div>
+
+            <form class="login-form">
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="EMAIL" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">LOG IN</button>
+            </form>
+
+            <div class="signup-link">
+                <p>Don't have an account? <a href="#">Sign up here.</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Section - Info Panel -->
+    <div class="info-section">
+        <div id="particles-js"></div>
+        <div class="info-content">
+            <h2>Your health, simplified.</h2>
+            <p>Access patient data from a single, secure source. Clear dashboards. Role-based access. Healthcare made easy.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    particlesJS("particles-js", {
+    particles: {
+        number: { value: 100 },
+        color: { value: "#ffffff" },
+        shape: { type: "triangle" },
+        opacity: { value: 0.4 },
+        size: { value: 2 },
+        line_linked: {
+            enable: true,
+            color: "#ffffff",
+            opacity: 0.4
+        },
+        move: { enable: true, speed: 1 }
+    }
+    });
+</script>
+
+</body>
+</html>
