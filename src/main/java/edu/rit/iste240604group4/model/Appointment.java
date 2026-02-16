@@ -7,13 +7,13 @@ import java.time.LocalTime;
 
 @Component
 public class Appointment {
-    private int appointmentID;
+    private int appointmentID; // primary key
     private LocalDate aDate;
     private LocalTime aTime;
     private String reason;
-    private int emiratesID;
-    private int doctorID;
-    private int hospitalID;
+    private int emiratesID; // foreign key
+    private int doctorID; // foreign key
+    private int hospitalID; // foreign key
 
     // getters
     public int getAppointmentID() {

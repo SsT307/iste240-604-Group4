@@ -14,7 +14,7 @@ public class MedicalRecord {
     private String treatmentGiven;
     private Boolean effective;
     private int emiratesID; // foreign key
-    private int hospitalID;
+    private int hospitalID; // foreign key
 
     // getters
     public int getRecordID() {
