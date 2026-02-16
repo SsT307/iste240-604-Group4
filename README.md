@@ -29,3 +29,5 @@ Lasty, entities will be added to the project as Spring Beans using the "@Compone
 contain attributes with their getters and setters.
 Overall, this assignment will help us not only practice using Git commands, but also allow us to start collaborating
 with each other and implement concepts we learnt in class.
+[[We considered using embeddables for shared attributes but chose to wait for implementation until we gain further 
+knowledge from future classes.]]
