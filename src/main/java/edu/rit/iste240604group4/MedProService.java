@@ -12,7 +12,6 @@ public class MedProService {
     // Simulate a DB -- one table per entity
     public List<Patient> patients = new ArrayList<>();
     public List<Doctor> doctors = new ArrayList<>();
-    public List<Nurse> nurses = new ArrayList<>();
     public List<Appointment> appointments = new ArrayList<>();
     public List<MedicalRecord> medicalRecords = new ArrayList<>();
     public List<Hospital> hospitals = new ArrayList<>();
