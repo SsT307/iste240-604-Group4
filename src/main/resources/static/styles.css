@@ -1,22 +1,75 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 /* This makes it easier for us to control customization */
 :root {
-    --main-fonts: 'Monserrat', 'Century Gothic', sans-serif;
+    --main-fonts: 'Montserrat', 'Century Gothic', sans-serif;
     --dark-text: #0761a7;
     --light-text: #1976D2;
+    --accent: #1494b3;
+    --blue-dark: #1565C0;
+
+    /* Background & surface colors used across dashboard pages */
+    --bg: #F0F2F5;
+    --card-bg: #FFFFFF;
+    --blue-light: #E3F2FD;
+    --blue-mid: #BBDEFB;
+
+    /* Text shades for secondary and muted content */
+    --text-secondary: #6B7A8D;
+    --text-muted: #A0AABB;
+    --border: #E4E8EE;
+
+    /* Controls how wide the sidebar is across all dashboard pages */
+    --sidebar-w: 260px;
+
+    /* Reusable border radius sizes */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+
+    /* Shadow levels - sm for cards, md for appoints and dropdowns */
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
+
+    /* Fixed height for the footer so it doesn't shift layout */
+    --footer-h: 52px;
+}
+
+/* Reset -- clears default browser spacing on everything */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
 }
 
 /* Main style */
 body {
     font-family: var(--main-fonts);
-    height: 100vh;
-    overflow: auto;
+    background: var(--bg);
+    color: var(--dark-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
+/* Removes default underline and color from all links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Makes sure buttons always use the same font as the rest of the page */
+button {
+    cursor: pointer;
+    font-family: var(--main-fonts);
+    border: none;
+}
+
+/* ------------------- Login Page - Main Container ----------------- */
 
 /* Main Container */
 .container {
@@ -80,9 +133,8 @@ body {
 .welcome-text h2 {
     color: var(--dark-text);
     font-size: 36px;
-    font-weight: 500;
-    margin-bottom: 8px;
     font-weight: bold;
+    margin-bottom: 8px;
 }
 
 /* Subtext */
@@ -245,6 +297,8 @@ body {
     color: white;
     max-width: 400px;
     padding-left: 40px;
+    position: relative;
+    z-index: 2;
 }
 
 /* Heading text */
@@ -261,6 +315,894 @@ body {
     line-height: 1.6;
     font-weight: 300;
     opacity: 0.95;
+}
+
+/* ------------------- Dashboard Pages - Shared Shell ----------------- */
+
+/* Wraps the sidebar and main content side by side */
+.app-shell {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+/* ------------------- Sidebar */
+
+/* The left navigation panel that stays fixed while content scrolls */
+.sidebar {
+    width: var(--sidebar-w);
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 20px 24px;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+/* Logo row inside the sidebar - icon + "MedPRO" text side by side */
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 36px;
+    padding-left: 4px;
+}
+
+/* Logo image sizing inside sidebar */
+.sidebar-logo img {
+    width: 38px;
+    height: 38px;
+}
+
+/* "MedPRO" text in the sidebar */
+.sidebar-logo-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    letter-spacing: -0.5px;
+}
+
+/* Stacks the nav buttons vertically and fills remaining sidebar space */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+/* Each navigation button in the sidebar */
+.nav-item {
+    display: block;
+    padding: 13px 20px;
+    border-radius: var(--radius-lg);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--light-text);
+    background: var(--blue-light);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    text-align: center;
+}
+
+/* Nav button when you hover over it */
+.nav-item:hover {
+    background: var(--blue-mid);
+    color: var(--dark-text);
+}
+
+/* The currently active page gets a filled gradient button */
+.nav-item.active {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--light-text) 100%);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(25, 118, 210, 0.3);
+}
+
+/* ------------------- Sidebar - Profile & Logout */
+
+/* Profile area at the bottom of the sidebar - clickable to open dropdown */
+.sidebar-user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 8px;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+    user-select: none;
+}
+
+/* Highlight the profile area when hovering */
+.sidebar-user:hover {
+    background: var(--blue-light);
+}
+
+/* The person icon next to the username */
+.sidebar-user svg {
+    width: 32px;
+    height: 32px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+/* Displays the logged-in user's name */
+.sidebar-user-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+/* Small triangle that rotates when the dropdown opens */
+.sidebar-user-caret {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+}
+
+/* Flips the triangle upward when dropdown is open */
+.sidebar-user.open .sidebar-user-caret {
+    transform: rotate(180deg);
+}
+
+/* The dropdown menu that appears above the profile area */
+.user-dropdown {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    z-index: 50;
+}
+
+/* Slides in when the profile is clicked */
+.user-dropdown.open {
+    display: block;
+    animation: dropUp 0.15s ease;
+}
+
+@keyframes dropUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Each option inside the dropdown */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--dark-text);
+    transition: background 0.12s, color 0.12s;
+    cursor: pointer;
+}
+
+/* Highlight a dropdown option when hovering */
+.dropdown-item:hover {
+    background: var(--blue-light);
+    color: var(--dark-text);
+}
+
+/* Log Out option gets a red color to stand out */
+.dropdown-item.logout {
+    color: #c0392b;
+    border-top: 1px solid var(--border);
+}
+
+/* Red highlight when hovering the logout option */
+.dropdown-item.logout:hover {
+    background: #fdf0f0;
+    color: #a93226;
+}
+
+/* ------------------- Dashboard Pages - Main Content Area */
+
+/* The scrollable area to the right of the sidebar */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 40px 28px;
+    overflow-y: auto;
+    min-width: 0;
+}
+
+/* Space above the page title */
+.page-header {
+    margin-bottom: 24px;
+}
+
+/* Main title at the top of each page e.g. "Calendar" */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    letter-spacing: -0.5px;
+}
+
+/* ------------------- Footer */
+
+/* Sits at the very bottom below the sidebar and main content */
+.app-footer {
+    height: var(--footer-h);
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    /* Left padding accounts for the sidebar width so content lines up */
+    padding: 0 40px 0 calc(var(--sidebar-w) + 40px);
+    flex-shrink: 0;
+}
+
+/* Copyright text on the left of the footer */
+.footer-copy {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* Container for the footer links on the right side */
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+/* Each link in the footer */
+.footer-links a {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    transition: color 0.15s;
+}
+
+/* Footer links light up on hover */
+.footer-links a:hover {
+    color: var(--light-text);
+}
+
+/* ------------------- Reusable - Cards */
+
+/* Generic white card used across multiple pages */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+
+/* ------------------- Reusable - Data Tables */
+
+/* Table used to display entity lists e.g. patients, appointments */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+/* Header row gets the blue gradient to match the site colors */
+.data-table th {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--light-text) 100%);
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+}
+
+/* Round the corners of the first and last header cells */
+.data-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.data-table th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
+
+/* Standard table cell styling */
+.data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--dark-text);
+}
+
+/* No bottom border on the very last row */
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Light blue highlight when hovering over a row */
+.data-table tr:hover td {
+    background: var(--blue-light);
+}
+
+/* ------------------- Reusable - Forms */
+
+/* White card that wraps the add-entity forms */
+.form-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    max-width: 560px;
+}
+
+/* Two-column grid layout for form fields */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Wrapper for a label + input pair */
+.form-group-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Makes a field span both columns in the grid */
+.form-group-field.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Small uppercase label above each input */
+.form-label {
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Shared style for text inputs and dropdowns on dashboard forms */
+.form-input,
+.form-select {
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-family: var(--main-fonts);
+    color: var(--dark-text);
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+}
+
+/* Blue outline when user clicks into a dashboard input */
+.form-input:focus,
+.form-select:focus {
+    border-color: var(--light-text);
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+/* ------------------- Reusable - Buttons */
+
+/* Main action button -- used for Save, Submit etc */
+.btn-primary {
+    background: var(--light-text);
+    color: #fff;
+    padding: 11px 28px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+/* Button lifts up when hovering */
+.btn-primary:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(25, 118, 210, 0.35);
+}
+
+/* Button snaps back when clicked */
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Secondary button -- lighter version for less important actions */
+.btn-secondary {
+    background: var(--blue-light);
+    color: var(--light-text);
+    padding: 11px 28px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: background 0.18s;
+}
+
+/* Slightly darker on hover */
+.btn-secondary:hover {
+    background: var(--blue-mid);
+}
+
+/* Cancel button -- no background, just a border */
+.btn-cancel {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--text-secondary);
+    padding: 9px 20px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+/* Cancel button changes to blue on hover */
+.btn-cancel:hover {
+    border-color: var(--light-text);
+    color: var(--light-text);
+}
+
+/* ------------------- Reusable - Back Link */
+
+/* Small "← back" link used at the top of subpages */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    transition: gap 0.15s;
+}
+
+/* Arrow slides further away from text on hover */
+.back-link:hover {
+    gap: 10px;
+}
+
+/* ------------------- Reusable - Confirmation Banner */
+
+/* Shown after a form is successfully submitted */
+.confirm-banner {
+    background: var(--blue-light);
+    border: 1.5px solid var(--blue-mid);
+    border-radius: var(--radius-md);
+    padding: 28px 32px;
+    max-width: 480px;
+    text-align: center;
+}
+
+/* "Success" heading inside the banner */
+.confirm-banner h2 {
+    color: var(--dark-text);
+    margin-bottom: 8px;
+}
+
+/* Description text below the heading */
+.confirm-banner p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ------------------- Calendar Page ----------------- */
+
+/* Side-by-side layout: mini calendar panel on left, main calendar on right */
+.calendar-layout {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Left column - holds the mini calendar and upcoming list */
+.calendar-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 220px;
+    flex-shrink: 0;
+}
+
+/* Right column - holds the toolbar and whichever view is active */
+.calendar-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* ------------------- Calendar - Toolbar */
+
+/* Row that holds the + add button on the right side */
+.calendar-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+/* Round blue + button to open the add appointment appoint */
+.btn-add-apt {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--light-text) 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    transition: transform 0.2s, box-shadow 0.15s;
+    border: none;
+}
+
+/* Spins and grows when hovered -- satisfying little detail */
+.btn-add-apt:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+}
+
+/* ------------------- Calendar - Monthly View */
+
+/* The white grid card for the monthly calendar */
+.month-grid-wrapper {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Month header row with arrows and the current month/year label */
+.month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--light-text) 100%);
+    color: #fff;
+}
+
+/* Current month and year label e.g. "February 2026" */
+.month-nav-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* Arrow buttons to go to previous/next month */
+.month-nav-btn {
+    background: rgba(0, 0, 0, 0.12);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background 0.15s;
+}
+
+/* Darker background when hovering the month arrow */
+.month-nav-btn:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* Row of day name labels across the top e.g. Sun Mon Tue... */
+.month-day-names {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+}
+
+/* Individual day name label */
+.month-day-name {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* The 6-row x 7-column grid of day cells */
+.month-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    flex: 1;
+}
+
+/* Individual day cell in the month grid */
+.month-cell {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 6px;
+    min-height: 90px;
+    cursor: pointer;
+    transition: background 0.1s;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+/* Light highlight when hovering a day */
+.month-cell:hover {
+    background: var(--blue-light);
+}
+
+/* Subtle blue tint on today's date */
+.month-cell.today {
+    background: rgba(25, 118, 210, 0.05);
+}
+
+/* Remove right border from every 7th cell so the grid edge is clean */
+.month-cell:nth-child(7n) {
+    border-right: none;
+}
+
+/* The date number in the top-left corner of each cell */
+.month-cell-num {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Today's date number gets a filled blue circle */
+.month-cell.today .month-cell-num {
+    background: var(--light-text);
+    color: #fff;
+}
+
+/* Days from the previous/next month are muted */
+.month-cell.other-month .month-cell-num {
+    color: var(--text-muted);
+}
+
+/* Appointment pill shown inside a month cell - clickable to see full details */
+.month-apt {
+    font-size: 0.63rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--light-text) 100%);
+    color: #fff;
+    border-radius: 4px;
+    padding: 3px 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+/* Scales up slightly when hovering an appointment pill */
+.month-apt:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.35);
+}
+
+/* The reason/title text inside the pill */
+.month-apt-reason {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* The time shown below the reason text in the pill */
+.month-apt-time {
+    font-size: 0.58rem;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+/* ------------------- Calendar - Appointment Details Modal */
+
+/* Two-column grid inside the details appoint */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+    margin-bottom: 4px;
+}
+
+/* A single label + value pair */
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+/* Spans both columns - used for longer fields like reason */
+.detail-row.full-width {
+    grid-column: 1 / -1;
+}
+
+/* The small uppercase label above the value */
+.detail-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* The actual value text */
+.detail-value {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+/* Hospital badge -- shows which hospital the appointment is at */
+.hospital-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--blue-light);
+    color: var(--dark-text);
+    border: 1px solid var(--blue-mid);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Small colored dot inside the hospital badge */
+.hospital-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+}
+
+/* Divider line between details and actions in the appoint */
+.appoint-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 18px 0 0;
+}
+
+/* ------------------- Calendar - Upcoming List (Side Panel) */
+
+/* Card below the mini calendar showing the next few appointments */
+.upcoming-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* "UPCOMING" label at the top of the card */
+.upcoming-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+}
+
+/* A single row in the upcoming appointments list */
+.upcoming-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+/* No border on the last upcoming item */
+.upcoming-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Small blue dot on the left of each upcoming item */
+.upcoming-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--light-text);
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+/* Container for appointment name and time text */
+.upcoming-info {
+    flex: 1;
+}
+
+/* Appointment name in the upcoming list */
+.upcoming-name {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+/* Date and time below the appointment name */
+.upcoming-time {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-top: 1px;
+}
+
+/* ------------------- Modal - Add Appointment ----------------- */
+
+/* Dark overlay that covers the whole screen behind the appoint */
+.appoint-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+/* JS adds this class to show the appoint */
+.appoint-overlay.open {
+    display: flex;
+}
+
+/* The white appoint box itself */
+.appoint {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 28px 32px;
+    width: 400px;
+    max-width: 95vw;
+    box-shadow: var(--shadow-md);
+    animation: appointPop 0.18s ease;
+}
+
+/* Modal pops in with a subtle scale animation */
+@keyframes appointPop {
+    from { transform: scale(0.95); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+}
+
+/* Title at the top of the appoint e.g. "Add Appointment" */
+.appoint-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 20px;
+    letter-spacing: -0.3px;
+}
+
+/* Row of buttons at the bottom of the appoint */
+.appoint-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
 }
 
 /* ------------------- Responsive Design */
@@ -327,5 +1269,35 @@ body {
 
     .logo-text {
         font-size: 26px;
+    }
+}
+
+/* Dashboard pages on smaller screens - hide the sidebar and simplify layout */
+@media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+
+    /* Sidebar is hidden on small screens */
+    .sidebar {
+        display: none;
+    }
+
+    /* Reduce padding since there's no sidebar to account for */
+    .main-content {
+        padding: 20px;
+    }
+
+    /* Footer padding resets too since sidebar is gone */
+    .app-footer {
+        padding: 0 20px;
+    }
+
+    /* Stack form fields into a single column on small screens */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Hide the mini calendar side panel on small screens */
+    .calendar-side {
+        display: none;
     }
 }
