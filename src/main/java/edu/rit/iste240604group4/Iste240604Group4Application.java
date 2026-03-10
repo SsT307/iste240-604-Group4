@@ -9,5 +9,4 @@ public class Iste240604Group4Application {
     public static void main(String[] args) {
         SpringApplication.run(Iste240604Group4Application.class, args);
     }
-
 }
