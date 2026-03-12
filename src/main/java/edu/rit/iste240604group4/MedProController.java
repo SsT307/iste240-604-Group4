@@ -25,24 +25,25 @@ public class MedProController {
     }
 
     //method to view the list of hospitals + medical records inside
-    @GetMapping("/hospitals")
+    @GetMapping("/viewHospitals")
     public String viewAllHospitals(Model model){
         model.addAttribute("hospitalsList", medProService.viewHospitals());
         return "viewHospitals";
 
     }
     //method to view the add hospital form
-    @GetMapping("/hospitals/add")
+    @GetMapping("/addHospital")
     public String showAddHospitalForm(){
         return "addHospital";
     }
 
+
     // POST METHODS
-    @PostMapping("/hospitals/add")
+    @PostMapping("/addHospital")
     public String addHospital(Hospital h){
         medProService.addHospital(h);
         //"hospital" is a path variable, the success page will use it to display the message :>
-        return "redirect:/success/hospital";
+        return "redirect:/add/success/hospital";
     }
 
 
