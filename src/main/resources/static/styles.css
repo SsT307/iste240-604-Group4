@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-/* This makes it easier for us to control customization */
+/* This makes it easier for us to control customization across all pages */
 :root {
     --main-fonts: 'Montserrat', 'Century Gothic', sans-serif;
     --dark-text: #0761a7;
     --light-text: #1976D2;
     --accent: #1494b3;
     --blue-dark: #1565C0;
+    --teal-accent: #4DB6AC;
 
     /* Background & surface colors used across dashboard pages */
     --bg: #F0F2F5;
@@ -27,13 +28,15 @@
     --radius-md: 16px;
     --radius-lg: 24px;
 
-    /* Shadow levels - sm for cards, md for appoints and dropdowns */
+    /* Shadow levels - sm for cards, md for modals and dropdowns */
     --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
 
     /* Fixed height for the footer so it doesn't shift layout */
     --footer-h: 52px;
 }
+
+/* ------------------- Global Reset ----------------- */
 
 /* Reset -- clears default browser spacing on everything */
 *, *::before, *::after {
@@ -69,254 +72,6 @@ button {
     border: none;
 }
 
-/* ------------------- Login Page - Main Container ----------------- */
-
-/* Main Container */
-.container {
-    display: flex;
-    height: 100vh;
-}
-
-/* ------------------- Left Section - Login Form ----------------- */
-
-/* Left half of the page */
-.login-section {
-    flex: 1;
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-}
-
-/* White card with the login form elements */
-.login-content {
-    background: white;
-    padding: 60px 50px;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 450px;
-}
-
-/* ------------------- Logo Section */
-
-/* Contains BOTH logo icon and text - put them side by side */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-}
-
-/* Icon style */
-.logo-icon {
-    width: 50px;
-    height: 50px;
-}
-
-/* Title text "MedPRO" style */
-.logo-text {
-    color: var(--dark-text);
-    font-size: 32px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-}
-
-/* ------------------- Welcome Text */
-/* Heading & Subtext */
-.welcome-text {
-    margin-bottom: 40px;
-}
-
-/* Main heading */
-.welcome-text h2 {
-    color: var(--dark-text);
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-/* Subtext */
-.welcome-text p {
-    color: var(--light-text);
-    font-size: 16px;
-    font-weight: 400;
-}
-
-/* ------------------- Form Style */
-/* Container - Holds email & password input */
-.login-form {
-    margin-bottom: 30px;
-}
-
-/* Input field container */
-.form-group {
-    margin-bottom: 20px;
-}
-
-/* Input field styling */
-.form-group input {
-    width: 100%;
-    padding: 16px 20px;
-    border: none;
-    background: #F5F5F5;
-    border-radius: 12px;
-    font-size: 14px;
-    color: #f0f0f0;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-/* Placeholder text for the inputs */
-.form-group input::placeholder {
-    color: #b4b4b4;
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-/* What happens to the input feild when user clicks on it*/
-.form-group input:focus {
-    outline: none;
-    background: #d9d9d9;
-    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
-}
-
-/* ------------------- Forgot Password Link */
-/* Container positioned to the right */
-.forgot-password {
-    text-align: right;
-    margin-bottom: 25px;
-    margin-top: -5px;
-}
-
-/* Link styling */
-.forgot-password a {
-    color: #acacac;
-    font-size: 12px;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-/* Link when person hovers over it */
-.forgot-password a:hover {
-    color: var(--light-text);
-}
-
-/* ------------------- Login Button */
-/* Login button style */
-.login-btn {
-    width: 100%;
-    padding: 16px;
-    background: var(--light-text);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-}
-
-/* Button when person hovers over it */
-.login-btn:hover {
-    background: #1565C0;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
-}
-
-/* Button clicked ! */
-.login-btn:active {
-    transform: translateY(0);
-}
-
-/* ------------------- Signup Link */
-/* Container for signup link and text */
-.signup-link {
-    text-align: center;
-}
-
-/* Style regular text - without link */
-.signup-link p {
-    color: #737373;
-    font-size: 14px;
-}
-
-/* Clickable link styling */
-.signup-link a {
-    color: var(--light-text);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-/* Link when person hovers over it */
-.signup-link a:hover {
-    color: #1565C0;
-    text-decoration: underline;
-}
-
-/* ------------------- Right Section - Info Panel ----------------- */
-/* Right half of the page design */
-.info-section {
-    flex: 1;
-    background: linear-gradient(135deg, #77aaba 0%, var(--light-text) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px;
-    position: relative;
-}
-
-/* For the 3D effect -- animated background*/
-#particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-/* Creates the line between the left and right section */
-.info-section::before {
-    content: ' ';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 60px;
-    background-color: #1494b3;
-    opacity: 100%;
-}
-
-/* Text container */
-.info-content {
-    color: white;
-    max-width: 400px;
-    padding-left: 40px;
-    position: relative;
-    z-index: 2;
-}
-
-/* Heading text */
-.info-content h2 {
-    font-size: 56px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-/* Information paragraph with text on the project details */
-.info-content p {
-    font-size: 15px;
-    line-height: 1.6;
-    font-weight: 300;
-    opacity: 0.95;
-}
-
 /* ------------------- Dashboard Pages - Shared Shell ----------------- */
 
 /* Wraps the sidebar and main content side by side */
@@ -326,7 +81,7 @@ button {
     min-height: 0;
 }
 
-/* ------------------- Sidebar */
+/* ------------------- Sidebar ----------------- */
 
 /* The left navigation panel that stays fixed while content scrolls */
 .sidebar {
@@ -373,6 +128,14 @@ button {
     flex: 1;
 }
 
+/* Keep the structure the same for the link */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
 /* Each navigation button in the sidebar */
 .nav-item {
     display: block;
@@ -400,7 +163,7 @@ button {
     box-shadow: 0 4px 14px rgba(25, 118, 210, 0.3);
 }
 
-/* ------------------- Sidebar - Profile & Logout */
+/* ------------------- Sidebar - Profile & Logout ----------------- */
 
 /* Profile area at the bottom of the sidebar - clickable to open dropdown */
 .sidebar-user {
@@ -507,7 +270,7 @@ button {
     color: #a93226;
 }
 
-/* ------------------- Dashboard Pages - Main Content Area */
+/* ------------------- Dashboard Pages - Main Content Area ----------------- */
 
 /* The scrollable area to the right of the sidebar */
 .main-content {
@@ -532,7 +295,7 @@ button {
     letter-spacing: -0.5px;
 }
 
-/* ------------------- Footer */
+/* ------------------- Footer ----------------- */
 
 /* Sits at the very bottom below the sidebar and main content */
 .app-footer {
@@ -573,7 +336,7 @@ button {
     color: var(--light-text);
 }
 
-/* ------------------- Reusable - Cards */
+/* ------------------- Reusable - Cards ----------------- */
 
 /* Generic white card used across multiple pages */
 .card {
@@ -583,7 +346,7 @@ button {
     border: 1px solid var(--border);
 }
 
-/* ------------------- Reusable - Data Tables */
+/* ------------------- Reusable - Data Tables ----------------- */
 
 /* Table used to display entity lists e.g. patients, appointments */
 .data-table {
@@ -625,7 +388,7 @@ button {
     background: var(--blue-light);
 }
 
-/* ------------------- Reusable - Forms */
+/* ------------------- Reusable - Forms ----------------- */
 
 /* White card that wraps the add-entity forms */
 .form-card {
@@ -686,7 +449,7 @@ button {
     box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
 }
 
-/* ------------------- Reusable - Buttons */
+/* ------------------- Reusable - Buttons ----------------- */
 
 /* Main action button -- used for Save, Submit etc */
 .btn-primary {
@@ -748,7 +511,7 @@ button {
     color: var(--light-text);
 }
 
-/* ------------------- Reusable - Back Link */
+/* ------------------- Reusable - Back Link ----------------- */
 
 /* Small "← back" link used at the top of subpages */
 .back-link {
@@ -767,7 +530,7 @@ button {
     gap: 10px;
 }
 
-/* ------------------- Reusable - Confirmation Banner */
+/* ------------------- Reusable - Confirmation Banner ----------------- */
 
 /* Shown after a form is successfully submitted */
 .confirm-banner {
@@ -818,7 +581,7 @@ button {
     min-width: 0;
 }
 
-/* ------------------- Calendar - Toolbar */
+/* ------------------- Calendar - Toolbar ----------------- */
 
 /* Row that holds the + add button on the right side */
 .calendar-toolbar {
@@ -828,7 +591,7 @@ button {
     margin-bottom: 16px;
 }
 
-/* Round blue + button to open the add appointment appoint */
+/* Round blue + button to open the add appointment modal */
 .btn-add-apt {
     width: 38px;
     height: 38px;
@@ -851,7 +614,7 @@ button {
     box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
 }
 
-/* ------------------- Calendar - Monthly View */
+/* ------------------- Calendar - Monthly View ----------------- */
 
 /* The white grid card for the monthly calendar */
 .month-grid-wrapper {
@@ -1019,9 +782,9 @@ button {
     opacity: 0.85;
 }
 
-/* ------------------- Calendar - Appointment Details Modal */
+/* ------------------- Calendar - Appointment Details Modal ----------------- */
 
-/* Two-column grid inside the details appoint */
+/* Two-column grid inside the details modal */
 .detail-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1080,14 +843,14 @@ button {
     flex-shrink: 0;
 }
 
-/* Divider line between details and actions in the appoint */
+/* Divider line between details and actions in the modal */
 .appoint-divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: 18px 0 0;
 }
 
-/* ------------------- Calendar - Upcoming List (Side Panel) */
+/* ------------------- Calendar - Upcoming List (Side Panel) ----------------- */
 
 /* Card below the mini calendar showing the next few appointments */
 .upcoming-card {
@@ -1154,7 +917,7 @@ button {
 
 /* ------------------- Modal - Add Appointment ----------------- */
 
-/* Dark overlay that covers the whole screen behind the appoint */
+/* Dark overlay that covers the whole screen behind the modal */
 .appoint-overlay {
     display: none;
     position: fixed;
@@ -1166,12 +929,12 @@ button {
     backdrop-filter: blur(2px);
 }
 
-/* JS adds this class to show the appoint */
+/* JS adds this class to show the modal */
 .appoint-overlay.open {
     display: flex;
 }
 
-/* The white appoint box itself */
+/* The white modal box itself */
 .appoint {
     background: #fff;
     border-radius: var(--radius-md);
@@ -1188,7 +951,7 @@ button {
     to   { transform: scale(1);    opacity: 1; }
 }
 
-/* Title at the top of the appoint e.g. "Add Appointment" */
+/* Title at the top of the modal e.g. "Add Appointment" */
 .appoint-title {
     font-size: 1.1rem;
     font-weight: 700;
@@ -1197,7 +960,7 @@ button {
     letter-spacing: -0.3px;
 }
 
-/* Row of buttons at the bottom of the appoint */
+/* Row of buttons at the bottom of the modal */
 .appoint-actions {
     display: flex;
     gap: 10px;
@@ -1205,75 +968,683 @@ button {
     justify-content: flex-end;
 }
 
-/* ------------------- Responsive Design */
+/* ------------------- Dashboard Grid (for Dashboard page) ----------------- */
+
+/* Quick Access Section */
+.quick-access-section {
+    max-width: 1200px;
+}
+
+/* Small label above the main title */
+.quick-access-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+/* Main "What would you like to do?" heading */
+.quick-access-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* Grid container for quick access cards */
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+/* Individual quick access card */
+.quick-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Card lifts up on hover */
+.quick-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon container with pastel background */
+.quick-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+/* Card title */
+.quick-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 0.75rem;
+}
+
+/* Card description text */
+.quick-card-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+/* Arrow at bottom of card */
+.quick-card-arrow {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Arrow moves right and turns blue on hover */
+.quick-card:hover .quick-card-arrow {
+    transform: translateX(4px);
+    color: var(--light-text);
+}
+
+/* Old dashboard grid styles - keep for other pages if needed */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto;
+    gap: 2rem;
+}
+
+/* Generic white card used across the dashboard */
+.dashboard-card {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Section title inside each dashboard card */
+.card-title {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+/* Row that holds the title and add button together */
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Calendar card spans two rows on the left */
+.calendar-card {
+    grid-row: span 2;
+}
+
+/* Round blue + button to add new items */
+.btn-circle-add {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-text);
+    color: #fff;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Button grows and changes color when hovered */
+.btn-circle-add:hover {
+    transform: scale(1.1);
+    background-color: var(--teal-accent);
+}
+
+/* List of upcoming appointments in the calendar widget */
+.calendar-appointments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* A single appointment row showing the type and date */
+.cal-appointment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--bg);
+    border-radius: 10px;
+}
+
+/* Appointment type label e.g. "CHECK UP" */
+.cal-apt-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Date shown on the right of each appointment */
+.cal-apt-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Medical report chart card takes up the right side */
+.report-card {
+    grid-column: 2;
+}
+
+/* Container for the chart and its legend */
+.chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Legend showing Progress and Recovery colors */
+.chart-legend-top {
+    display: flex;
+    gap: 2rem;
+    justify-content: flex-end;
+}
+
+/* Single item in the legend with dot and label */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Colored circle in the legend */
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Gray dot for progress */
+.progress-dot {
+    background-color: #C4C4C4;
+}
+
+/* Blue dot for recovery */
+.recovery-dot {
+    background-color: var(--light-text);
+}
+
+/* Main container for the bar chart with Y-axis and bars */
+.bar-chart-container {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    height: 250px;
+}
+
+/* Y-axis labels showing the scale */
+.chart-y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding-bottom: 20px;
+}
+
+/* Container for all the vertical bars */
+.chart-bars {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    flex: 1;
+    height: 100%;
+}
+
+/* Single column in the chart with bar and month label */
+.bar-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+}
+
+/* Wrapper for the bar - height is set with inline style */
+.bar-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+/* The colored bar itself with gradient fill */
+.bar-fill {
+    width: 100%;
+    background: linear-gradient(180deg, var(--light-text) 0%, rgba(25, 118, 210, 0.3) 100%);
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* February bar gets a solid color since it's active */
+.bar-fill.active-bar {
+    background: linear-gradient(180deg, var(--light-text) 0%, var(--light-text) 100%);
+}
+
+/* Tooltip that appears on February's bar showing details */
+.bar-tooltip {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2C3E50;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Tooltip appears when the bar is active */
+.bar-fill.active-bar .bar-tooltip {
+    opacity: 1;
+}
+
+/* Heading inside the tooltip */
+.bar-tooltip strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+/* Month label below each bar */
+.bar-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Specialists card on the bottom right */
+.specialists-card {
+    grid-column: 2;
+}
+
+/* Row of three specialist avatars and info */
+.specialists-row {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+/* Single specialist with avatar, name, and specialty */
+.specialist-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Circular placeholder for doctor photo */
+.specialist-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #C4C4C4;
+}
+
+/* Doctor's name below the avatar */
+.specialist-name {
+    font-size: 0.95rem;
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+/* "SPECIALIST" label below the name */
+.specialist-spec {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    font-weight: 500;
+}
+
+/* ------------------- Medical Reports Page ----------------- */
+
+/* Main container for the reports section */
+.reports-container {
+    max-width: 1200px;
+}
+
+/* Header row with "REPORTS" title and + button */
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* "REPORTS" section title */
+.reports-section-title {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* List of all medical report cards */
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Single report card showing type, date, doctor, and hospital */
+.report-item {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Left side with report type link and date */
+.report-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Clickable report type that opens the full report */
+.report-type-link {
+    font-size: 1.25rem;
+    color: var(--light-text);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+/* Link turns teal when hovered */
+.report-type-link:hover {
+    color: var(--teal-accent);
+}
+
+/* Date the report was created */
+.report-date {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Right side with doctor and hospital info */
+.report-right {
+    display: flex;
+    gap: 3rem;
+}
+
+/* Container for label + value pair */
+.report-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Small uppercase label like "DOCTOR" or "HOSPITAL" */
+.report-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* The actual doctor name or hospital name */
+.report-value {
+    font-size: 0.95rem;
+    color: var(--dark-text);
+}
+
+/* Message at the bottom about processing time */
+.reports-info-message {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    padding: 2rem;
+}
+
+/* ------------------- Dashboard - Recent Reports Widget ----------------- */
+
+/* Container for recent reports on dashboard */
+.recent-reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Individual report item in dashboard widget */
+.recent-report-item {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--light-text);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Light highlight on hover */
+.recent-report-item:hover {
+    background-color: var(--bg);
+    border-left-color: var(--teal-accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Container for View All Reports link */
+.view-all-reports {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+/* View All Reports link styling */
+.view-all-link {
+    color: var(--light-text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Link turns teal on hover */
+.view-all-link:hover {
+    color: var(--teal-accent);
+    text-decoration: underline;
+}
+
+/* ------------------- My Specialists Page ----------------- */
+
+/* Grid layout for doctor cards - auto-fills based on screen width */
+.specialists-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual doctor card with all their info */
+.doctor-card {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+/* Yellow rating badge in the top-left corner */
+.doctor-rating {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: #FFD700;
+    color: var(--dark-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+}
+
+/* Circular placeholder for doctor photo */
+.doctor-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #C4C4C4;
+}
+
+/* Doctor's full name */
+.doctor-name {
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Doctor's specialty below their name */
+.doctor-specialty {
+    font-size: 0.85rem;
+    color: var(--light-text);
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Row of action buttons at the bottom of the card */
+.doctor-actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* Individual action button like "Availability" or "Make a call" */
+.btn-doctor-action {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: var(--bg);
+    color: var(--dark-text);
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Button turns blue when hovered */
+.btn-doctor-action:hover {
+    background-color: var(--light-text);
+    color: #fff;
+}
+
+/* ------------------- Form Pages ----------------- */
+
+/* Centered container for add forms */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* White card that wraps the add-entity forms */
+.entity-form {
+    background-color: var(--card-bg);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Two-column grid layout for form fields */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Wrapper for a label + input pair */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* ------------------- Success Page ----------------- */
+
+/* Centered container for the success message */
+.success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+}
+
+/* Checkmark icon at the top */
+.success-icon {
+    margin-bottom: 2rem;
+}
+
+/* "Success!" heading */
+.success-title {
+    font-size: 2.5rem;
+    color: var(--light-text);
+    margin-bottom: 1rem;
+}
+
+/* Message confirming what was added */
+.success-message {
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    margin-bottom: 2.5rem;
+}
+
+/* Entity name highlighted in teal */
+.success-message strong {
+    color: var(--teal-accent);
+}
+
+/* Row of buttons to navigate after success */
+.success-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* ------------------- Responsive Design ----------------- */
+
 /* Tablet-like Size - Screen SMALLER than 968px */
 @media (max-width: 968px) {
-    /* Stack the left and right on top of each other*/
-    .container {
-        flex-direction: column;
-    }
-
-    /* Remove flex: 1 so sections to remove split 50/50 */
-    .login-section,
-    .info-section {
-        flex: none;
-    }
-
-    /* Login section is bigger - 60% */
-    .login-section {
-        height: auto;
-        min-height: 60vh;
-    }
-
-    /* Info section with only 40% of the screen height */
-    .info-section {
-        height: 40vh;
-        padding: 40px;
-    }
-
-    /* Change bar seperating the info panel and login
-        form from vertical to horizontal */
-    .info-section::before {
-        width: 100%;
-        height: 40px;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-
-    /* Text position & sizing below */
-    .info-content {
-        padding-left: 0;
-        padding-top: 20px;
-    }
-
-    .info-content h2 {
-        font-size: 32px;
-    }
-
-    .info-content p {
-        font-size: 16px;
-    }
-}
-
-/* Phone size -- Screen SMALLER than 480px */
-@media (max-width: 480px) {
-    /* Reducing size of login card, and the text below */
-    .login-content {
-        padding: 40px 30px;
-    }
-
-    .welcome-text h2 {
-        font-size: 28px;
-    }
-
-    .logo-text {
-        font-size: 26px;
-    }
-}
-
-/* Dashboard pages on smaller screens - hide the sidebar and simplify layout */
-@media (max-width: 768px) {
     :root { --sidebar-w: 0px; }
 
     /* Sidebar is hidden on small screens */
@@ -1299,5 +1670,58 @@ button {
     /* Hide the mini calendar side panel on small screens */
     .calendar-side {
         display: none;
+    }
+
+    /* Stack dashboard grid into single column */
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Calendar card no longer spans multiple rows */
+    .calendar-card {
+        grid-row: span 1;
+    }
+
+    /* Stack form fields into a single column on small screens */
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* Quick access grid becomes 2 columns on tablets */
+    .quick-access-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Reduce quick access title size */
+    .quick-access-title {
+        font-size: 2rem;
+    }
+}
+
+/* Phone size -- Screen SMALLER than 480px */
+@media (max-width: 480px) {
+    /* Reduce page title size */
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    /* Reduce main content padding */
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    /* Stack specialist grid into single column */
+    .specialists-grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Quick access grid becomes 1 column on phones */
+    .quick-access-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Reduce quick access title size further */
+    .quick-access-title {
+        font-size: 1.5rem;
     }
 }
