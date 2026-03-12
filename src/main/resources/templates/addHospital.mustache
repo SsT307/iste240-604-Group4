@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Form</title>
+</head>
+<body>
+<h1>Add a New Hospital</h1>
+<form action="/addHospital" method="post">
+    <label>Hospital ID</label>
+    <input type="text" name="hospitalID"> <br>
+
+    <label>Hospital Name</label>
+    <input type="text" name="name"> <br>
+
+    <label>Hospital Owner</label>
+    <input type="text" name="owner"> <br>
+
+    <!--type="submit" is what triggers the POST request -->
+    <button type="submit">Add Hospital</button>
+</form>
+
+<a href="/">Back To Landing Page</a>
+
+</body>
+</html>
