@@ -23,6 +23,10 @@ public class MedProService {
 
 
         // --- DOCTOR
+        this.doctors.add(new Doctor(1 , "Fatma" , "Alsuwaidi" , "Dentistry" , 143));
+        this.doctors.add(new Doctor(2 , "Tania" , "Aziz" , "Pediatrics" , 148));
+        this.doctors.add(new Doctor(3 , "Shaikha" , "Alhajri" , "Cardiologist" , 123));
+        this.doctors.add(new Doctor(4 , "Fatma" , "Almadani" , "Dermatologist" , 142));
 
 
         // --- HOSPITAL AND MEDICAL RECORDS
@@ -54,6 +58,17 @@ public class MedProService {
 
         // --- INSURANCE
 
+    }
+
+    // Query the Database
+
+    // Get all doctors
+    public List<Doctor> findAll(){
+        return doctors;
+    }
+    // Add a new doctor
+    public void addDoctor(Doctor doctor) {
+        this.doctors.add(doctor);
     }
 
     // Method for listing all hospitals
