@@ -35,6 +35,6 @@ public class MedProController {
         this.medProService.addDoctor(doctor);
         //inject doc to template
         model.addAttribute("doctors",this.medProService.findAll());
-        return "DoctorViewPage"; //SUCCESS PAGE LINK!!
+        return "redirect:/success/doctor";
     }
 }
