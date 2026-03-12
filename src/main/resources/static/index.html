@@ -3,81 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedPRO - Login</title>
+    <title>MedPRO - Dashboard</title>
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Three.js (required for Vanta) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Vanta Particles -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <!-- Left Section - Login Form -->
-    <div class="login-section">
-        <div class="login-content">
-            <div class="logo">
-                <img class="logo-icon" src="medPro_logo1.png" alt="MedPro Logo">
-                <h1 class="logo-text">MedPRO</h1>
-            </div>
 
-            <div class="welcome-text">
-                <h2>Welcome Back!</h2>
-                <p>Log in to start viewing.</p>
-            </div>
+<div class="app-shell">
 
-            <form class="login-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="EMAIL" required>
-                </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="index.html" class="logo-link">
+                <img src="medPro_logo1.png" alt="MedPRO" class="logo-icon" />
+                <span class="sidebar-logo-text">MedPRO</span>
+            </a>
+        </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="PASSWORD" required>
-                </div>
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item active">DASHBOARD</a>
+            <a href="reports.html" class="nav-item">MEDICAL REPORTS</a>
+            <a href="calendar.html" class="nav-item">CALENDAR</a>
+            <a href="specialists.html" class="nav-item">MY SPECIALISTS</a>
+        </nav>
 
-                <div class="forgot-password">
-                    <a href="#">Forgot Password?</a>
-                </div>
+        <div class="sidebar-user">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            <span class="sidebar-user-name">First Last</span>
+        </div>
+    </aside>
 
-                <button type="submit" class="login-btn">LOG IN</button>
-            </form>
+    <!-- Main Content -->
+    <main class="main-content">
 
-            <div class="signup-link">
-                <p>Don't have an account? <a href="#">Sign up here.</a></p>
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+        </div>
+
+        <!-- Quick Access Section -->
+        <div class="quick-access-section">
+            <p class="quick-access-label">QUICK ACCESS</p>
+            <h2 class="quick-access-title">What would you like to do?</h2>
+
+            <div class="quick-access-grid">
+
+                <!-- Card 1: Book Appointment -->
+                <a href="calendar.html" class="quick-card">
+                    <div class="quick-card-icon" style="background-color: #E3F2FD;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1976D2" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <path d="M16 2v4M8 2v4M3 10h18"/>
+                        </svg>
+                    </div>
+                    <h3 class="quick-card-title">Book Appointment</h3>
+                    <p class="quick-card-desc">Schedule a new appointment with a doctor or specialist.</p>
+                    <span class="quick-card-arrow">→</span>
+                </a>
+
+                <!-- Card 2: View Medical Reports -->
+                <a href="reports.html" class="quick-card">
+                    <div class="quick-card-icon" style="background-color: #F3E5F5;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9C27B0" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                        </svg>
+                    </div>
+                    <h3 class="quick-card-title">View Medical Reports</h3>
+                    <p class="quick-card-desc">Access all your medical reports and test results.</p>
+                    <span class="quick-card-arrow">→</span>
+                </a>
+
+                <!-- Card 3: My Specialists -->
+                <a href="specialists.html" class="quick-card">
+                    <div class="quick-card-icon" style="background-color: #FCE4EC;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E91E63" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3 class="quick-card-title">My Specialists</h3>
+                    <p class="quick-card-desc">Browse all your doctors and their departments.</p>
+                    <span class="quick-card-arrow">→</span>
+                </a>
+
             </div>
         </div>
-    </div>
 
-    <!-- Right Section - Info Panel -->
-    <div class="info-section">
-        <div id="particles-js"></div>
-        <div class="info-content">
-            <h2>Your health, simplified.</h2>
-            <p>Access patient data from a single, secure source. Clear dashboards. Role-based access. Healthcare made easy.</p>
-        </div>
-    </div>
+    </main>
+
 </div>
 
-<!-- JavaScript -->
-<script>
-    particlesJS("particles-js", {
-    particles: {
-        number: { value: 100 },
-        color: { value: "#ffffff" },
-        shape: { type: "triangle" },
-        opacity: { value: 0.4 },
-        size: { value: 2 },
-        line_linked: {
-            enable: true,
-            color: "#ffffff",
-            opacity: 0.4
-        },
-        move: { enable: true, speed: 1 }
-    }
-    });
-</script>
+<!-- Footer -->
+<footer class="app-footer">
+    <span class="footer-copy">© 2026 MedPRO. All rights reserved.</span>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
 
 </body>
 </html>
