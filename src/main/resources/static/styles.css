@@ -1049,15 +1049,10 @@ button {
     flex: 1;
 }
 
-/* Arrow at bottom of card */
-.quick-card-arrow {
-    font-size: 1.25rem;
-    color: var(--text-muted);
-    transition: transform 0.3s ease, color 0.3s ease;
-}
+/* Arrow at bottom of card -- deleted */
 
 /* Arrow moves right and turns blue on hover */
-.quick-card:hover .quick-card-arrow {
+.quick-card:hover {
     transform: translateX(4px);
     color: var(--light-text);
 }
@@ -1544,6 +1539,14 @@ button {
 
 /* Row of action buttons at the bottom of the card */
 .doctor-actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* for index page -- ignore for now WIP */
+.doctor-actions a {
     display: flex;
     gap: 1rem;
     width: 100%;

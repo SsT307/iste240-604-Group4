@@ -1,31 +1,40 @@
 package edu.rit.iste240604group4.model;
 
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-@Component
 public class MedicalRecord {
     private int recordID; // primary key
-    private LocalDate visitDate;
-    private LocalTime visitTime;
+    private String visitDate; // changed datatype to string for now  -- was LocalDate
+    private String visitTime;
     private String conditions;
     private String treatmentGiven;
     private Boolean effective;
     private int emiratesID; // foreign key
-    private int hospitalID; // foreign key
+    // not using because the link with hospital is created via Hospital's list
+    // private int hospitalID; // foreign key
+        // I think we should keep it, for future use when connecting our database which already has that FK -Shaikha
+
+    public MedicalRecord() {}
+
+    public MedicalRecord(int recordID,  String visitDate, String visitTime,
+                         String conditions, String treatmentGiven, Boolean effective, int emiratesID) {
+        this.recordID = recordID;
+        this.visitDate = visitDate;
+        this.visitTime = visitTime;
+        this.conditions = conditions;
+        this.treatmentGiven = treatmentGiven;
+        this.effective = effective;
+        this.emiratesID = emiratesID;
+    }
 
     // getters
     public int getRecordID() {
         return recordID;
     }
 
-    public LocalDate getVisitDate() {
+    public String getVisitDate() {
         return visitDate;
     }
 
-    public LocalTime getVisitTime() {
+    public String getVisitTime() {
         return visitTime;
     }
 
@@ -45,9 +54,9 @@ public class MedicalRecord {
         return emiratesID;
     }
 
-    public int getHospitalID() {
-        return hospitalID;
-    }
+//    public int getHospitalID() {
+//        return hospitalID;
+//    }
 
     // setters
 
@@ -55,11 +64,11 @@ public class MedicalRecord {
         this.recordID = recordID;
     }
 
-    public void setVisitDate(LocalDate visitDate) {
+    public void setVisitDate(String visitDate) {
         this.visitDate = visitDate;
     }
 
-    public void setVisitTime(LocalTime visitTime) {
+    public void setVisitTime(String visitTime) {
         this.visitTime = visitTime;
     }
 
@@ -79,7 +88,7 @@ public class MedicalRecord {
         this.emiratesID = emiratesID;
     }
 
-    public void setHospitalID(int hospitalID) {
-        this.hospitalID = hospitalID;
-    }
+//    public void setHospitalID(int hospitalID) {
+//        this.hospitalID = hospitalID;
+//    }
 }
