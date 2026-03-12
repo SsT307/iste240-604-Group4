@@ -13,16 +13,18 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <img src="medPro_logo1.png" alt="MedPRO" />
-            <span class="sidebar-logo-text">MedPRO</span>
+            <a href="index.html" class="logo-link">
+                <img src="medPro_logo1.png" alt="MedPRO" class="logo-icon" />
+                <span class="sidebar-logo-text">MedPRO</span>
+            </a>
         </div>
 
         <!-- Navigation Links -->
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item">DASHBOARD</a>
-            <a href="#" class="nav-item">MEDICAL REPORTS</a>
+            <a href="index.html" class="nav-item">DASHBOARD</a>
+            <a href="reports.html" class="nav-item">MEDICAL REPORTS</a>
             <a href="calendar.html" class="nav-item active">CALENDAR</a>
-            <a href="#" class="nav-item">MY SPECIALISTS</a>
+            <a href="specialists.html" class="nav-item">MY SPECIALISTS</a>
         </nav>
 
         <!-- Profile & Logout -->
@@ -69,14 +71,6 @@
         </div>
 
         <div class="calendar-layout">
-
-            <!-- Upcoming Appointments Panel -->
-            <div class="calendar-side">
-                <div class="upcoming-card">
-                    <div class="upcoming-title">Upcoming</div>
-                    <div id="upcomingList"></div>
-                </div>
-            </div>
 
             <!-- Monthly Calendar -->
             <div class="calendar-main">
@@ -215,172 +209,264 @@
 
 <!-- JavaScript -->
 <script>
-    // Appointment data -- seeded with sample records from multiple hospitals
+
+    const userProfile = document.getElementById('userProfile');
+    const userDropdown = document.getElementById('userDropdown');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const monthNavLabel = document.getElementById('monthNavLabel');
+    const monthDays = document.getElementById('monthDays');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+
+    const addAptBtn = document.getElementById('addAptBtn');
+    const addAppointOverlay = document.getElementById('addAppoint');
+    const addCancelBtn = document.getElementById('addCancelBtn');
+    const saveAptBtn = document.getElementById('saveAptBtn');
+
+    const aptDateInput = document.getElementById('aptDate');
+    const aptTimeInput = document.getElementById('aptTime');
+    const aptReasonInput = document.getElementById('aptReason');
+    const aptHospitalSelect = document.getElementById('aptHospital');
+    const aptDoctorSelect = document.getElementById('aptDoctor');
+    const aptPatientInput = document.getElementById('aptPatient');
+
+    const detailsAppointOverlay = document.getElementById('detailsAppoint');
+    const detailsCloseBtn = document.getElementById('detailsCloseBtn');
+    const detailsTitle = document.getElementById('detailsTitle');
+    const dDate = document.getElementById('dDate');
+    const dTime = document.getElementById('dTime');
+    const dReason = document.getElementById('dReason');
+    const dPatient = document.getElementById('dPatient');
+    const dDoctor = document.getElementById('dDoctor');
+    const dHospital = document.getElementById('dHospital');
+
+    // - - - - - - - - - - - DATE - MONTH - YEAR - - - - - - - - - - -
+
     const today = new Date();
     let monthDate = new Date(today);
 
     const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+    // - - - - - - - - - - - SAMPLE DATA - - - - - - - - - - -
     const appointments = [
-        { date: fmt(0), time: '09:00', reason: 'Annual checkup',    patient: '784-1993-4821736-0', doctor: 'Dr. Patel - General Practice',     hospital: 'Dubai Hospital' },
-        { date: fmt(1), time: '11:30', reason: 'Follow-up visit',   patient: '784-1982-2871336-0', doctor: 'Dr. Hassan - Neurology',            hospital: 'Rashid Hospital' },
-        { date: fmt(3), time: '14:00', reason: 'Blood test',        patient: '784-2001-7739482-0', doctor: 'Dr. Al Mansoori - Cardiology',      hospital: 'American Hospital Dubai' },
-        { date: fmt(5), time: '10:00', reason: 'MRI scan review',   patient: '784-1975-1204857-1', doctor: 'Dr. Khalil - Orthopedics',          hospital: 'Cleveland Clinic Abu Dhabi' },
-        { date: fmt(7), time: '08:30', reason: 'Skin consultation', patient: '784-1987-3056214-1', doctor: 'Dr. Nguyen - Dermatology',          hospital: 'Mediclinic City Hospital' }
+        { date: getDateOffset(0), time: '09:00', reason: 'Annual checkup',    patient: '784-1993-4821736-0', doctor: 'Dr. Patel - General Practice',     hospital: 'Dubai Hospital' },
+        { date: getDateOffset(1), time: '11:30', reason: 'Follow-up visit',   patient: '784-1982-2871336-0', doctor: 'Dr. Hassan - Neurology',            hospital: 'Rashid Hospital' },
+        { date: getDateOffset(3), time: '14:00', reason: 'Blood test',        patient: '784-2001-7739482-0', doctor: 'Dr. Al Mansoori - Cardiology',      hospital: 'American Hospital Dubai' },
+        { date: getDateOffset(7), time: '08:30', reason: 'Skin consultation', patient: '784-1987-3056214-1', doctor: 'Dr. Nguyen - Dermatology',          hospital: 'Mediclinic City Hospital' }
     ];
 
-    // Returns a YYYY-MM-DD string offset by the given number of days from today
-    function fmt(offset = 0) {
-        const d = new Date(today);
-        d.setDate(d.getDate() + offset);
-        return d.toISOString().slice(0, 10);
+    // - - - - - - - - - - - HELPER FUNCTIONS - - - - - - - - - - -
+
+    // Get a date string offset by the given number of days from today
+    function getDateOffset(offset = 0) {
+        const date = new Date(today);
+        date.setDate(date.getDate() + offset);
+        return date.toISOString().slice(0, 10);
     }
 
-    // Converts "14:00" to "2:00 PM"
-    function formatTime(t) {
-        let [h, m] = t.split(':').map(Number);
-        const suffix = h >= 12 ? 'PM' : 'AM';
-        h = h % 12 || 12;
-        return `${h}:${String(m).padStart(2, '0')} ${suffix}`;
+    // Convert 24-hour time to 12-hour format with AM/PM
+    function formatTime(time) {
+        let [hours, minutes] = time.split(':').map(Number);
+        const period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        return `${hours}:${String(minutes).padStart(2, '0')} ${period}`;
     }
 
-    // Opens or closes an overlay by id
-    function toggleAppoint(id, open) {
-        document.getElementById(id).classList.toggle('open', open);
+    // Show or hide appointment overlay modals
+    function toggleOverlay(overlayElement, shouldOpen) {
+        overlayElement.classList.toggle('open', shouldOpen);
     }
 
-    // Profile dropdown
-    const userProfile = document.getElementById('userProfile');
-    userProfile.addEventListener('click', e => {
-        e.stopPropagation();
-        userProfile.classList.toggle('open');
-        document.getElementById('userDropdown').classList.toggle('open');
-    });
-    document.addEventListener('click', () => {
-        userProfile.classList.remove('open');
-        document.getElementById('userDropdown').classList.remove('open');
-    });
-    document.getElementById('logoutBtn').addEventListener('click', () => window.location.href = 'index.html');
+    // - - - - - - - - - - - CALENDAR RENDERING - - - - - - - - - - -
 
-    // Auto-format Patient ID as Emirates ID: 784-YYYY-XXXXXXX-X
-    document.getElementById('aptPatient').addEventListener('input', function () {
-        const digits = this.value.replace(/\D/g, '').slice(0, 15);
-        const p = [digits.slice(0, 3), digits.slice(3, 7), digits.slice(7, 14), digits.slice(14, 15)];
-        this.value = p.filter(s => s.length).join('-');
-    });
-
-    // Build the monthly calendar grid
     function buildMonthView() {
-        document.getElementById('monthNavLabel').textContent = MONTHS[monthDate.getMonth()] + ' ' + monthDate.getFullYear();
+        // Update the month/year label in the header
+        monthNavLabel.textContent = MONTHS[monthDate.getMonth()] + ' ' + monthDate.getFullYear();
 
-        const grid     = document.getElementById('monthDays');
-        const first    = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
-        const lastDay  = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
-        const startPad = first.getDay();
+        // Calculate calendar grid parameters
+        const firstDayOfMonth = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
+        const lastDayOfMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
+        const startPadding = firstDayOfMonth.getDay();
 
-        grid.innerHTML = '';
+        // Clear existing calendar cells
+        monthDays.innerHTML = '';
 
-        // Fill grid: prev month padding + current days + next month padding
+        // Build a 6-week grid (42 cells total)
         const totalCells = 42;
         for (let i = 0; i < totalCells; i++) {
-            const offset = i - startPad;
-            const d      = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1 + offset);
-            const ds     = d.toISOString().slice(0, 10);
-            const other  = offset < 0 || offset >= lastDay;
+            const dayOffset = i - startPadding;
+            const currentDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1 + dayOffset);
+            const dateString = currentDate.toISOString().slice(0, 10);
+            const isOtherMonth = dayOffset < 0 || dayOffset >= lastDayOfMonth;
 
+            // Create the calendar cell
             const cell = document.createElement('div');
             cell.className = 'month-cell'
-                + (other ? ' other-month' : '')
-                + (d.toDateString() === today.toDateString() ? ' today' : '');
+                + (isOtherMonth ? ' other-month' : '')
+                + (currentDate.toDateString() === today.toDateString() ? ' today' : '');
 
-            // Date number
-            const num = document.createElement('div');
-            num.className = 'month-cell-num';
-            num.textContent = d.getDate();
-            cell.appendChild(num);
+            // Add the day number
+            const dayNumber = document.createElement('div');
+            dayNumber.className = 'month-cell-num';
+            dayNumber.textContent = currentDate.getDate();
+            cell.appendChild(dayNumber);
 
-            // Appointment pills for this day
-            appointments.filter(a => a.date === ds).forEach(a => {
+            // Add appointment pills for this day
+            appointments.filter(apt => apt.date === dateString).forEach(apt => {
                 const pill = document.createElement('div');
                 pill.className = 'month-apt';
-                pill.innerHTML = `<span class="month-apt-reason">${a.reason}</span>
-                                  <span class="month-apt-time">${formatTime(a.time)} · ${a.hospital}</span>`;
-                pill.addEventListener('click', e => { e.stopPropagation(); openDetails(a); });
+                pill.innerHTML = `<span class="month-apt-reason">${apt.reason}</span>
+                                  <span class="month-apt-time">${formatTime(apt.time)} · ${apt.hospital}</span>`;
+                pill.addEventListener('click', e => {
+                    e.stopPropagation();
+                    showAppointmentDetails(apt);
+                });
                 cell.appendChild(pill);
             });
 
-            // Empty cell click opens add form
-            cell.addEventListener('click', () => openAdd(ds));
-            grid.appendChild(cell);
+            // Clicking an empty cell opens the add form
+            cell.addEventListener('click', () => openAddForm(dateString));
+            monthDays.appendChild(cell);
         }
     }
 
-    document.getElementById('prevMonth').addEventListener('click', () => { monthDate.setMonth(monthDate.getMonth() - 1); buildMonthView(); buildUpcoming(); });
-    document.getElementById('nextMonth').addEventListener('click', () => { monthDate.setMonth(monthDate.getMonth() + 1); buildMonthView(); buildUpcoming(); });
+    // - - - - - - - - - - - APPOINTMENT FORMS - - - - - - - - - - -
 
-    // Build upcoming appointments list
-    function buildUpcoming() {
-        const now  = today.toISOString().slice(0, 10);
-        const list = appointments
-            .filter(a => a.date >= now)
-            .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
-            .slice(0, 5);
+    function openAddForm(selectedDate = '') {
+        // Clear all form fields
+        aptDateInput.value = '';
+        aptTimeInput.value = '';
+        aptReasonInput.value = '';
+        aptPatientInput.value = '';
+        aptHospitalSelect.value = '';
+        aptDoctorSelect.value = '';
 
-        document.getElementById('upcomingList').innerHTML = list.length
-            ? list.map(a => {
-                const lbl = new Date(a.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-                return `<div class="upcoming-item">
-                            <div class="upcoming-dot"></div>
-                            <div class="upcoming-info">
-                                <div class="upcoming-name">${a.reason}</div>
-                                <div class="upcoming-time">${lbl} · ${formatTime(a.time)}</div>
-                            </div>
-                        </div>`;
-            }).join('')
-            : '<div style="font-size:.78rem;color:var(--text-muted)">No upcoming appointments.</div>';
+        // Pre-fill the date if provided
+        aptDateInput.value = selectedDate;
+
+        // Show the add appointment modal
+        toggleOverlay(addAppointOverlay, true);
     }
 
-    // Open the add appointment form, pre-fill date
-    function openAdd(date = '') {
-        ['aptDate','aptTime','aptReason','aptPatient'].forEach(id => document.getElementById(id).value = '');
-        ['aptHospital','aptDoctor'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('aptDate').value = date;
-        toggleAppoint('addAppoint', true);
-    }
+    function saveNewAppointment() {
+        // Collect all form values
+        const newAppointment = {
+            date: aptDateInput.value.trim(),
+            time: aptTimeInput.value.trim(),
+            reason: aptReasonInput.value.trim(),
+            hospital: aptHospitalSelect.value.trim(),
+            doctor: aptDoctorSelect.value.trim(),
+            patient: aptPatientInput.value.trim()
+        };
 
-    document.getElementById('addCancelBtn').addEventListener('click', () => toggleAppoint('addAppoint', false));
-    document.getElementById('addAppoint').addEventListener('click', e => { if (e.target.id === 'addAppoint') toggleAppoint('addAppoint', false); });
-    document.getElementById('addAptBtn').addEventListener('click', () => openAdd(fmt()));
+        // Validate that all fields are filled
+        const allFieldsFilled = Object.values(newAppointment).every(val => val !== '');
+        if (!allFieldsFilled) {
+            alert('Please fill in all fields.');
+            return;
+        }
 
-    document.getElementById('saveAptBtn').addEventListener('click', () => {
-        const fields = ['aptDate','aptTime','aptReason','aptHospital','aptDoctor','aptPatient'];
-        const vals   = fields.map(id => document.getElementById(id).value.trim());
-        if (vals.some(v => !v)) { alert('Please fill in all fields.'); return; }
-        appointments.push({ date: vals[0], time: vals[1], reason: vals[2], hospital: vals[3], doctor: vals[4], patient: vals[5] });
-        toggleAppoint('addAppoint', false);
+        // Add to appointments array and refresh calendar
+        appointments.push(newAppointment);
+        toggleOverlay(addAppointOverlay, false);
         buildMonthView();
-        buildUpcoming();
+    }
+
+    function showAppointmentDetails(appointment) {
+        // Format the date nicely
+        const formattedDate = new Date(appointment.date).toLocaleDateString('en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        // Populate the details modal
+        detailsTitle.textContent = appointment.reason;
+        dDate.textContent = formattedDate;
+        dTime.textContent = formatTime(appointment.time);
+        dReason.textContent = appointment.reason;
+        dPatient.textContent = appointment.patient;
+        dDoctor.textContent = appointment.doctor;
+        dHospital.textContent = appointment.hospital;
+
+        // Show the details modal
+        toggleOverlay(detailsAppointOverlay, true);
+    }
+
+    // - - - - - - - - - - - EVENT LISTENERS - - - - - - - - - - -
+    // User profile dropdown toggle
+    userProfile.addEventListener('click', e => {
+        e.stopPropagation();
+        userProfile.classList.toggle('open');
+        userDropdown.classList.toggle('open');
     });
 
-    // Open the appointment details view
-    function openDetails(a) {
-        const lbl = new Date(a.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        document.getElementById('detailsTitle').textContent = a.reason;
-        document.getElementById('dDate').textContent        = lbl;
-        document.getElementById('dTime').textContent        = formatTime(a.time);
-        document.getElementById('dReason').textContent      = a.reason;
-        document.getElementById('dPatient').textContent     = a.patient;
-        document.getElementById('dDoctor').textContent      = a.doctor;
-        document.getElementById('dHospital').textContent    = a.hospital;
-        toggleAppoint('detailsAppoint', true);
-    }
+    // Close dropdown when clicking anywhere else
+    document.addEventListener('click', () => {
+        userProfile.classList.remove('open');
+        userDropdown.classList.remove('open');
+    });
 
-    document.getElementById('detailsCloseBtn').addEventListener('click', () => toggleAppoint('detailsAppoint', false));
-    document.getElementById('detailsAppoint').addEventListener('click', e => { if (e.target.id === 'detailsAppoint') toggleAppoint('detailsAppoint', false); });
+    // Logout button
+    logoutBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
 
-    // Init
+    // Month navigation buttons
+    prevMonthBtn.addEventListener('click', () => {
+        monthDate.setMonth(monthDate.getMonth() - 1);
+        buildMonthView();
+    });
+
+    nextMonthBtn.addEventListener('click', () => {
+        monthDate.setMonth(monthDate.getMonth() + 1);
+        buildMonthView();
+    });
+
+    // Add appointment button (top toolbar)
+    addAptBtn.addEventListener('click', () => {
+        openAddForm(getDateOffset(0));
+    });
+
+    // Add appointment modal controls
+    addCancelBtn.addEventListener('click', () => {
+        toggleOverlay(addAppointOverlay, false);
+    });
+
+    addAppointOverlay.addEventListener('click', e => {
+        if (e.target.id === 'addAppoint') {
+            toggleOverlay(addAppointOverlay, false);
+        }
+    });
+
+    saveAptBtn.addEventListener('click', saveNewAppointment);
+
+    // - - - - - - - - - - - CONTROLS - - - - - - - - - - -
+    detailsCloseBtn.addEventListener('click', () => {
+        toggleOverlay(detailsAppointOverlay, false);
+    });
+
+    detailsAppointOverlay.addEventListener('click', e => {
+        if (e.target.id === 'detailsAppoint') {
+            toggleOverlay(detailsAppointOverlay, false);
+        }
+    });
+
+    // Auto-format Emirates ID as user types (784-YYYY-XXXXXXX-X)
+    aptPatientInput.addEventListener('input', function() {
+        const digitsOnly = this.value.replace(/\D/g, '').slice(0, 15);
+        const parts = [
+            digitsOnly.slice(0, 3),
+            digitsOnly.slice(3, 7),
+            digitsOnly.slice(7, 14),
+            digitsOnly.slice(14, 15)
+        ];
+        this.value = parts.filter(part => part.length).join('-');
+    });
+
     buildMonthView();
-    buildUpcoming();
 </script>
 </body>
 </html>
