@@ -25,6 +25,17 @@ public class MedProController {
         // --- APPOINTMENT AND PERSON
 
         // --- DOCTOR
+            // -- DOCTOR VIEW
+        @GetMapping("/doctor")
+        public String viewDoctors(Model model) {
+            model.addAttribute("doctors", this.medProService.findAll());
+            return "DoctorViewPage";
+        }
+            // -- DOCTOR FORM
+        @GetMapping("/doctor/add")
+        public String showAddDoctorForm(Model model) {
+            return "DoctorAddPage";
+        }
 
         // --- HOSPITAL AND MEDICAL RECORDS
             // -- LIST OF HOSPITAL AND MEDICAL RECORDS
@@ -43,6 +54,15 @@ public class MedProController {
         // --- INSURANCE
 
     // - - - - POST METHODS - - - -
+        // --- DOCTOR ADD
+    @PostMapping("/doctor/add")
+    public String addDoctor(Doctor doctor, Model model) {
+        //save doc
+        this.medProService.addDoctor(doctor);
+        //inject doc to template
+        model.addAttribute("doctors",this.medProService.findAll());
+        return "redirect:/success/doctor";
+    }
 
         // --- ADD HOSPITAL
     @PostMapping("/hospitals/add")
