@@ -18,7 +18,20 @@ public class MedProService {
 
     // Add data to the lists
     public MedProService() {
+        this.doctors.add(new Doctor(1 , "Fatma" , "Alsuwaidi" , "Dentistry" , 143));
+        this.doctors.add(new Doctor(2 , "Tania" , "Aziz" , "Pediatrics" , 148));
+        this.doctors.add(new Doctor(3 , "Shaikha" , "Alhajri" , "Cardiologist" , 123));
+        this.doctors.add(new Doctor(4 , "Fatma" , "Almadani" , "Dermatologist" , 145));
+    }
 
+    // Query the Database
+    // select / get all
+    public List<Doctor> findAll(){
+        return doctors;
+    }
+    // insert / add
+    public void addDoctor(Doctor doctor){
+        this.doctors.add(doctor);
     }
 
 }
