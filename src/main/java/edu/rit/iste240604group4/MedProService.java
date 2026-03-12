@@ -15,6 +15,7 @@ public class MedProService {
     public List<Appointment> appointments = new ArrayList<>();
     public List<MedicalRecord> medicalRecords = new ArrayList<>();
     public List<Hospital> hospitals = new ArrayList<>();
+    public List<Insurance> insurances = new ArrayList<>();
 
     // Add data to the lists
     public MedProService() {
