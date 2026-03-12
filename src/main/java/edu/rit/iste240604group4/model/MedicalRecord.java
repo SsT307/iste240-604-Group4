@@ -1,17 +1,16 @@
 package edu.rit.iste240604group4.model;
 
-
-
 public class MedicalRecord {
     private int recordID; // primary key
-    private String visitDate; //changed datatype to string for now
+    private String visitDate; // changed datatype to string for now  -- was LocalDate
     private String visitTime;
     private String conditions;
     private String treatmentGiven;
     private Boolean effective;
     private int emiratesID; // foreign key
     // not using because the link with hospital is created via Hospital's list
-//    private int hospitalID; // foreign key
+    // private int hospitalID; // foreign key
+        // I think we should keep it, for future use when connecting our database which already has that FK -Shaikha
 
     public MedicalRecord() {}
 
