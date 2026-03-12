@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -16,6 +17,13 @@ public class MedProController {
 
 
     // GET METHODS
+    //Get method for success page!!!
+    @GetMapping("/success/{entityName}")
+    public String showSuccessMessage(@PathVariable String entityName, Model model) {
+        model.addAttribute("entityName", entityName);
+        return "success";
+    }
+
     //method to view the list of hospitals + medical records inside
     @GetMapping("/viewHospitals")
     public String viewAllHospitals(Model model){
