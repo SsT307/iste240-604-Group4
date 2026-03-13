@@ -2,9 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Appointment</title>
 </head>
 <body>
+<!-- remember to add localdate and time later incase of any issues -->
+<h2>Add Appointment</h2>
+<form action="/appointments/add" method="post">
+    <label>AppointmentID: </label>
+    <input type="number" name="appointmentID">
+    <br>
+
+    <label>EID: </label>
+    <input type="number" name="emiratesID">
+    <br>
+
+    <label>Reason: </label>
+    <input type="text" name="reason">
+    <br>
+
+    <label>DoctorID: </label>
+    <input type="number" name="doctorID">
+    <br>
+
+    <label>HospitalID: </label>
+    <input type="number" name="hospitalID">
+    <br>
+
+    <button type="submit">Add Appointment</button>
+</form>
+
+<a href="/">Back To Landing Page</a>
 
 </body>
 </html>
