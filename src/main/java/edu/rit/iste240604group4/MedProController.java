@@ -23,23 +23,18 @@ public class MedProController {
     }
 
         // --- APPOINTMENT AND PERSON
-            // -- VIEW PATIENTS
-        @GetMapping("/patient")
-        public String viewPatients(Model model) {
+            // -- VIEW PATIENTS & APPOINTMENTS
+        @GetMapping("/appointments/patients/view")
+        public String viewRecords(Model model) {
             model.addAttribute("patients", this.medProService.viewAllPatient());
-            return "viewPatients";
+            model.addAttribute("appointments", this.medProService.viewAllAppointment());
+            return "viewAppointment";
         }
+
             // -- PATIENT FORM
         @GetMapping("/patients/add")
         public String showAddPatientForm() {
             return "addPatient";
-        }
-
-            // -- APPOINTMENT VIEW
-        @GetMapping("/appointments")
-        public String viewAppointments(Model model) {
-            model.addAttribute("appointments", this.medProService.viewAllAppointment());
-            return "viewAppointment";
         }
             // -- APPOINTMENT FORM
         @GetMapping("/appointments/add")
@@ -97,7 +92,7 @@ public class MedProController {
     }
 
         // --- ADD APPOINTMENT
-    @PostMapping("/appointment/add")
+    @PostMapping("/appointments/add")
     public String addApp(Appointment appointment) {
         medProService.addApp(appointment);
         return "redirect:/success/appointment";
