@@ -57,13 +57,13 @@ public class MedProService {
         Hospital hospital3 = new Hospital(3, "Rashid Hospital", "Government");
         Hospital hospital4 = new Hospital(4, "New Medical Hospital", "Private");
             // Medical Records
-        MedicalRecord mr1 = new MedicalRecord(1, "2024-01-15", "09:00", "Flu",
+        MedicalRecord mr1 = new MedicalRecord(1, LocalDate.of(2024, 1, 15), LocalTime.of(9, 0), "Flu",
                 "Rest and fluids", true, 1234567890);
-        MedicalRecord mr2 = new MedicalRecord(2, "2025-02-06", "08:00", "Diabetes",
+        MedicalRecord mr2 = new MedicalRecord(2, LocalDate.of(2025, 2, 6), LocalTime.of(8, 0), "Diabetes",
                 "Insulin shots", true, 1234567891);
-        MedicalRecord mr3 = new MedicalRecord(3, "2025-03-12", "11:30", "Hypertension",
+        MedicalRecord mr3 = new MedicalRecord(3, LocalDate.of(2025, 3, 12), LocalTime.of(11, 30), "Hypertension",
                 "Blood pressure medication", true, 1234567892);
-        MedicalRecord mr4 = new MedicalRecord(4, "2025-07-08", "10:15", "Asthma",
+        MedicalRecord mr4 = new MedicalRecord(4, LocalDate.of(2025, 7, 8), LocalTime.of(10, 15), "Asthma",
                 "Inhaler and steroids", true, 1234567893);
 
             // Linking hospitals to medical records
