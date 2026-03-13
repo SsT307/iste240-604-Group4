@@ -12,12 +12,12 @@ import java.util.List;
 public class MedProService {
 
     // Simulate a DB -- one table per entity
-    public List<Patient> patients = new ArrayList<>();
-    public List<Doctor> doctors = new ArrayList<>();
-    public List<Appointment> appointments = new ArrayList<>();
-    public List<MedicalRecord> medicalRecords = new ArrayList<>();
-    public List<Hospital> hospitals = new ArrayList<>();
-    public List<Insurance> insurances = new ArrayList<>();
+    private List<Patient> patients = new ArrayList<>();
+    private List<Doctor> doctors = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
+    private List<MedicalRecord> medicalRecords = new ArrayList<>();
+    private List<Hospital> hospitals = new ArrayList<>();
+    private List<Insurance> insurances = new ArrayList<>();
 
     // Add data to the lists
     public MedProService() {
