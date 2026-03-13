@@ -58,13 +58,13 @@ public class MedProService {
         Hospital hospital4 = new Hospital(4, "New Medical Hospital", "Private");
             // Medical Records
         MedicalRecord mr1 = new MedicalRecord(1, LocalDate.of(2024, 1, 15), LocalTime.of(9, 0), "Flu",
-                "Rest and fluids", true, 1234567890);
+                "Rest and fluids", true, 1234567890, 1);
         MedicalRecord mr2 = new MedicalRecord(2, LocalDate.of(2025, 2, 6), LocalTime.of(8, 0), "Diabetes",
-                "Insulin shots", true, 1234567891);
+                "Insulin shots", true, 1234567891, 2);
         MedicalRecord mr3 = new MedicalRecord(3, LocalDate.of(2025, 3, 12), LocalTime.of(11, 30), "Hypertension",
-                "Blood pressure medication", true, 1234567892);
+                "Blood pressure medication", true, 1234567892, 3);
         MedicalRecord mr4 = new MedicalRecord(4, LocalDate.of(2025, 7, 8), LocalTime.of(10, 15), "Asthma",
-                "Inhaler and steroids", true, 1234567893);
+                "Inhaler and steroids", true, 1234567893, 4);
 
             // Linking hospitals to medical records
         hospital1.getMedicalRecords().addAll(List.of(mr1, mr2, mr3, mr4));
