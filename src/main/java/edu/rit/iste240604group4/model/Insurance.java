@@ -2,7 +2,6 @@ package edu.rit.iste240604group4.model;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class Insurance {
     private int insuranceID; //Primary Key
     private String insuranceName;
