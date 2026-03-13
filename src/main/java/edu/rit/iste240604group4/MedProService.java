@@ -3,6 +3,8 @@ package edu.rit.iste240604group4;
 import edu.rit.iste240604group4.model.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +23,15 @@ public class MedProService {
     public MedProService() {
         // --- APPOINTMENT AND PATIENT
             // -- Patients
-        Patient p1 = Patient.of(1234567890, "Ahmed",  "Mohammad",   "Egyptian");
-        Patient p2 = Patient.of(1234567891, "Hamda",   "Alsuwaidi", "Emirati");
-        Patient p3 = Patient.of(1234567892, "Omar",   "Khalil",      "Lebanese");
-        Patient p4 = Patient.of(1234567893, "Priya",  "Khan",      "Pakistani");
+        Patient p1 = Patient.of(1234567890, "Ahmed", "Mohammad", "Egyptian");
+        Patient p2 = Patient.of(1234567891, "Hamda", "Alsuwaidi", "Emirati");
+        Patient p3 = Patient.of(1234567892, "Omar", "Khalil", "Lebanese");
+        Patient p4 = Patient.of(1234567893, "Priya", "Khan", "Pakistani");
             // -- Appointments
-        Appointment a1 = Appointment.of(1, "Annual checkup",    1234567890, 3, 1);
-        Appointment a2 = Appointment.of(2, "Follow-up visit",   1234567891, 2, 3);
-        Appointment a3 = Appointment.of(3, "Blood test",        1234567892, 1, 2);
-        Appointment a4 = Appointment.of(4, "Skin consultation", 1234567893, 4, 4);
+        Appointment a1 = Appointment.of(1, "Annual checkup", LocalDate.of(2026,3,13), LocalTime.of(9,0), 1234567890, 3, 1);
+        Appointment a2 = Appointment.of(2, "Follow-up visit", LocalDate.of(2026,3,14), LocalTime.of(11,30), 1234567891, 2, 3);
+        Appointment a3 = Appointment.of(3, "Blood test", LocalDate.of(2026,3,16), LocalTime.of(14,0), 1234567892, 1, 2);
+        Appointment a4 = Appointment.of(4, "Skin consultation", LocalDate.of(2026,3,20), LocalTime.of(8,30), 1234567893, 4, 4);
 
             // -- Link appointments -> patients
         p1.getAppointments().add(a1);
@@ -97,9 +99,6 @@ public class MedProService {
         insurances.add(i3);
         insurances.add(i4);
     }
-
-
-
 
 
     // Query the Database

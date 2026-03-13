@@ -20,17 +20,19 @@ public class Appointment {
     }
 
     // CONSTRUCTOR
-    public Appointment(int appointmentID, String reason, int emiratesID, int doctorID, int hospitalID) {
+    public Appointment(int appointmentID, String reason, LocalDate aDate, LocalTime aTime, int emiratesID, int doctorID, int hospitalID) {
         this.appointmentID = appointmentID;
         this.reason = reason;
+        this.aDate = aDate;
+        this.aTime = aTime;
         this.emiratesID = emiratesID;
         this.doctorID = doctorID;
         this.hospitalID = hospitalID;
     }
 
     // Appointment.of
-    public static Appointment of(int appointmentID, String reason, int emiratesID, int doctorID, int hospitalID) {
-        return new Appointment(appointmentID, reason, emiratesID, doctorID, hospitalID);
+    public static Appointment of(int appointmentID, String reason, LocalDate aDate, LocalTime aTime, int emiratesID, int doctorID, int hospitalID) {
+        return new Appointment(appointmentID, reason, aDate, aTime, emiratesID, doctorID, hospitalID);
     }
 
     // GETTERS
