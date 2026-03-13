@@ -52,6 +52,18 @@ public class MedProController {
     }
 
         // --- INSURANCE
+            // --- INSURANCE LIST
+    @GetMapping("/insurance")
+    public String viewInsurance(Model model) {
+        model.addAttribute("insurances", this.medProService.findAllInsurance());
+        return "insurance";
+    }
+            // --- INSURANCE FORM
+    @GetMapping("/insurance/add")
+    public String showAddInsuranceForm() {
+        return "addInsurance";
+    }
+
 
     // - - - - POST METHODS - - - -
         // --- DOCTOR ADD
@@ -70,6 +82,13 @@ public class MedProController {
         medProService.addHospital(h);
         //"hospital" is a path variable, the success page will use it to display the message :>
         return "redirect:/success/hospital";
+    }
+        // --- ADD INSURANCE
+    @PostMapping("/insurance/add")
+    public String addInsurance(Insurance i) {
+        this.medProService.addInsurance(i);
+
+        return "redirect:/success/insurance";
     }
 
 

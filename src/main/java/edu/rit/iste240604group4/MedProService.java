@@ -57,8 +57,31 @@ public class MedProService {
         medicalRecords.addAll(List.of(mr1, mr2, mr3, mr4));
 
         // --- INSURANCE
+        Insurance i1 = new Insurance();
+        i1.setInsuranceID(1);
+        i1.setInsuranceName("Daman");
 
+        Insurance i2 = new Insurance();
+        i2.setInsuranceID(2);
+        i2.setInsuranceName("Thiqa");
+
+        Insurance i3 = new Insurance();
+        i3.setInsuranceID(3);
+        i3.setInsuranceName("NextCare");
+
+        Insurance i4 = new Insurance();
+        i4.setInsuranceID(4);
+        i4.setInsuranceName("Almadallah");
+
+        insurances.add(i1);
+        insurances.add(i2);
+        insurances.add(i3);
+        insurances.add(i4);
     }
+
+
+
+
 
     // Query the Database
 
@@ -82,5 +105,21 @@ public class MedProService {
         h.getMedicalRecords().addAll(medicalRecords);
         hospitals.add(h);
     }
+
+    // Get list of insurance
+    public List<Insurance> findAllInsurance() {
+        return insurances;
+    }
+    // Adding new insurance
+    public void addInsurance(Insurance i) {
+        this.insurances.add(i);
 }
+}
+
+
+
+
+
+
+
 
