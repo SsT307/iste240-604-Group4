@@ -1,5 +1,6 @@
 package edu.rit.iste240604group4.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -7,8 +8,11 @@ import java.time.LocalTime;
 
 public class Appointment {
     private int appointmentID; // primary key
-    private LocalDate aDate;
-    private LocalTime aTime;
+    // Spring cannot automatically convert the form's text values into LocalDate and LocalTime, so we need to add the @DateTimeFormat annotation
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate Date;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime Time;
     private String reason;
     private int emiratesID; // foreign key
     private int doctorID; // foreign key
@@ -20,11 +24,11 @@ public class Appointment {
     }
 
     // CONSTRUCTOR
-    public Appointment(int appointmentID, String reason, LocalDate aDate, LocalTime aTime, int emiratesID, int doctorID, int hospitalID) {
+    public Appointment(int appointmentID, String reason, LocalDate Date, LocalTime Time, int emiratesID, int doctorID, int hospitalID) {
         this.appointmentID = appointmentID;
         this.reason = reason;
-        this.aDate = aDate;
-        this.aTime = aTime;
+        this.Date = Date;
+        this.Time = Time;
         this.emiratesID = emiratesID;
         this.doctorID = doctorID;
         this.hospitalID = hospitalID;
@@ -40,12 +44,12 @@ public class Appointment {
         return appointmentID;
     }
 
-    public LocalDate getaDate() {
-        return aDate;
+    public LocalDate getDate() {
+        return Date;
     }
 
-    public LocalTime getaTime() {
-        return aTime;
+    public LocalTime getTime() {
+        return Time;
     }
 
     public String getReason() {
@@ -69,12 +73,12 @@ public class Appointment {
         this.appointmentID = appointmentID;
     }
 
-    public void setaDate(LocalDate aDate) {
-        this.aDate = aDate;
+    public void setDate(LocalDate aDate) {
+        this.Date = aDate;
     }
 
-    public void setaTime(LocalTime aTime) {
-        this.aTime = aTime;
+    public void setTime(LocalTime aTime) {
+        this.Time = aTime;
     }
 
     public void setReason(String reason) {
