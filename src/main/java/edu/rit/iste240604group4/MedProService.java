@@ -105,11 +105,11 @@ public class MedProService {
     // Query the Database
         // APPOINTMENT + PATIENT
     // Get & Add patient
-    public List<Patient> viewPatient() { return patients; }
+    public List<Patient> viewAllPatient() { return patients; }
     public void addPatient(Patient p) { this.patients.add(p); }
 
     // Get & Add appointment
-    public List<Appointment> viewAppointment() { return appointments; }
+    public List<Appointment> viewAllAppointment() { return appointments; }
     public void addApp(Appointment a) { this.appointments.add(a); }
 
         // DOCTOR
