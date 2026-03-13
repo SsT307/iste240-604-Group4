@@ -20,7 +20,26 @@ public class MedProService {
     // Add data to the lists
     public MedProService() {
         // --- APPOINTMENT AND PERSON
+            // -- Patients
+        Patient p1 = Patient.of(1234567890, "Ahmed",  "Mohammad",   "Egyptian");
+        Patient p2 = Patient.of(1234567891, "Hamda",   "Alsuwaidi", "Emirati");
+        Patient p3 = Patient.of(1234567892, "Omar",   "Khalil",      "Lebanese");
+        Patient p4 = Patient.of(1234567893, "Priya",  "Khan",      "Pakistani");
+            // -- Appointments
+        Appointment a1 = Appointment.of(1, "Annual checkup",    1234567890, 3, 1);
+        Appointment a2 = Appointment.of(2, "Follow-up visit",   1234567891, 2, 3);
+        Appointment a3 = Appointment.of(3, "Blood test",        1234567892, 1, 2);
+        Appointment a4 = Appointment.of(4, "Skin consultation", 1234567893, 4, 4);
 
+            // -- Link appointments -> patients
+        p1.getAppointments().add(a1);
+        p2.getAppointments().add(a2);
+        p3.getAppointments().add(a3);
+        p4.getAppointments().add(a4);
+
+            // -- Add to the simulated DB
+        patients.addAll(List.of(p1, p2, p3, p4));
+        appointments.addAll(List.of(a1, a2, a3, a4));
 
         // --- DOCTOR
         this.doctors.add(new Doctor(1 , "Fatma" , "Alsuwaidi" , "Dentistry" , 143));
@@ -84,7 +103,16 @@ public class MedProService {
 
 
     // Query the Database
+        // APPOINTMENT + PATIENT
+    // Get & Add patient
+    public List<Patient> viewPatient() { return patients; }
+    public void addPatient(Patient p) { this.patients.add(p); }
 
+    // Get & Add appointment
+    public List<Appointment> viewAppointment() { return appointments; }
+    public void addApp(Appointment a) { this.appointments.add(a); }
+
+        // DOCTOR
     // Get all doctors
     public List<Doctor> findAll(){
         return doctors;
@@ -94,6 +122,7 @@ public class MedProService {
         this.doctors.add(doctor);
     }
 
+        // HOSPITAL + MEDICAL RECORD
     // Method for listing all hospitals
     public List<Hospital> viewHospitals(){
         return hospitals;
@@ -106,6 +135,7 @@ public class MedProService {
         hospitals.add(h);
     }
 
+        // INSURANCE
     // Get list of insurance
     public List<Insurance> findAllInsurance() {
         return insurances;

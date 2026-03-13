@@ -14,7 +14,21 @@ public class Appointment {
     private int doctorID; // foreign key
     private int hospitalID; // foreign key
 
-    // getters
+    // CONSTRUCTOR
+    public Appointment(int appointmentID, String reason, int emiratesID, int doctorID, int hospitalID) {
+        this.appointmentID = appointmentID;
+        this.reason = reason;
+        this.emiratesID = emiratesID;
+        this.doctorID = doctorID;
+        this.hospitalID = hospitalID;
+    }
+
+    // Appointment.of
+    public static Appointment of(int appointmentID, String reason, int emiratesID, int doctorID, int hospitalID) {
+        return new Appointment(appointmentID, reason, emiratesID, doctorID, hospitalID);
+    }
+
+    // GETTERS
     public int getAppointmentID() {
         return appointmentID;
     }
@@ -43,7 +57,7 @@ public class Appointment {
         return hospitalID;
     }
 
-    // setters
+    // SETTERS
     public void setAppointmentID(int appointmentID) {
         this.appointmentID = appointmentID;
     }
