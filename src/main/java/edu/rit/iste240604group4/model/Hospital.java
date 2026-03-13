@@ -1,6 +1,5 @@
 package edu.rit.iste240604group4.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

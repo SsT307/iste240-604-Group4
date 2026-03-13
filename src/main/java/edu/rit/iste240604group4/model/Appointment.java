@@ -1,7 +1,6 @@
 package edu.rit.iste240604group4.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
