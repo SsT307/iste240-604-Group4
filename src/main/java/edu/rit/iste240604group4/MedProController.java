@@ -28,7 +28,7 @@ public class MedProController {
         public String viewRecords(Model model) {
             model.addAttribute("patients", this.medProService.viewAllPatient());
             model.addAttribute("appointments", this.medProService.viewAllAppointment());
-            return "viewAppointment";
+            return "viewAppPatient";
         }
 
             // -- PATIENT FORM
