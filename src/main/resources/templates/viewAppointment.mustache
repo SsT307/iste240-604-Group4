@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Appointments & Patients</title>
 </head>
 <body>
+<h1>Appointments & Patients</h1>
+
+<!-- Patient -->
+<h2>Patients</h2>
+<table>
+    <tr>
+        <th>Emirates ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Ethnicity</th>
+    </tr>
+    {{#patients}}
+        <tr>
+            <td>{{emiratesID}}</td>
+            <td>{{firstName}}</td>
+            <td>{{lastName}}</td>
+            <td>{{ethnicity}}</td>
+        </tr>
+    {{/patients}}
+</table>
+
+<!-- Appointments -->
+<h2>Appointments</h2>
+    <table>
+        <tr>
+            <th>EmiratesID</th>
+            <th>Appointment ID</th>
+            <th>Reason</th>
+            <th>Doctor ID</th>
+            <th>Hospital ID</th>
+        </tr>
+        {{#appointments}}
+            <tr>
+                <td>{{emiratesID}}</td>
+                <td>{{appointmentID}}</td>
+                <td>{{reason}}</td>
+                <td>{{doctorID}}</td>
+                <td>{{hospitalID}}</td>
+            </tr>
+        {{/appointments}}
+    </table>
+
+<a href="/">Back To Landing Page</a>
 
 </body>
 </html>
