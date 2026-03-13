@@ -31,3 +31,16 @@ Overall, this assignment will help us not only practice using Git commands, but 
 with each other and implement concepts we learnt in class.
 [[We considered using embeddables for shared attributes but chose to wait for implementation until we gain further 
 knowledge from future classes.]]
+
+~ ~ ~ ~ ~
+#### ASSIGNMENT 2:
+This assignment required us to build upon our previous assignment using Spring Boot. We served dynamic web pages
+using the Mustache template.
+Each member should now contribute their work using their own branch: using git branch, git checkout, and git merge.
+The project requires a Service class, as well as a Controller Class. A simulated DB is created in the Service class to 
+store hardcoded lists of entity objects. The GET and POST requests are then handled by the Controller class to return the correct 
+views. 
+Each entity must belong to 2 mustache template pages, one to view and one to add data. We are also required to link at 
+least 2 entities together [[We linked 4 entites; Appointments & Patient | Hospital & Medical Record ]]. 
+This assignment builds on our understanding of backend applications and dynamic views.
+
