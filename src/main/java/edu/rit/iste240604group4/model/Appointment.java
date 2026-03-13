@@ -14,6 +14,11 @@ public class Appointment {
     private int doctorID; // foreign key
     private int hospitalID; // foreign key
 
+
+    // EMPTY CONSTRUCTOR - for the POST binding
+    public Appointment() {
+    }
+
     // CONSTRUCTOR
     public Appointment(int appointmentID, String reason, int emiratesID, int doctorID, int hospitalID) {
         this.appointmentID = appointmentID;
