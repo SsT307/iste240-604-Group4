@@ -19,7 +19,7 @@ public class Patient {
         this.ethnicity = ethnicity;
     }
 
-    // Product.of
+    // Patient.of
     public static Patient of(int emiratesID, String firstName, String lastName, String ethnicity) {
         return new Patient(emiratesID, firstName, lastName, ethnicity);
     }
