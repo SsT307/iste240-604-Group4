@@ -1,6 +1,5 @@
 package edu.rit.iste240604group4.model;
 
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -10,20 +9,19 @@ public class MedicalRecord {
     private int recordID; // primary key
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate visitDate;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime visitTime;
     private String conditions;
     private String treatmentGiven;
     private Boolean effective;
     private int emiratesID; // foreign key
-    // not using because the link with hospital is created via Hospital's list
-    // private int hospitalID; // foreign key
-        // I think we should keep it, for future use when connecting our database which already has that FK -Shaikha
+    private int hospitalID; // foreign key
 
+    // Default Constructor
     public MedicalRecord() {}
 
     public MedicalRecord(int recordID,  LocalDate visitDate, LocalTime visitTime,
-                         String conditions, String treatmentGiven, Boolean effective, int emiratesID) {
+                         String conditions, String treatmentGiven, Boolean effective, int emiratesID, int hospitalID) {
         this.recordID = recordID;
         this.visitDate = visitDate;
         this.visitTime = visitTime;
@@ -31,6 +29,7 @@ public class MedicalRecord {
         this.treatmentGiven = treatmentGiven;
         this.effective = effective;
         this.emiratesID = emiratesID;
+        this.hospitalID = hospitalID;
     }
 
     // getters
