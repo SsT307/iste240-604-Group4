@@ -1,9 +1,17 @@
 package edu.rit.iste240604group4.model;
 
+import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class MedicalRecord {
     private int recordID; // primary key
-    private String visitDate; // changed datatype to string for now  -- was LocalDate
-    private String visitTime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate visitDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalTime visitTime;
     private String conditions;
     private String treatmentGiven;
     private Boolean effective;
@@ -14,7 +22,7 @@ public class MedicalRecord {
 
     public MedicalRecord() {}
 
-    public MedicalRecord(int recordID,  String visitDate, String visitTime,
+    public MedicalRecord(int recordID,  LocalDate visitDate, LocalTime visitTime,
                          String conditions, String treatmentGiven, Boolean effective, int emiratesID) {
         this.recordID = recordID;
         this.visitDate = visitDate;
@@ -30,11 +38,11 @@ public class MedicalRecord {
         return recordID;
     }
 
-    public String getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public String getVisitTime() {
+    public LocalTime getVisitTime() {
         return visitTime;
     }
 
@@ -64,11 +72,11 @@ public class MedicalRecord {
         this.recordID = recordID;
     }
 
-    public void setVisitDate(String visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
 
-    public void setVisitTime(String visitTime) {
+    public void setVisitTime(LocalTime visitTime) {
         this.visitTime = visitTime;
     }
 
