@@ -39,7 +39,7 @@ public class MedProController {
         @GetMapping("/appointments")
         public String viewAppointments(Model model) {
             model.addAttribute("appointments", this.medProService.viewAllAppointment());
-            return "viewAppointments";
+            return "viewAppointment";
         }
             // -- APPOINTMENT FORM
         @GetMapping("/appointments/add")
@@ -52,12 +52,12 @@ public class MedProController {
         @GetMapping("/doctor")
         public String viewDoctors(Model model) {
             model.addAttribute("doctors", this.medProService.findAll());
-            return "DoctorViewPage";
+            return "viewDoctor";
         }
             // -- DOCTOR FORM
         @GetMapping("/doctor/add")
         public String showAddDoctorForm(Model model) {
-            return "DoctorAddPage";
+            return "addDoctor";
         }
 
         // --- HOSPITAL AND MEDICAL RECORDS
@@ -79,7 +79,7 @@ public class MedProController {
     @GetMapping("/insurance")
     public String viewInsurance(Model model) {
         model.addAttribute("insurances", this.medProService.findAllInsurance());
-        return "insurance";
+        return "viewInsurance";
     }
             // --- INSURANCE FORM
     @GetMapping("/insurance/add")
