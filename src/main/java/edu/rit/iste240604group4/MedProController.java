@@ -23,18 +23,36 @@ public class MedProController {
     }
 
         // --- APPOINTMENT AND PERSON
+            // -- VIEW PATIENTS & APPOINTMENTS
+        @GetMapping("/appointments/patients/view")
+        public String viewRecords(Model model) {
+            model.addAttribute("patients", this.medProService.viewAllPatient());
+            model.addAttribute("appointments", this.medProService.viewAllAppointment());
+            return "viewAppPatient";
+        }
+
+            // -- PATIENT FORM
+        @GetMapping("/patients/add")
+        public String showAddPatientForm() {
+            return "addPatient";
+        }
+            // -- APPOINTMENT FORM
+        @GetMapping("/appointments/add")
+        public String showAddAppointmentForm() {
+            return "addAppointment";
+        }
 
         // --- DOCTOR
             // -- DOCTOR VIEW
         @GetMapping("/doctor")
         public String viewDoctors(Model model) {
             model.addAttribute("doctors", this.medProService.findAll());
-            return "DoctorViewPage";
+            return "viewDoctor";
         }
             // -- DOCTOR FORM
         @GetMapping("/doctor/add")
         public String showAddDoctorForm(Model model) {
-            return "DoctorAddPage";
+            return "addDoctor";
         }
 
         // --- HOSPITAL AND MEDICAL RECORDS
@@ -56,7 +74,7 @@ public class MedProController {
     @GetMapping("/insurance")
     public String viewInsurance(Model model) {
         model.addAttribute("insurances", this.medProService.findAllInsurance());
-        return "insurance";
+        return "viewInsurance";
     }
             // --- INSURANCE FORM
     @GetMapping("/insurance/add")
@@ -66,6 +84,19 @@ public class MedProController {
 
 
     // - - - - POST METHODS - - - -
+        // --- ADD PATIENT
+    @PostMapping("/patients/add")
+    public String addPatient(Patient p) {
+        this.medProService.addPatient(p);
+        return "redirect:/success/patient";
+    }
+
+        // --- ADD APPOINTMENT
+    @PostMapping("/appointments/add")
+    public String addApp(Appointment appointment) {
+        medProService.addApp(appointment);
+        return "redirect:/success/appointment";
+    }
         // --- DOCTOR ADD
     @PostMapping("/doctor/add")
     public String addDoctor(Doctor doctor, Model model) {

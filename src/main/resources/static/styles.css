@@ -589,6 +589,7 @@ button {
     align-items: center;
     justify-content: flex-end;
     margin-bottom: 16px;
+    margin-top: -50px;
 }
 
 /* Round blue + button to open the add appointment modal */
@@ -993,6 +994,16 @@ button {
     margin-bottom: 2.5rem;
     letter-spacing: -0.5px;
 }
+/* Temporary to show where the work for assignment2 is*/
+.assignment2-label {
+    font-size: 0.75rem;
+    font-weight: 460;
+    font-style: italic;
+    opacity: 80%;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
 
 /* Grid container for quick access cards */
 .quick-access-grid {
@@ -1335,7 +1346,8 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 15px;
+    margin-top: -10px;
 }
 
 /* "REPORTS" section title */
