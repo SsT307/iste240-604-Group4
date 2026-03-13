@@ -19,7 +19,7 @@ public class MedProService {
 
     // Add data to the lists
     public MedProService() {
-        // --- APPOINTMENT AND PERSON
+        // --- APPOINTMENT AND PATIENT
             // -- Patients
         Patient p1 = Patient.of(1234567890, "Ahmed",  "Mohammad",   "Egyptian");
         Patient p2 = Patient.of(1234567891, "Hamda",   "Alsuwaidi", "Emirati");
@@ -106,11 +106,11 @@ public class MedProService {
         // APPOINTMENT + PATIENT
     // Get & Add patient
     public List<Patient> viewAllPatient() { return patients; }
-    public void addPatient(Patient p) { this.patients.add(p); }
+    public void addPatient(Patient p) { patients.add(p); }
 
     // Get & Add appointment
     public List<Appointment> viewAllAppointment() { return appointments; }
-    public void addApp(Appointment a) { this.appointments.add(a); }
+    public void addApp(Appointment a) { appointments.add(a); }
 
         // DOCTOR
     // Get all doctors
