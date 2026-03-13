@@ -61,9 +61,9 @@ public class MedicalRecord {
         return emiratesID;
     }
 
-//    public int getHospitalID() {
-//        return hospitalID;
-//    }
+    public int getHospitalID() {
+        return hospitalID;
+    }
 
     // setters
 
@@ -95,7 +95,7 @@ public class MedicalRecord {
         this.emiratesID = emiratesID;
     }
 
-//    public void setHospitalID(int hospitalID) {
-//        this.hospitalID = hospitalID;
-//    }
+    public void setHospitalID(int hospitalID) {
+        this.hospitalID = hospitalID;
+    }
 }

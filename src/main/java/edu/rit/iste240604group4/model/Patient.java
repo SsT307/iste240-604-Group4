@@ -1,5 +1,4 @@
 package edu.rit.iste240604group4.model;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
