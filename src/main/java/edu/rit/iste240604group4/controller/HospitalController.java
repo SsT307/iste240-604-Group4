@@ -47,6 +47,12 @@ public class HospitalController {
         return hospitalService.saveHospital(hospital);
     }
 
+    // update ONLY owner of a hospital by ID
+    @PutMapping("/{id}/owner")
+    public void updateHospitalOwner(@PathVariable Integer id, @RequestParam String owner) {
+        hospitalService.updateHosptialOwner(id, owner);
+    }
+
     // delete a hospital from the list
     @DeleteMapping("/{id}")
     public String deleteHospital(@PathVariable Integer id) {
