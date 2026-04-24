@@ -1,5 +1,6 @@
-package edu.rit.iste240604group4;
+package edu.rit.iste240604group4.controller;
 
+import edu.rit.iste240604group4.service.MedProService;
 import edu.rit.iste240604group4.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
