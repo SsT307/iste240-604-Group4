@@ -1,4 +1,4 @@
-package edu.rit.iste240604group4;
+package edu.rit.iste240604group4.service;
 
 import edu.rit.iste240604group4.model.*;
 import org.springframework.stereotype.Service;
