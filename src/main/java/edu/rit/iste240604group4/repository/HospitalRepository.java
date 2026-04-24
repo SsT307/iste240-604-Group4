@@ -15,25 +15,25 @@ import java.util.Optional;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
 
-    // Declaring the methods that will be used
+    // declaring the methods that will be used
 
-    // Get all hospitals
+    // get all hospitals
     List<Hospital> findAll();
 
-    // Save or update a hospital
+    // save or update a hospital
     Hospital save(Hospital hospital);
 
-    // Find a hospital by its ID
+    // find a hospital by its ID
     Optional<Hospital> findById(Integer id);
 
-    // Delete a hospital by its ID
+    // delete a hospital by its ID
     void deleteById(Integer id);
 
-    // Custom JPQL query to find hospitals by name
+    // custom JPQL query to find hospitals by name
     @Query("SELECT h FROM Hospital h WHERE h.name = :name")
     List<Hospital> findByName(@Param("name") String name);
 
-    // Update the owner of a hospital by its ID
+    // update the owner of a hospital by its ID
     @Modifying
     @Transactional
     @Query("UPDATE Hospital h SET h.owner = :owner WHERE h.hospitalID = :id")
