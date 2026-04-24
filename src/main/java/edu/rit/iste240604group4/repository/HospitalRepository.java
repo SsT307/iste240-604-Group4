@@ -24,6 +24,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
     Hospital save(Hospital hospital);
 
     // find a hospital by its ID
+    // note: optional handles the case where no hospital is found for the given ID
     Optional<Hospital> findById(Integer id);
 
     // delete a hospital by its ID

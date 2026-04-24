@@ -24,6 +24,7 @@ public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, In
     MedicalRecord save(MedicalRecord medicalRecord);
 
     // Find a medical record by its ID
+    // note: optional handles the case where no hospital is found for the given ID
     Optional<MedicalRecord> findById(Integer id);
 
     // Delete a medical record by its ID
