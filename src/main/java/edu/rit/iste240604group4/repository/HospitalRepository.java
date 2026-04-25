@@ -31,7 +31,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
     void deleteById(Integer id);
 
     // custom JPQL query to find hospitals by name
-    @Query("SELECT h FROM Hospital h WHERE h.name = :name")
+    @Query("SELECT h FROM Hospital h WHERE h.name LIKE %:name%")
     List<Hospital> findByName(@Param("name") String name);
 
     // update the owner of a hospital by its ID
