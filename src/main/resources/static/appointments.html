@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- Shaikha Alhajri - 418008663 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+
+    <h1>Appointments</h1>
+
+    <div class="d-flex mb-3">
+        <input type="number" id="searchInput" class="form-control me-2" placeholder="Search by appointment ID...">
+        <button class="btn me-2" onclick="searchAppointment()">Search</button>
+        <button class="btn" onclick="showAddForm()">Add Appointment</button>
+    </div>
+
+    <table class="table table-bordered table-hover" id="appointmentTable">
+        <thead class="table-header">
+        <tr>
+            <th>Appointment ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Emirates ID</th>
+            <th>Doctor ID</th>
+            <th>Hospital ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="appointmentTableBody">
+        </tbody>
+    </table>
+
+    <form id="appointmentForm" style="display:none;" class="mt-3">
+        <h4>Appointment Form</h4>
+
+        <!-- hidden id so we know if this is edit mode -->
+        <input type="hidden" id="appointmentId">
+
+        <div class="mb-3">
+            <label>Date</label>
+            <input type="date" id="appointmentDate" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Time</label>
+            <input type="time" id="appointmentTime" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Reason</label>
+            <input type="text" id="appointmentReason" class="form-control" placeholder="Enter reason">
+        </div>
+
+        <div class="mb-3">
+            <label>Emirates ID</label>
+            <input type="number" id="appointmentEmiratesID" class="form-control" placeholder="Enter emirates id">
+        </div>
+
+        <div class="mb-3">
+            <label>Doctor ID</label>
+            <input type="number" id="appointmentDoctorID" class="form-control" placeholder="Enter doctor id">
+        </div>
+
+        <div class="mb-3">
+            <label>Hospital ID</label>
+            <input type="number" id="appointmentHospitalID" class="form-control" placeholder="Enter hospital id">
+        </div>
+
+        <button type="button" class="btn" onclick="saveAppointment()">Save</button>
+        <button type="button" class="btn" onclick="hideForm()">Cancel</button>
+    </form>
+
+</div>
+
+<script>
+    // load all rows on first page render
+    $(document).ready(function() {
+        loadAppointments();
+    });
+
+    // get all appointments
+    function loadAppointments() {
+        fetch("/api/appointments")
+            .then(function(response) { return response.json(); })
+            .then(function(appointments) {
+                $("#appointmentTableBody").empty();
+                for (let appointment of appointments) {
+                    addRowToTable(appointment);
+                }
+            });
+    }
+
+    // render one table row
+    function addRowToTable(appointment) {
+        let row = $("<tr>");
+
+        row.append($("<td>").text(appointment.appointmentID));
+        row.append($("<td>").text(appointment.date));
+        row.append($("<td>").text(appointment.time));
+        row.append($("<td>").text(appointment.reason));
+        row.append($("<td>").text(appointment.emiratesID));
+        row.append($("<td>").text(appointment.doctorID));
+        row.append($("<td>").text(appointment.hospitalID));
+
+        let actions = $("<td>");
+
+        let editBtn = $("<button>")
+            .text("Edit")
+            .addClass("btn btn-sm me-2")
+            .click(function() { showEditForm(appointment); });
+
+        let deleteBtn = $("<button>")
+            .text("Delete")
+            .addClass("btn btn-sm")
+            .click(function() { deleteAppointment(appointment.appointmentID); });
+
+        actions.append(editBtn);
+        actions.append(deleteBtn);
+        row.append(actions);
+
+        $("#appointmentTableBody").append(row);
+    }
+
+    // open empty add form
+    function showAddForm() {
+        document.getElementById("appointmentForm").reset();
+        $("#appointmentId").val("");
+        $("#appointmentForm").show();
+    }
+
+    // open edit form with row values
+    function showEditForm(appointment) {
+        $("#appointmentId").val(appointment.appointmentID);
+        $("#appointmentDate").val(appointment.date);
+        $("#appointmentTime").val(appointment.time);
+        $("#appointmentReason").val(appointment.reason);
+        $("#appointmentEmiratesID").val(appointment.emiratesID);
+        $("#appointmentDoctorID").val(appointment.doctorID);
+        $("#appointmentHospitalID").val(appointment.hospitalID);
+        $("#appointmentForm").show();
+    }
+
+    // close form
+    function hideForm() {
+        $("#appointmentForm").hide();
+        document.getElementById("appointmentForm").reset();
+    }
+
+    // save add/edit
+    function saveAppointment() {
+        let id = $("#appointmentId").val();
+        let appointment = {
+            date: $("#appointmentDate").val(),
+            time: $("#appointmentTime").val(),
+            reason: $("#appointmentReason").val(),
+            emiratesID: parseInt($("#appointmentEmiratesID").val()),
+            doctorID: parseInt($("#appointmentDoctorID").val()),
+            hospitalID: parseInt($("#appointmentHospitalID").val())
+        };
+
+        if (id) {
+            fetch("/api/appointments/" + id, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(appointment)
+            })
+                .then(function(response) { return response.json(); })
+                .then(function() {
+                    hideForm();
+                    loadAppointments();
+                });
+        } else {
+            fetch("/api/appointments", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(appointment)
+            })
+                .then(function(response) { return response.json(); })
+                .then(function() {
+                    hideForm();
+                    loadAppointments();
+                });
+        }
+    }
+
+    // delete by appointment id
+    function deleteAppointment(id) {
+        if (confirm("Are you sure you want to delete this appointment?")) {
+            fetch("/api/appointments/" + id, {
+                method: "DELETE"
+            }).then(function() {
+                loadAppointments();
+            });
+        }
+    }
+
+    // search by appointment id
+    function searchAppointment() {
+        let appointmentID = $("#searchInput").val().trim();
+
+        if (appointmentID === "") {
+            loadAppointments();
+            return;
+        }
+
+        fetch("/api/appointments/search?appointmentID=" + encodeURIComponent(appointmentID))
+            .then(function(response) { return response.json(); })
+            .then(function(appointment) {
+                $("#appointmentTableBody").empty();
+
+                // endpoint returns one object (or null) because search is by unique id
+                if (appointment && appointment.appointmentID) {
+                    addRowToTable(appointment);
+                }
+            });
+    }
+</script>
+
+</body>
+</html>
