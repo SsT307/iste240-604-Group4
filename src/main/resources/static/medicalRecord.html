@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--Tania Aziz - 418005117-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Records</title>
+
+    <!-- Bootstrap 5 CSS - for styling and responsiveness -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Shared CSS file -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 JS - needed for interactive components like modals -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery - for DOM manipulation and making API calls easier -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <!-- Shared JS file -->
+    <script src="script.js"></script>
+</head>
+<body>
+<!-- BODY CONTENT -->
+<!-- main container - centers content and adds padding -->
+<div class="container mt-4">
+
+    <!-- page title -->
+    <h1>Medical Records</h1>
+
+    <!-- top bar with search and add button -->
+    <div class="d-flex mb-3">
+
+        <!-- search bar -->
+        <input type="number" id="searchInput" class="form-control me-2" placeholder="Search by Emirates ID...">
+
+        <!-- search button -->
+        <button class="btn me-2" onclick="searchMedicalRecords()">Search</button>
+
+        <!-- add new record button -->
+        <button class="btn" onclick="showAddForm()">Add Record</button>
+    </div>
+
+    <!-- TABLE to display all medical records -->
+    <table class="table table-bordered table-hover" id="recordTable">
+        <thead class="table-header">
+        <tr>
+            <th>ID</th>
+            <th>Visit Date</th>
+            <th>Visit Time</th>
+            <th>Conditions</th>
+            <th>Treatment Given</th>
+            <th>Effective</th>
+            <th>Emirates ID</th>
+            <th>Hospital ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="recordsTableBody">
+        <!-- rows will be added here dynamically by JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- FORM for adding/editing a Medical Record - hidden by default -->
+    <form id="recordsForm" style="display:none;" class="mt-3">
+        <h4>Medical Record Form</h4>
+
+        <!-- hidden field to store the ID when editing -->
+        <input type="hidden" id="recordId">
+
+        <div class="mb-3">
+            <label>Visit Date</label>
+            <input type="date" id="visitDate" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Visit Time</label>
+            <input type="time" id="visitTime" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Treatment Given</label>
+            <input type="text" id="treatmentGiven" class="form-control" placeholder="Enter treatment given">
+        </div>
+
+        <div class="mb-3">
+            <label>Conditions</label>
+            <input type="text" id="conditions" class="form-control" placeholder="Enter conditions">
+        </div>
+
+        <div class="mb-3">
+            <label>Effective</label>
+            <select id="effective" class="form-control">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Emirates ID</label>
+            <input type="number" id="emiratesID" class="form-control" placeholder="Enter emirates ID">
+        </div>
+
+        <div class="mb-3">
+            <label>Hospital ID</label>
+            <input type="number" id="hospitalID" class="form-control" placeholder="Enter hospital ID">
+        </div>
+
+
+        <button type="button" class="btn" onclick="saveRecord()">Save</button>
+        <button type="button" class="btn" onclick="hideForm()">Cancel</button>
+    </form>
+
+</div>
+
+
+<!-- JAVASCRIPT CONTENT -->
+<!-- JS for Medical Records CRUD operations will go here -->
+<script>
+    // when page is ready, load all medical records
+    $(document).ready(function() {
+        loadRecords();
+    });
+
+    // FUNCTION 1: GET all medical records from API and display in table
+    function loadRecords(){
+        fetch("/api/records")
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(records){
+                //clear the table before adding new rows
+                $("#recordsTableBody").empty();
+
+               //loop through each record and add a row
+                for (let record of records){
+                    addRowToTable(record);
+                }
+
+            });
+    }
+
+    // FUNCTION 2: creates and adds one row to the table for a record object
+    function addRowToTable(record) {
+        let row = $("<tr>");
+
+        // add data cells
+        row.append($("<td>").text(record.recordID));
+        row.append($("<td>").text(record.visitDate));
+        row.append($("<td>").text(record.visitTime));
+        row.append($("<td>").text(record.conditions));
+        row.append($("<td>").text(record.treatmentGiven));
+        row.append($("<td>").text(record.effective));
+        row.append($("<td>").text(record.emiratesID));
+        row.append($("<td>").text(record.hospitalID));
+
+        // add edit and delete buttons in the last cell
+        let actions = $("<td>");
+
+        let editBtn = $("<button>")
+            .text("Edit")
+            .addClass("btn btn-sm me-2")
+            .click(function() { showEditForm(record); });
+
+        let deleteBtn = $("<button>")
+            .text("Delete")
+            .addClass("btn btn-sm")
+            .click(function() { deleteRecord(record.recordID); });
+
+        actions.append(editBtn);
+        actions.append(deleteBtn);
+        row.append(actions);
+
+        $("#recordsTableBody").append(row);
+    }
+
+    // FUNCTION 3: shows the empty form for adding a new record
+    function showAddForm() {
+        document.getElementById("recordsForm").reset();
+        $("#recordsForm").show();
+    }
+
+    // FUNCTION 4: shows the form filled with existing data for editing
+    function showEditForm(record) {
+        $("#recordId").val(record.recordID);
+        $("#visitDate").val(record.visitDate);
+        $("#visitTime").val(record.visitTime);
+        $("#conditions").val(record.conditions);
+        $("#treatmentGiven").val(record.treatmentGiven);
+        $("#effective").val(record.effective);
+        $("#emiratesID").val(record.emiratesID);
+        $("#hospitalID").val(record.hospitalID);
+        $("#recordsForm").show();
+    }
+
+    // FUNCTION 5: hides and resets the form
+    function hideForm() {
+        $("#recordsForm").hide();
+        document.getElementById("recordsForm").reset();
+    }
+
+    // FUNCTION 6: saves a record - decides whether to POST (add) or PUT (edit)
+    function saveRecord() {
+        let id = $("#recordId").val();
+
+        let record = {
+            visitDate: $("#visitDate").val(),
+            visitTime: $("#visitTime").val(),
+            conditions: $("#conditions").val(),
+            treatmentGiven: $("#treatmentGiven").val(),
+            effective: $("#effective").val() === "true", //converts the string "true" from the dropdown to a proper boolean
+            emiratesID: parseInt($("#emiratesID").val()),
+            hospitalID: parseInt($("#hospitalID").val())
+        };
+
+        if (id) {
+            // PUT request - edit existing record
+            fetch("/api/records/" + id, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(record)
+            })
+                .then(function(response) { return response.json(); })
+                .then(function() {
+                    hideForm();
+                    loadRecords();
+                });
+        } else {
+            // POST request - add new record
+            fetch("/api/records", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(record)
+            })
+                .then(function(response) { return response.json(); })
+                .then(function() {
+                    hideForm();
+                    loadRecords();
+                });
+        }
+    }
+
+    // FUNCTION 7: DELETE a record by ID
+    function deleteRecord(id) {
+        if (confirm("Are you sure you want to delete this record?")) {
+            fetch("/api/records/" + id, {
+                method: "DELETE"
+            })
+                .then(function() {
+                    loadRecords();
+                });
+        }
+    }
+
+    // FUNCTION 8: SEARCH records by Emirates ID
+    function searchMedicalRecords() {
+        let emiratesID = $("#searchInput").val();
+
+        // if search is empty, load all records
+        if (emiratesID === "") {
+            loadRecords();
+            return;
+        }
+
+        fetch("/api/records/search?emiratesID=" + emiratesID)
+            .then(function(response) { return response.json(); })
+            .then(function(records) {
+                $("#recordsTableBody").empty();
+                for (let record of records) {
+                    addRowToTable(record);
+                }
+            });
+    }
+
+</script>
+
+</body>
+</html>
