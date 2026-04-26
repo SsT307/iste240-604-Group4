@@ -22,18 +22,21 @@ public class Appointment {
     private String reason;
     private int emiratesID; // foreign key
     private int doctorID; // foreign key
+    private int hospitalID; // foreign key
+
 
 
     // EMPTY CONSTRUCTOR - for POST binding
     public Appointment() {}
 
     // CONSTRUCTOR for creating rows
-    public Appointment(String reason, LocalDate date, LocalTime time, int emiratesID, int doctorID) {
+    public Appointment(String reason, LocalDate date, LocalTime time, int emiratesID, int doctorID, int hospitalID) {
         this.reason = reason;
         this.date = date;
         this.time = time;
         this.emiratesID = emiratesID;
         this.doctorID = doctorID;
+        this.hospitalID = hospitalID;
     }
 
     // GETTERS
@@ -61,6 +64,7 @@ public class Appointment {
         return doctorID;
     }
 
+    public int getHospitalID() { return hospitalID; }
 
     // SETTERS
     public void setAppointmentID(int appointmentID) {
@@ -87,4 +91,5 @@ public class Appointment {
         this.doctorID = doctorID;
     }
 
+    public void setHospitalID(int hospitalID) { this.hospitalID = hospitalID; }
 }
