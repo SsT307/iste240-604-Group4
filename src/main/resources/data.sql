@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS iste240;
 USE iste240;
 
+DELETE FROM insurance;
 DELETE FROM medical_record;
 DELETE FROM hospital;
 DELETE FROM doctor;
@@ -29,6 +30,7 @@ INSERT INTO medical_record (visit_date, visit_time, conditions, treatment_given,
                                     ('2026-04-05', '11:30:00', 'Allergies', 'Antihistamines', true, 784222444, 8),
                                     ('2026-04-10', '09:30:00', 'Chest Pain', 'ECG and monitoring', true, 784555777, 9);
 
+
 INSERT INTO doctor (first_name, last_name, speciality, hospitalid) VALUES
     ('Fatma', 'Alsuwaidi', 'Dentistry', 1),
     ('Tania', 'Aziz', 'Pediatrics', 2),
@@ -45,3 +47,20 @@ INSERT INTO doctor (first_name, last_name, speciality, hospitalid) VALUES
     ('Amna', 'Alsuwaidi', 'Endocrinology', 13),
     ('Dana', 'Alhammadi', 'Urology', 14),
     ('Sara', 'Alketbi', 'Emergency Medicine', 15);
+    
+ INSERT INTO insurance (insurance_name) VALUES
+                                           ('Sukoon Insurance'),
+                                           ('Dubai Insurance Company'),
+                                           ('Dubai National Insurance & Reinsurance'),
+                                           ('Orient Insurance'),
+                                           ('GIG Gulf Insurance'),
+                                           ('Daman Health Insurance'),
+                                           ('Takaful Emarat'),
+                                           ('Salama Islamic Arab Insurance'),
+                                           ('Oman Insurance Company'),
+                                           ('Union Insurance Company'),
+                                           ('Al Sagr National Insurance'),
+                                           ('Emirates Insurance Company'),
+                                           ('RAK Insurance'),
+                                           ('Adamjee Insurance'),
+                                           ('National General Insurance');
