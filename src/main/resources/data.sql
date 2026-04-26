@@ -3,6 +3,7 @@ USE iste240;
 
 DELETE FROM medical_record;
 DELETE FROM hospital;
+DELETE FROM doctor;
 
 INSERT INTO hospital (name, owner) VALUES
                                        ('City Hospital', 'Government'),
@@ -27,3 +28,20 @@ INSERT INTO medical_record (visit_date, visit_time, conditions, treatment_given,
                                     ('2026-03-20', '15:00:00', 'Migraine', 'Pain relief medication', false, 784111333, 7),
                                     ('2026-04-05', '11:30:00', 'Allergies', 'Antihistamines', true, 784222444, 8),
                                     ('2026-04-10', '09:30:00', 'Chest Pain', 'ECG and monitoring', true, 784555777, 9);
+
+INSERT INTO doctor (first_name, last_name, speciality, hospitalid) VALUES
+    ('Fatma', 'Alsuwaidi', 'Dentistry', 1),
+    ('Tania', 'Aziz', 'Pediatrics', 2),
+    ('Shaikha', 'Alhajri', 'Cardiologist', 3),
+    ('Fatma', 'Almadani', 'Dermatologist', 4),
+    ('Maryam', 'Almazrouei', 'Neurology', 5),
+    ('Aisha', 'Alnuaimi', 'Orthopedics', 6),
+    ('Noora', 'Alkaabi', 'Ophthalmology', 7),
+    ('Hessa', 'Alfalasi', 'Gynecology', 8),
+    ('Latifa', 'Almansoori', 'Psychiatry', 9),
+    ('Maha', 'Alhashimi', 'General Medicine', 10),
+    ('Reem', 'Alshamsi', 'ENT', 11),
+    ('Salama', 'Alali', 'Radiology', 12),
+    ('Amna', 'Alsuwaidi', 'Endocrinology', 13),
+    ('Dana', 'Alhammadi', 'Urology', 14),
+    ('Sara', 'Alketbi', 'Emergency Medicine', 15);
