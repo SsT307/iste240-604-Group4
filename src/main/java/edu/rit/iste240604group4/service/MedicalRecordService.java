@@ -5,7 +5,6 @@ import edu.rit.iste240604group4.model.MedicalRecord;
 import edu.rit.iste240604group4.repository.MedicalRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +34,9 @@ public class MedicalRecordService {
         medicalRecordRepository.deleteById(id);
     }
 
-    // find records by a visit date
-    public List<MedicalRecord> findRecordByDate(LocalDate visitDate){
-        return medicalRecordRepository.findByVisitDate(visitDate);
+    // find records by Emirates ID
+    public List<MedicalRecord> findRecordByEmiratesID(int emiratesID) {
+        return medicalRecordRepository.findByEmiratesID(emiratesID);
     }
 
     // update the conditions of a medical record by its ID

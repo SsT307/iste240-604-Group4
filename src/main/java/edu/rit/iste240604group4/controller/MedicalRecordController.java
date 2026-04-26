@@ -5,7 +5,6 @@ import edu.rit.iste240604group4.model.MedicalRecord;
 import edu.rit.iste240604group4.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +29,8 @@ public class MedicalRecordController {
 
     // search medical record using visit date
     @GetMapping("/search")
-    public List<MedicalRecord> getRecordsByDate(@RequestParam LocalDate visitDate){
-        return medicalRecordService.findRecordByDate(visitDate);
+    public List<MedicalRecord> getRecordsByEID(@RequestParam int emiratesID){
+        return medicalRecordService.findRecordByEmiratesID(emiratesID);
     }
 
     // post a new record

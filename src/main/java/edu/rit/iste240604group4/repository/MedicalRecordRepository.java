@@ -30,9 +30,9 @@ public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, In
     // Delete a medical record by its ID
     void deleteById(Integer id);
 
-    // Custom JPQL query to find medical records by visit date
-    @Query("SELECT m FROM MedicalRecord m WHERE m.visitDate = :visitDate")
-    List<MedicalRecord> findByVisitDate(@Param("visitDate") LocalDate visitDate);
+    // Custom JPQL query to find medical records by Emirates ID
+    @Query("SELECT m FROM MedicalRecord m WHERE m.emiratesID = :emiratesID")
+    List<MedicalRecord> findByEmiratesID(@Param("emiratesID") int emiratesID);
 
     // Update the conditions of a medical record by its ID
     @Modifying
