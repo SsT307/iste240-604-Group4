@@ -35,15 +35,15 @@
         <input type="text" id="searchInput" class="form-control me-2" placeholder="Search by name...">
 
         <!-- search button -->
-        <button class="btn btn-primary me-2" onclick="searchHospitals()">Search</button>
+        <button class="btn me-2" onclick="searchHospitals()">Search</button>
 
         <!-- add new hospital button -->
-        <button class="btn btn-success" onclick="showAddForm()">Add Hospital</button>
+        <button class="btn" onclick="showAddForm()">Add Hospital</button>
     </div>
 
-    <!-- table to display all hospitals -->
+    <!-- TABLE to display all hospitals -->
     <table class="table table-bordered table-hover" id="hospitalTable">
-        <thead class="table-dark">
+        <thead class="table-header">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -56,7 +56,7 @@
         </tbody>
     </table>
 
-    <!-- form for adding/editing a hospital - hidden by default -->
+    <!-- FORM for adding/editing a hospital - hidden by default -->
     <form id="hospitalForm" style="display:none;" class="mt-3">
         <h4>Hospital Form</h4>
 
@@ -73,8 +73,8 @@
             <input type="text" id="hospitalOwner" class="form-control" placeholder="Enter owner">
         </div>
 
-        <button type="button" class="btn btn-success" onclick="saveHospital()">Save</button>
-        <button type="button" class="btn btn-secondary" onclick="hideForm()">Cancel</button>
+        <button type="button" class="btn" onclick="saveHospital()">Save</button>
+        <button type="button" class="btn" onclick="hideForm()">Cancel</button>
     </form>
 
 </div>
@@ -82,7 +82,6 @@
 <!-- JAVASCRIPT CONTENT -->
 <!-- JS for hospital CRUD operations will go here -->
 <script>
-    // hospital fetch() calls go here
     // when page is ready, load all hospitals
     $(document).ready(function() {
         loadHospitals();
@@ -119,12 +118,12 @@
 
         let editBtn = $("<button>")
             .text("Edit")
-            .addClass("btn btn-warning btn-sm me-2")
+            .addClass("btn btn-sm me-2")
             .click(function() { showEditForm(hospital); });
 
         let deleteBtn = $("<button>")
             .text("Delete")
-            .addClass("btn btn-danger btn-sm")
+            .addClass("btn btn-sm")
             .click(function() { deleteHospital(hospital.hospitalID); });
 
         actions.append(editBtn);
