@@ -1,42 +1,54 @@
+// Tania Aziz - 418005117
 package edu.rit.iste240604group4.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 
+
+@Entity
+@Table(name= "hospital")
 public class Hospital {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment the PK value
     private int hospitalID; //Primary Key
     private String name;
     private String owner;
-    private List<MedicalRecord> medicalRecords = new ArrayList<>(); //links Hospital and MedicalRecord together
 
     //empty constructor
-    public Hospital(){}
+    public Hospital() {
+    }
 
-    public Hospital(int hospitalID, String name, String owner) {
-        this.hospitalID = hospitalID;
+    public Hospital(String name, String owner) {
         this.name = name;
         this.owner = owner;
     }
 
     //Getters
-    public int getHospitalID() { return hospitalID; }
-
-    public String getName() { return name; }
-
-    public String getOwner() { return owner; }
-
-    public List<MedicalRecord> getMedicalRecords() {
-        return medicalRecords;
+    public int getHospitalID() {
+        return hospitalID;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
 
     //Setters
-    public void setHospitalID(int hospitalID) { this.hospitalID = hospitalID; }
-
-    public void setName(String name) { this.name = name; }
-
-    public void setOwner(String owner) { this.owner = owner; }
-
-    public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
-        this.medicalRecords = medicalRecords;
+    public void setHospitalID(int hospitalID) {
+        this.hospitalID = hospitalID;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+
 }

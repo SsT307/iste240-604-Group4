@@ -1,11 +1,17 @@
+// Tania Aziz - 418005117
 package edu.rit.iste240604group4.model;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "medical_record")
 public class MedicalRecord {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int recordID; // primary key
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate visitDate;
@@ -20,9 +26,8 @@ public class MedicalRecord {
     // Default Constructor
     public MedicalRecord() {}
 
-    public MedicalRecord(int recordID,  LocalDate visitDate, LocalTime visitTime,
+    public MedicalRecord(LocalDate visitDate, LocalTime visitTime,
                          String conditions, String treatmentGiven, Boolean effective, int emiratesID, int hospitalID) {
-        this.recordID = recordID;
         this.visitDate = visitDate;
         this.visitTime = visitTime;
         this.conditions = conditions;
