@@ -1,3 +1,5 @@
+// Shaikha Alhajri 418008663
+
 package edu.rit.iste240604group4.repository;
 
 
@@ -27,9 +29,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     Optional<Appointment> findByAppointmentID(Integer appointmentid);
 
     // Delete appointment by id
-    void deleteByAppointmentID(Integer id);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Appointment a WHERE a.appointmentID = :id")
+    void deleteByAppointmentID(@Param("id") Integer id);
 
-    // JPQL query
     // Update reason only by id
     @Modifying
     @Transactional
