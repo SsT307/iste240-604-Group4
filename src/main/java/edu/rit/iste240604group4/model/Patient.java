@@ -1,26 +1,36 @@
+// Shaikha Alhajri 418008663
+
 package edu.rit.iste240604group4.model;
+
+import jakarta.persistence.*;
 
 import java.util.*;
 
-public class Patient {
-    private int emiratesID; //PRIMARY KEY
-    private String firstName;
-    private String lastName;
-    private String ethnicity;
-    // Link patient -> appointment
-    private List<Appointment> appointments = new ArrayList<>();
 
-    // CONSTRUCTOR
-    public Patient(int emiratesID, String firstName, String lastName, String ethnicity) {
-        this.emiratesID = emiratesID;
+@Entity
+@Table(name = "patient")
+public class Patient {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int emiratesID; //PRIMARY KEY
+    @Column(name = "firstName", length = 50, nullable = false)
+    private String firstName;
+
+    @Column(name = "lastName", length = 50, nullable = false)
+    private String lastName;
+
+    @Column(name = "ethnicity", length = 50)
+    private String ethnicity;
+
+    // EMPTY CONSTRUCTOR
+    public Patient() { }
+
+    // CONSTRUCTOR for creating rows
+    public Patient(String firstName, String lastName, String ethnicity) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ethnicity = ethnicity;
-    }
-
-    // Patient.of
-    public static Patient of(int emiratesID, String firstName, String lastName, String ethnicity) {
-        return new Patient(emiratesID, firstName, lastName, ethnicity);
     }
 
     //GETTERS
@@ -34,7 +44,6 @@ public class Patient {
     public String getEthnicity() {
         return ethnicity;
     }
-    public List<Appointment> getAppointments() { return appointments; }
 
     //SETTERS
     public void setEmiratesID(int emiratesID) {
