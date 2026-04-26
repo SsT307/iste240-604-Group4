@@ -44,3 +44,20 @@ Each entity must belong to 2 mustache template pages, one to view and one to add
 least 2 entities together [[We linked 4 entites; Appointments & Patient | Hospital & Medical Record ]]. 
 This assignment builds on our understanding of backend applications and dynamic views.
 
+~ ~ ~ ~ ~
+#### ASSIGNMENT 3 | PhaseII:
+This phase required us to migrate from Mustache templates to a full REST API architecture. 
+Each member implemented their own JPA entity classes, repositories, services, and REST controllers 
+for their assigned entities. The backend now uses MySQL as a persistent database, with Spring Data JPA 
+handling all database operations. The frontend was rebuilt using standalone HTML/CSS/JavaScript pages 
+with Bootstrap 5 for responsiveness, consuming the REST APIs via fetch() and jQuery. Each entity page 
+supports full CRUD operations including search functionality. Database seeding was implemented via 
+data.sql to populate initial records on startup.
+
+**Entity Division:**
+- Shaikha Alhajri : Patient, Appointment
+- Tania Aziz : Hospital, Medical Record
+- Fatma Almadani : Insurance
+- Fatma Alsuwaidi : Doctor
+
+**Merge Manager:** Shaikha Alhajri
