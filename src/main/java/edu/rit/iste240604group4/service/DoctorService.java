@@ -34,8 +34,8 @@ public class DoctorService {
     }
 
     // adds new doctor to the db -- inherited save(), inserts if new, update if exists
-    public void addDoctor(Doctor doctor) {
-        doctorRepository.save(doctor);
+    public Doctor addDoctor(Doctor doctor) {
+        return doctorRepository.save(doctor); // change void to return Doctor
     }
 
     // updates speciality of a doctor with the given ID

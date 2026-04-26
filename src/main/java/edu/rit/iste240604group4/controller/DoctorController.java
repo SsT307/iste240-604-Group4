@@ -46,11 +46,12 @@ public class DoctorController {
         doctorService.addDoctor(doctor);
     }
 
-    // PUT /api/doctors/{id}?speciality=xxx
-    // updates the speciality of the doctor w given ID
+    // PUT /api/doctors/{id}?speciality=xxz -- updates the speciality of the doctor w given ID
+    // PUT update speciality by ID
     @PutMapping("/{id}")
-    public void updateDoctor(@PathVariable int id, @RequestParam String speciality) {
-        doctorService.updateSpecialityById(id, speciality);
+    public Doctor updateDoctor(@PathVariable int id, @RequestBody Doctor doctor) {
+        doctor.setDoctorID(id); // set the ID so Spring knows which record to update
+        return doctorService.addDoctor(doctor); // use save() via service
     }
 
     // DELETE /api/doctors/{id}
