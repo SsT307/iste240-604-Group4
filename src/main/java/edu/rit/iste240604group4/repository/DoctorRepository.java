@@ -22,16 +22,11 @@ public interface DoctorRepository extends JpaRepository < Doctor, Integer > {
     void deleteById(Integer id); //deletes doctor with given ID
     Optional<Doctor> findById(Integer id); //returns doctor by ID, wrapped in Optional
 
-    // --- FIND BY FIELD
-    // spring automatically generates query based on  method name
-    // translates this to: SELECT * FROM doctor WHERE speciality = X
-    List<Doctor> findBySpeciality(String speciality);
-
-    // --- CUSTOM JPQL QUERY
-    // :lastName is a placeholder
+    // --- FIND BY FIELD + CUSTOM QUERY
+    // :speciality is a placeholder
     // LIKE with % allows partial matching
-    @Query("SELECT d FROM Doctor d WHERE d.lastName LIKE %:lastName%")
-    List<Doctor> searchByLastName(String lastName);
+    @Query("SELECT d FROM Doctor d WHERE d.speciality LIKE %:speciality%")
+    List<Doctor> findBySpeciality(String speciality);
 
     // --- UPDATE QUERY
     // sets speciality for doctor with the matching ID
