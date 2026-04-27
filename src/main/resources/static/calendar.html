@@ -97,8 +97,8 @@
                 <input type="text" class="form-input" id="aptReason" placeholder="e.g. Annual checkup" />
             </div>
             <div class="form-group-field">
-                <label class="form-label" for="aptPatient">Emirates ID</label>
-                <input type="number" class="form-input" id="aptPatient" placeholder="Enter Emirates ID" />
+                <label class="form-label" for="aptPatient">Patient ID</label>
+                <input type="number" class="form-input" id="aptPatient" placeholder="Enter Patient ID" />
             </div>
             <div class="form-group-field">
                 <label class="form-label" for="aptDoctor">Doctor ID</label>
@@ -135,7 +135,7 @@
                 <span class="detail-value" id="dReason"></span>
             </div>
             <div class="detail-row full-width">
-                <span class="detail-label">Emirates ID</span>
+                <span class="detail-label">Patient ID</span>
                 <span class="detail-value" id="dPatient"></span>
             </div>
             <div class="detail-row">
@@ -324,7 +324,7 @@
         aptReasonInput.value = appointment.reason ?? "";
         aptHospitalInput.value = appointment.hospitalID ?? "";
         aptDoctorInput.value = appointment.doctorID ?? "";
-        aptPatientInput.value = appointment.emiratesID ?? "";
+        aptPatientInput.value = appointment.patientID ?? "";
         addAppointOverlay.classList.add("open");
     }
 
@@ -336,12 +336,12 @@
             date: aptDateInput.value,
             time: aptTimeInput.value,
             reason: aptReasonInput.value.trim(),
-            emiratesID: Number(aptPatientInput.value),
+            patientID: Number(aptPatientInput.value),
             doctorID: Number(aptDoctorInput.value),
             hospitalID: Number(aptHospitalInput.value)
         };
 
-        if (!payload.date || !payload.time || !payload.reason || !payload.emiratesID || !payload.doctorID || !payload.hospitalID) {
+        if (!payload.date || !payload.time || !payload.reason || !payload.patientID || !payload.doctorID || !payload.hospitalID) {
             MedProUI.showToast("Please fill all appointment fields.", "error");
             return;
         }
@@ -380,7 +380,7 @@
         dDate.textContent = formatDateLabel(appointment.date);
         dTime.textContent = formatTime(appointment.time);
         dReason.textContent = appointment.reason || "";
-        dPatient.textContent = appointment.emiratesID ?? "";
+        dPatient.textContent = appointment.patientID ?? "";
         dDoctor.textContent = appointment.doctorID ?? "";
         dHospital.textContent = appointment.hospitalID ?? "";
 

@@ -59,7 +59,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Reason</th>
-                            <th>Emirates ID</th>
+                            <th>Patient ID</th>
                             <th>Doctor ID</th>
                             <th>Hospital ID</th>
                             <th>Actions</th>
@@ -106,8 +106,8 @@
                 <input type="text" id="appointmentReason" class="form-input" placeholder="Enter reason">
             </div>
             <div class="form-group-field">
-                <label class="form-label" for="appointmentEmiratesID">Emirates ID</label>
-                <input type="number" id="appointmentEmiratesID" class="form-input" placeholder="Enter Emirates ID">
+                <label class="form-label" for="appointmentPatientID">Patient ID</label>
+                <input type="number" id="appointmentPatientID" class="form-input" placeholder="Enter Patient ID">
             </div>
             <div class="form-group-field">
                 <label class="form-label" for="appointmentDoctorID">Doctor ID</label>
@@ -139,7 +139,7 @@
     const appointmentDate = document.getElementById("appointmentDate");
     const appointmentTime = document.getElementById("appointmentTime");
     const appointmentReason = document.getElementById("appointmentReason");
-    const appointmentEmiratesID = document.getElementById("appointmentEmiratesID");
+    const appointmentPatientID = document.getElementById("appointmentPatientID");
     const appointmentDoctorID = document.getElementById("appointmentDoctorID");
     const appointmentHospitalID = document.getElementById("appointmentHospitalID");
 
@@ -185,7 +185,7 @@
                 <td>${MedProUI.sanitize(appointment.date)}</td>
                 <td>${MedProUI.sanitize(appointment.time)}</td>
                 <td>${MedProUI.sanitize(appointment.reason)}</td>
-                <td>${appointment.emiratesID ?? ""}</td>
+                <td>${appointment.patientID ?? ""}</td>
                 <td>${appointment.doctorID ?? ""}</td>
                 <td>${appointment.hospitalID ?? ""}</td>
                 <td>
@@ -204,7 +204,7 @@
         appointmentDate.value = "";
         appointmentTime.value = "";
         appointmentReason.value = "";
-        appointmentEmiratesID.value = "";
+        appointmentPatientID.value = "";
         appointmentDoctorID.value = "";
         appointmentHospitalID.value = "";
     }
@@ -231,7 +231,7 @@
         appointmentDate.value = String(appointment.date || "").slice(0, 10);
         appointmentTime.value = String(appointment.time || "").slice(0, 5);
         appointmentReason.value = appointment.reason ?? "";
-        appointmentEmiratesID.value = appointment.emiratesID ?? "";
+        appointmentPatientID.value = appointment.patientID ?? "";
         appointmentDoctorID.value = appointment.doctorID ?? "";
         appointmentHospitalID.value = appointment.hospitalID ?? "";
         MedProUI.openModal("appointmentModal");
@@ -245,12 +245,12 @@
             date: appointmentDate.value,
             time: appointmentTime.value,
             reason: appointmentReason.value.trim(),
-            emiratesID: Number(appointmentEmiratesID.value),
+            patientID: Number(appointmentPatientID.value),
             doctorID: Number(appointmentDoctorID.value),
             hospitalID: Number(appointmentHospitalID.value)
         };
 
-        if (!payload.date || !payload.time || !payload.reason || !payload.emiratesID || !payload.doctorID || !payload.hospitalID) {
+        if (!payload.date || !payload.time || !payload.reason || !payload.patientID || !payload.doctorID || !payload.hospitalID) {
             MedProUI.showToast("Please complete all appointment fields.", "error");
             return;
         }
