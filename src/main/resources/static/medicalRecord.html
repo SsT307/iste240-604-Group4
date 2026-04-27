@@ -1,277 +1,327 @@
 <!DOCTYPE html>
-<!--Tania Aziz - 418005117-->
+<!-- Tania Aziz - 418005117 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Medical Records</title>
-
-    <!-- Bootstrap 5 CSS - for styling and responsiveness -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Shared CSS file -->
-    <link href="style.css" rel="stylesheet">
-
-    <!-- Bootstrap 5 JS - needed for interactive components like modals -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- jQuery - for DOM manipulation and making API calls easier -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-    <!-- Shared JS file -->
-    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedPRO - Medical Records</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<!-- BODY CONTENT -->
-<!-- main container - centers content and adds padding -->
-<div class="container mt-4">
 
-    <!-- page title -->
-    <h1>Medical Records</h1>
+<!-- App shell -->
+<div class="app-shell">
 
-    <!-- top bar with search and add button -->
-    <div class="d-flex mb-3">
-
-        <!-- search bar -->
-        <input type="number" id="searchInput" class="form-control me-2" placeholder="Search by Emirates ID...">
-
-        <!-- search button -->
-        <button class="btn me-2" onclick="searchMedicalRecords()">Search</button>
-
-        <!-- add new record button -->
-        <button class="btn" onclick="showAddForm()">Add Record</button>
-    </div>
-
-    <!-- TABLE to display all medical records -->
-    <table class="table table-bordered table-hover" id="recordTable">
-        <thead class="table-header">
-        <tr>
-            <th>ID</th>
-            <th>Visit Date</th>
-            <th>Visit Time</th>
-            <th>Conditions</th>
-            <th>Treatment Given</th>
-            <th>Effective</th>
-            <th>Emirates ID</th>
-            <th>Hospital ID</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody id="recordsTableBody">
-        <!-- rows will be added here dynamically by JavaScript -->
-        </tbody>
-    </table>
-
-    <!-- FORM for adding/editing a Medical Record - hidden by default -->
-    <form id="recordsForm" style="display:none;" class="mt-3">
-        <h4>Medical Record Form</h4>
-
-        <!-- hidden field to store the ID when editing -->
-        <input type="hidden" id="recordId">
-
-        <div class="mb-3">
-            <label>Visit Date</label>
-            <input type="date" id="visitDate" class="form-control">
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="index.html" class="logo-link">
+                <img src="medPro_logo1.png" alt="MedPRO" class="logo-icon" />
+                <span class="sidebar-logo-text">MedPRO</span>
+            </a>
         </div>
 
-        <div class="mb-3">
-            <label>Visit Time</label>
-            <input type="time" id="visitTime" class="form-control">
-        </div>
+        <!-- Sidebar links -->
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">DASHBOARD</a>
+            <a href="calendar.html" class="nav-item">CALENDAR</a>
+            <a href="specialists.html" class="nav-item">DOCTORS</a>
+            <a href="medicalRecord.html" class="nav-item active">MEDICAL RECORDS</a>
+        </nav>
 
-        <div class="mb-3">
-            <label>Treatment Given</label>
-            <input type="text" id="treatmentGiven" class="form-control" placeholder="Enter treatment given">
-        </div>
+    </aside>
 
-        <div class="mb-3">
-            <label>Conditions</label>
-            <input type="text" id="conditions" class="form-control" placeholder="Enter conditions">
-        </div>
-
-        <div class="mb-3">
-            <label>Effective</label>
-            <select id="effective" class="form-control">
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label>Patient ID</label>
-            <input type="number" id="emiratesID" class="form-control" placeholder="Enter Patient ID">
-        </div>
-
-        <div class="mb-3">
-            <label>Hospital ID</label>
-            <input type="number" id="hospitalID" class="form-control" placeholder="Enter hospital ID">
+    <!-- Main page content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Medical Records</h1>
         </div>
 
 
-        <button type="button" class="btn" onclick="saveRecord()">Save</button>
-        <button type="button" class="btn" onclick="hideForm()">Cancel</button>
-    </form>
+        <!-- Search and action controls -->
+        <div class="entity-toolbar">
+            <input type="number" id="searchInput" class="form-input entity-search" placeholder="Search by Patient ID...">
+            <button class="btn-action secondary" id="searchBtn" type="button">Search</button>
+            <button class="btn-action ghost" id="viewAllBtn" type="button">View All</button>
+            <button class="btn-action primary" id="addBtn" type="button">Add Record</button>
+        </div>
+
+        <!-- Data table section -->
+        <div class="table-card">
+            <div class="table-scroll">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Visit Date</th>
+                        <th>Visit Time</th>
+                        <th>Conditions</th>
+                        <th>Treatment</th>
+                        <th>Effective</th>
+                        <th>Patient ID</th>
+                        <th>Hospital ID</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="recordsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
 
 </div>
+</main>
+</div>
 
+<!-- Footer section -->
+<footer class="app-footer">
+    <span class="footer-copy">&copy; 2026 MedPRO. All rights reserved.</span>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
 
-<!-- JAVASCRIPT CONTENT -->
-<!-- JS for Medical Records CRUD operations will go here -->
+<!-- Modal form for add and update -->
+<div class="modal-overlay" id="recordModal">
+    <div class="modal-card">
+        <h3 class="modal-title" id="recordModalTitle">Add Medical Record</h3>
+        <input type="hidden" id="recordId">
+
+        <div class="form-grid">
+            <div class="form-group-field">
+                <label class="form-label" for="visitDate">Visit Date</label>
+                <input type="date" id="visitDate" class="form-input">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="visitTime">Visit Time</label>
+                <input type="time" id="visitTime" class="form-input">
+            </div>
+            <div class="form-group-field full-width">
+                <label class="form-label" for="conditions">Conditions</label>
+                <input type="text" id="conditions" class="form-input" placeholder="Enter conditions">
+            </div>
+            <div class="form-group-field full-width">
+                <label class="form-label" for="treatmentGiven">Treatment Given</label>
+                <input type="text" id="treatmentGiven" class="form-input" placeholder="Enter treatment given">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="effective">Effective</label>
+                <select id="effective" class="form-select">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="patientID">Patient ID</label>
+                <input type="number" id="patientID" class="form-input" placeholder="Enter Patient ID">
+            </div>
+            <div class="form-group-field full-width">
+                <label class="form-label" for="hospitalID">Hospital ID</label>
+                <input type="number" id="hospitalID" class="form-input" placeholder="Enter Hospital ID">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-action ghost" id="cancelRecordBtn" type="button">Cancel</button>
+            <button class="btn-action primary" id="saveRecordBtn" type="button">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="shared-ui.js"></script>
 <script>
-    // when page is ready, load all medical records
-    $(document).ready(function() {
-        loadRecords();
+    // Get references for table and search controls
+    const tableBody = document.getElementById("recordsTableBody");
+    const searchInput = document.getElementById("searchInput");
+    const recordModalTitle = document.getElementById("recordModalTitle");
+    let currentRecords = [];
+
+    // Get references for modal form fields
+    const recordId = document.getElementById("recordId");
+    const visitDate = document.getElementById("visitDate");
+    const visitTime = document.getElementById("visitTime");
+    const conditions = document.getElementById("conditions");
+    const treatmentGiven = document.getElementById("treatmentGiven");
+    const effective = document.getElementById("effective");
+    const patientID = document.getElementById("patientID");
+    const hospitalID = document.getElementById("hospitalID");
+
+    // Register click handlers for top action buttons
+    document.getElementById("addBtn").addEventListener("click", openAddModal);
+    document.getElementById("searchBtn").addEventListener("click", searchRecords);
+    document.getElementById("viewAllBtn").addEventListener("click", loadRecords);
+    document.getElementById("cancelRecordBtn").addEventListener("click", function () {
+        MedProUI.closeModal("recordModal");
     });
+    document.getElementById("saveRecordBtn").addEventListener("click", saveRecord);
 
-    // FUNCTION 1: GET all medical records from API and display in table
-    function loadRecords(){
-        fetch("/api/records")
-            .then(function(response){
-                return response.json();
-            })
-            .then(function(records){
-                //clear the table before adding new rows
-                $("#recordsTableBody").empty();
+    // Allow closing the modal when the user clicks outside the modal card
+    MedProUI.wireOverlayClose("recordModal");
 
-                //loop through each record and add a row
-                for (let record of records){
-                    addRowToTable(record);
-                }
-
-            });
+    // This function loads all medical records from the API
+    // It refreshes the table with current data
+    async function loadRecords() {
+        try {
+            const response = await fetch("/api/records");
+            const records = await response.json();
+            renderRows(records);
+        } catch (error) {
+            MedProUI.showToast("Could not load records.", "error");
+        }
     }
 
-    // FUNCTION 2: creates and adds one row to the table for a record object
-    function addRowToTable(record) {
-        let row = $("<tr>");
+    // This function draws all rows inside the records table
+    // It also shows a simple message when no records exist
+    function renderRows(records) {
+        currentRecords = Array.isArray(records) ? records : [];
 
-        // add data cells
-        row.append($("<td>").text(record.recordID));
-        row.append($("<td>").text(record.visitDate));
-        row.append($("<td>").text(record.visitTime));
-        row.append($("<td>").text(record.conditions));
-        row.append($("<td>").text(record.treatmentGiven));
-        row.append($("<td>").text(record.effective));
-        row.append($("<td>").text(record.emiratesID));
-        row.append($("<td>").text(record.hospitalID));
+        if (!Array.isArray(records) || records.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="9" class="empty-state">No records found.</td></tr>';
+            return;
+        }
 
-        // add edit and delete buttons in the last cell
-        let actions = $("<td>");
-
-        let editBtn = $("<button>")
-            .text("Edit")
-            .addClass("btn btn-sm me-2")
-            .click(function() { showEditForm(record); });
-
-        let deleteBtn = $("<button>")
-            .text("Delete")
-            .addClass("btn btn-sm")
-            .click(function() { deleteRecord(record.recordID); });
-
-        actions.append(editBtn);
-        actions.append(deleteBtn);
-        row.append(actions);
-
-        $("#recordsTableBody").append(row);
+        tableBody.innerHTML = records.map(function (record) {
+            return `<tr>
+                <td>${record.recordID ?? ""}</td>
+                <td>${MedProUI.sanitize(record.visitDate)}</td>
+                <td>${MedProUI.sanitize(record.visitTime)}</td>
+                <td>${MedProUI.sanitize(record.conditions)}</td>
+                <td>${MedProUI.sanitize(record.treatmentGiven)}</td>
+                <td>${record.effective ? "Yes" : "No"}</td>
+                <td>${record.patientID ?? ""}</td>
+                <td>${record.hospitalID ?? ""}</td>
+                <td>
+                    <div class="row-actions">
+                        <button class="btn-row edit" type="button" onclick="openEditModalById(${record.recordID})">Edit</button>
+                        <button class="btn-row delete" type="button" onclick="deleteRecord(${record.recordID})">Delete</button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join("");
     }
 
-    // FUNCTION 3: shows the empty form for adding a new record
-    function showAddForm() {
-        document.getElementById("recordsForm").reset();
-        $("#recordsForm").show();
+    // This function clears the form values in the modal
+    function resetForm() {
+        recordId.value = "";
+        visitDate.value = "";
+        visitTime.value = "";
+        conditions.value = "";
+        treatmentGiven.value = "";
+        effective.value = "true";
+        patientID.value = "";
+        hospitalID.value = "";
     }
 
-    // FUNCTION 4: shows the form filled with existing data for editing
-    function showEditForm(record) {
-        $("#recordId").val(record.recordID);
-        $("#visitDate").val(record.visitDate);
-        $("#visitTime").val(record.visitTime);
-        $("#conditions").val(record.conditions);
-        $("#treatmentGiven").val(record.treatmentGiven);
-        $("#effective").val(record.effective);
-        $("#emiratesID").val(record.emiratesID);
-        $("#hospitalID").val(record.hospitalID);
-        $("#recordsForm").show();
+    // This runs when the user clicks the add button
+    // It prepares the modal for a new record
+    function openAddModal() {
+        resetForm();
+        recordModalTitle.textContent = "Add Medical Record";
+        MedProUI.openModal("recordModal");
     }
 
-    // FUNCTION 5: hides and resets the form
-    function hideForm() {
-        $("#recordsForm").hide();
-        document.getElementById("recordsForm").reset();
-    }
+    // This runs when the user clicks edit on a row
+    // It fills the modal with existing record data
+    window.openEditModalById = function (id) {
+        const record = currentRecords.find(function (item) { return item.recordID === id; });
+        if (!record) {
+            MedProUI.showToast("Could not open the selected record.", "error");
+            return;
+        }
 
-    // FUNCTION 6: saves a record - decides whether to POST (add) or PUT (edit)
-    function saveRecord() {
-        let id = $("#recordId").val();
+        recordModalTitle.textContent = "Update Medical Record";
+        recordId.value = record.recordID ?? "";
+        visitDate.value = record.visitDate ?? "";
+        visitTime.value = record.visitTime ?? "";
+        conditions.value = record.conditions ?? "";
+        treatmentGiven.value = record.treatmentGiven ?? "";
+        effective.value = String(!!record.effective);
+        patientID.value = record.patientID ?? "";
+        hospitalID.value = record.hospitalID ?? "";
+        MedProUI.openModal("recordModal");
+    };
 
-        let record = {
-            visitDate: $("#visitDate").val(),
-            visitTime: $("#visitTime").val(),
-            conditions: $("#conditions").val(),
-            treatmentGiven: $("#treatmentGiven").val(),
-            effective: $("#effective").val() === "true", //converts the string "true" from the dropdown to a proper boolean
-            emiratesID: parseInt($("#emiratesID").val()),
-            hospitalID: parseInt($("#hospitalID").val())
+    // This function sends add or update requests to the API
+    // It validates required fields before saving
+    async function saveRecord() {
+        const id = recordId.value.trim();
+        const payload = {
+            visitDate: visitDate.value,
+            visitTime: visitTime.value,
+            conditions: conditions.value.trim(),
+            treatmentGiven: treatmentGiven.value.trim(),
+            effective: effective.value === "true",
+            patientID: Number(patientID.value),
+            hospitalID: Number(hospitalID.value)
         };
 
-        if (id) {
-            // PUT request - edit existing record
-            fetch("/api/records/" + id, {
-                method: "PUT",
+        if (!payload.visitDate || !payload.visitTime || !payload.conditions || !payload.treatmentGiven || !payload.patientID || !payload.hospitalID) {
+            MedProUI.showToast("Please fill all fields before saving.", "error");
+            return;
+        }
+
+        const url = id ? `/api/records/${id}` : "/api/records";
+        const method = id ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method,
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(record)
-            })
-                .then(function(response) { return response.json(); })
-                .then(function() {
-                    hideForm();
-                    loadRecords();
-                });
-        } else {
-            // POST request - add new record
-            fetch("/api/records", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(record)
-            })
-                .then(function(response) { return response.json(); })
-                .then(function() {
-                    hideForm();
-                    loadRecords();
-                });
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error("Request failed");
+            }
+
+            MedProUI.closeModal("recordModal");
+            MedProUI.showToast(id ? "Medical record updated." : "Medical record added.");
+            loadRecords();
+        } catch (error) {
+            MedProUI.showToast("Unable to save medical record.", "error");
         }
     }
 
-    // FUNCTION 7: DELETE a record by ID
-    function deleteRecord(id) {
-        if (confirm("Are you sure you want to delete this record?")) {
-            fetch("/api/records/" + id, {
-                method: "DELETE"
-            })
-                .then(function() {
-                    loadRecords();
-                });
+    // This function deletes a selected record by ID
+    // It asks for confirmation before API delete call
+    window.deleteRecord = async function (id) {
+        if (!confirm("Delete this medical record?")) {
+            return;
         }
-    }
 
-    // FUNCTION 8: SEARCH records by Emirates ID
-    function searchMedicalRecords() {
-        let emiratesID = $("#searchInput").val();
+        try {
+            const response = await fetch(`/api/records/${id}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Delete failed");
+            }
+            MedProUI.showToast("Medical record deleted.");
+            loadRecords();
+        } catch (error) {
+            MedProUI.showToast("Unable to delete medical record.", "error");
+        }
+    };
 
-        // if search is empty, load all records
-        if (emiratesID === "") {
+    // This function searches records by Emirates ID
+    // If the search box is empty, it loads all records
+    async function searchRecords() {
+        const id = searchInput.value.trim();
+        if (!id) {
             loadRecords();
             return;
         }
 
-        fetch("/api/records/search?emiratesID=" + emiratesID)
-            .then(function(response) { return response.json(); })
-            .then(function(records) {
-                $("#recordsTableBody").empty();
-                for (let record of records) {
-                    addRowToTable(record);
-                }
-            });
+        try {
+            const response = await fetch(`/api/records/search?patientID=${encodeURIComponent(id)}`);
+            const records = await response.json();
+            renderRows(records);
+        } catch (error) {
+            MedProUI.showToast("Search failed.", "error");
+        }
     }
 
+    // Initial page load for the records table
+    loadRecords();
 </script>
 
 </body>
