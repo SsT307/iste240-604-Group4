@@ -113,8 +113,8 @@
                 </select>
             </div>
             <div class="form-group-field">
-                <label class="form-label" for="emiratesID">Emirates ID</label>
-                <input type="number" id="emiratesID" class="form-input" placeholder="Enter Emirates ID">
+                <label class="form-label" for="patientID">Patient ID</label>
+                <input type="number" id="patientID" class="form-input" placeholder="Enter Emirates ID">
             </div>
             <div class="form-group-field full-width">
                 <label class="form-label" for="hospitalID">Hospital ID</label>
@@ -144,7 +144,7 @@
     const conditions = document.getElementById("conditions");
     const treatmentGiven = document.getElementById("treatmentGiven");
     const effective = document.getElementById("effective");
-    const emiratesID = document.getElementById("emiratesID");
+    const patientID = document.getElementById("patientID");
     const hospitalID = document.getElementById("hospitalID");
 
     // Register click handlers for top action buttons
@@ -189,7 +189,7 @@
                 <td>${MedProUI.sanitize(record.conditions)}</td>
                 <td>${MedProUI.sanitize(record.treatmentGiven)}</td>
                 <td>${record.effective ? "Yes" : "No"}</td>
-                <td>${record.emiratesID ?? ""}</td>
+                <td>${record.patientID ?? ""}</td>
                 <td>${record.hospitalID ?? ""}</td>
                 <td>
                     <div class="row-actions">
@@ -209,7 +209,7 @@
         conditions.value = "";
         treatmentGiven.value = "";
         effective.value = "true";
-        emiratesID.value = "";
+        patientID.value = "";
         hospitalID.value = "";
     }
 
@@ -237,7 +237,7 @@
         conditions.value = record.conditions ?? "";
         treatmentGiven.value = record.treatmentGiven ?? "";
         effective.value = String(!!record.effective);
-        emiratesID.value = record.emiratesID ?? "";
+        patientID.value = record.patientID ?? "";
         hospitalID.value = record.hospitalID ?? "";
         MedProUI.openModal("recordModal");
     };
@@ -252,11 +252,11 @@
             conditions: conditions.value.trim(),
             treatmentGiven: treatmentGiven.value.trim(),
             effective: effective.value === "true",
-            emiratesID: Number(emiratesID.value),
+            patientID: Number(patientID.value),
             hospitalID: Number(hospitalID.value)
         };
 
-        if (!payload.visitDate || !payload.visitTime || !payload.conditions || !payload.treatmentGiven || !payload.emiratesID || !payload.hospitalID) {
+        if (!payload.visitDate || !payload.visitTime || !payload.conditions || !payload.treatmentGiven || !payload.patientID || !payload.hospitalID) {
             MedProUI.showToast("Please fill all fields before saving.", "error");
             return;
         }
@@ -312,7 +312,7 @@
         }
 
         try {
-            const response = await fetch(`/api/records/search?emiratesID=${encodeURIComponent(id)}`);
+            const response = await fetch(`/api/records/search?patientID=${encodeURIComponent(id)}`);
             const records = await response.json();
             renderRows(records);
         } catch (error) {
