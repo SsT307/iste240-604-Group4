@@ -13,7 +13,11 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int emiratesID; //PRIMARY KEY
+    private Integer patientId; // PRIMARY KEY
+
+    @Column(name = "emiratesID", nullable = false)
+    private Integer emiratesID;
+
     @Column(name = "firstName", length = 50, nullable = false)
     private String firstName;
 
@@ -27,14 +31,20 @@ public class Patient {
     public Patient() { }
 
     // CONSTRUCTOR for creating rows
-    public Patient(String firstName, String lastName, String ethnicity) {
+    public Patient(Integer emiratesID, firstName, String lastName, String ethnicity) {
+        this.emiratesID = emiratesID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.ethnicity = ethnicity;
     }
 
     //GETTERS
+    public Integer getPatientId() {
+        return patientId;
+    }
+
     public int getEmiratesID() {return emiratesID;}
+
     public String getFirstName() {
         return firstName;
     }
@@ -46,6 +56,9 @@ public class Patient {
     }
 
     //SETTERS
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
+    }
     public void setEmiratesID(int emiratesID) {
         this.emiratesID = emiratesID;
     }

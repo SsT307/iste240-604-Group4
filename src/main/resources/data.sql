@@ -66,23 +66,23 @@ INSERT INTO doctor (first_name, last_name, speciality, hospitalid) VALUES
                                            ('RAK Insurance'),
                                            ('Adamjee Insurance'),
                                            ('National General Insurance');
-                                           
-INSERT INTO patient (first_name, last_name, ethnicity) VALUES
-                                                           ('Ahmed', 'Mohammad', 'Egyptian'),
-                                                           ('Hamda', 'Alsuwaidi', 'Emirati'),
-                                                           ('Omar', 'Khalil', 'Lebanese'),
-                                                           ('Priya', 'Khan', 'Pakistani'),
-                                                           ('Noora', 'Almansoori', 'Emirati'),
-                                                           ('Yousef', 'Haddad', 'Jordanian'),
-                                                           ('Sara', 'Rahman', 'Bangladeshi'),
-                                                           ('Mariam', 'Alnuaimi', 'Emirati'),
-                                                           ('Hassan', 'Farouk', 'Sudanese'),
-                                                           ('Laila', 'Qureshi', 'Indian'),
-                                                           ('Khaled', 'Nasser', 'Palestinian'),
-                                                           ('Aisha', 'Belhaj', 'Moroccan'),
-                                                           ('Rana', 'Yilmaz', 'Turkish'),
-                                                           ('Faisal', 'Alotaibi', 'Saudi'),
-                                                           ('Nadine', 'Khoury', 'Syrian');
+
+INSERT INTO patient (patient_id, emiratesid, first_name, last_name, ethnicity) VALUES
+                                                                                   (1, 784123456, 'Ahmed', 'Mohammad', 'Egyptian'),
+                                                                                   (2, 784654321, 'Hamda', 'Alsuwaidi', 'Emirati'),
+                                                                                   (3, 784111222, 'Omar', 'Khalil', 'Lebanese'),
+                                                                                   (4, 784333444, 'Priya', 'Khan', 'Pakistani'),
+                                                                                   (5, 784555666, 'Noora', 'Almansoori', 'Emirati'),
+                                                                                   (6, 784777888, 'Yousef', 'Haddad', 'Jordanian'),
+                                                                                   (7, 784999000, 'Sara', 'Rahman', 'Bangladeshi'),
+                                                                                   (8, 784111333, 'Mariam', 'Alnuaimi', 'Emirati'),
+                                                                                   (9, 784222444, 'Hassan', 'Farouk', 'Sudanese'),
+                                                                                   (10, 784555777, 'Laila', 'Qureshi', 'Indian'),
+                                                                                   (11, 784888999, 'Khaled', 'Nasser', 'Palestinian'),
+                                                                                   (12, 784123789, 'Aisha', 'Belhaj', 'Moroccan'),
+                                                                                   (13, 784456012, 'Rana', 'Yilmaz', 'Turkish'),
+                                                                                   (14, 784789345, 'Faisal', 'Alotaibi', 'Saudi'),
+                                                                                   (15, 784012678, 'Nadine', 'Khoury', 'Syrian');
 
 INSERT INTO appointment (date, time, reason, emiratesid, doctorid, hospitalid) VALUES
                                                                                    ('2026-03-13', '09:00:00', 'Annual checkup', 784123456, 1, 1),

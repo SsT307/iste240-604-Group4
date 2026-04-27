@@ -20,20 +20,20 @@ public class MedicalRecord {
     private String conditions;
     private String treatmentGiven;
     private Boolean effective;
-    private int emiratesID; // foreign key
+    private int patientID; // foreign key
     private int hospitalID; // foreign key
 
     // Default Constructor
     public MedicalRecord() {}
 
     public MedicalRecord(LocalDate visitDate, LocalTime visitTime,
-                         String conditions, String treatmentGiven, Boolean effective, int emiratesID, int hospitalID) {
+                         String conditions, String treatmentGiven, Boolean effective, int patientID, int hospitalID) {
         this.visitDate = visitDate;
         this.visitTime = visitTime;
         this.conditions = conditions;
         this.treatmentGiven = treatmentGiven;
         this.effective = effective;
-        this.emiratesID = emiratesID;
+        this.patientID = patientID;
         this.hospitalID = hospitalID;
     }
 
@@ -62,8 +62,8 @@ public class MedicalRecord {
         return effective;
     }
 
-    public int getEmiratesID() {
-        return emiratesID;
+    public int getPatientID() {
+        return patientID;
     }
 
     public int getHospitalID() {
@@ -96,8 +96,8 @@ public class MedicalRecord {
         this.effective = effective;
     }
 
-    public void setEmiratesID(int emiratesID) {
-        this.emiratesID = emiratesID;
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
     }
 
     public void setHospitalID(int hospitalID) {

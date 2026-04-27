@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedPRO - Patients</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -14,25 +14,25 @@
     <!-- Sidebar navigation -->
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <a href="../index.html" class="logo-link">
-                <img src="../medPro_logo1.png" alt="MedPRO" class="logo-icon"/>
+            <a href="index.html" class="logo-link">
+                <img src="medPro_logo1.png" alt="MedPRO" class="logo-icon"/>
                 <span class="sidebar-logo-text">MedPRO</span>
             </a>
         </div>
 
         <!-- Sidebar links -->
         <nav class="sidebar-nav">
-            <a href="../index.html" class="nav-item active">DASHBOARD</a>
-            <a href="../calendar.html" class="nav-item">CALENDAR</a>
-            <a href="../specialists.html" class="nav-item">DOCTORS</a>
-            <a href="../reports.html" class="nav-item">MEDICAL RECORDS</a>
+            <a href="index.html" class="nav-item active">DASHBOARD</a>
+            <a href="calendar.html" class="nav-item">CALENDAR</a>
+            <a href="specialists.html" class="nav-item">DOCTORS</a>
+            <a href="reports.html" class="nav-item">MEDICAL RECORDS</a>
         </nav>
 
     </aside>
 
     <!-- Main page content -->
     <main class="main-content">
-        <a href="../index.html" class="back-link">← Back to Dashboard</a>
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
         <div class="page-header">
             <h1 class="page-title">Patients</h1>
         </div>
@@ -52,6 +52,7 @@
                     <table class="data-table">
                         <thead>
                         <tr>
+                            <th>Patient ID</th>
                             <th>Emirates ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -85,6 +86,10 @@
         <input type="hidden" id="patientId">
 
         <div class="form-grid">
+            <div class="form-group-field full-width">
+                <label class="form-label" for="patientEmiratesID">Emirates ID</label>
+                <input type="number" id="patientEmiratesID" class="form-input" placeholder="Enter Emirates ID">
+            </div>
             <div class="form-group-field">
                 <label class="form-label" for="patientFirstName">First Name</label>
                 <input type="text" id="patientFirstName" class="form-input" placeholder="Enter first name">
@@ -106,7 +111,7 @@
     </div>
 </div>
 
-<script src="../shared-ui.js"></script>
+<script src="shared-ui.js"></script>
 <script>
     // Get references for table and search controls
     const tableBody = document.getElementById("patientTableBody");
@@ -116,6 +121,7 @@
     // Get references for modal form values
     const patientId = document.getElementById("patientId");
     const patientFirstName = document.getElementById("patientFirstName");
+    const patientEmiratesID = document.getElementById("patientEmiratesID");
     const patientLastName = document.getElementById("patientLastName");
     const patientEthnicity = document.getElementById("patientEthnicity");
 
@@ -151,20 +157,21 @@
         patientsCache = Array.isArray(patients) ? patients : [];
 
         if (patientsCache.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">No patients found.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="6" class="empty-state">No patients found.</td></tr>';
             return;
         }
 
         tableBody.innerHTML = patientsCache.map(function (patient) {
             return `<tr>
+                <td>${patient.patientId ?? ""}</td>
                 <td>${patient.emiratesID ?? ""}</td>
                 <td>${MedProUI.sanitize(patient.firstName)}</td>
                 <td>${MedProUI.sanitize(patient.lastName)}</td>
                 <td>${MedProUI.sanitize(patient.ethnicity)}</td>
                 <td>
                     <div class="row-actions">
-                        <button class="btn-row edit" type="button" onclick="openEditModal(${patient.emiratesID})">Edit</button>
-                        <button class="btn-row delete" type="button" onclick="deletePatient(${patient.emiratesID})">Delete</button>
+                        <button class="btn-row edit" type="button" onclick="openEditModal(${patient.patientId})">Edit</button>
+                        <button class="btn-row delete" type="button" onclick="deletePatient(${patient.patientId})">Delete</button>
                     </div>
                 </td>
             </tr>`;
@@ -175,6 +182,7 @@
     function resetForm() {
         patientId.value = "";
         patientFirstName.value = "";
+        patientEmiratesID.value = "";
         patientLastName.value = "";
         patientEthnicity.value = "";
     }
@@ -190,15 +198,16 @@
     // This runs when user clicks Edit in a table row
     // It fills the form with selected patient data
     window.openEditModal = function (id) {
-        const patient = patientsCache.find(function (item) { return item.emiratesID === id; });
+        const patient = patientsCache.find(function (item) { return item.patientId === id; });
         if (!patient) {
             MedProUI.showToast("Could not open selected patient.", "error");
             return;
         }
 
         patientModalTitle.textContent = "Update Patient";
-        patientId.value = patient.emiratesID ?? "";
+        patientId.value = patient.patientId ?? "";
         patientFirstName.value = patient.firstName ?? "";
+        patientEmiratesID.value = patient.emiratesID ?? "";
         patientLastName.value = patient.lastName ?? "";
         patientEthnicity.value = patient.ethnicity ?? "";
         MedProUI.openModal("patientModal");
@@ -209,12 +218,13 @@
     async function savePatient() {
         const id = patientId.value.trim();
         const payload = {
+            emiratesID: Number(patientEmiratesID.value),
             firstName: patientFirstName.value.trim(),
             lastName: patientLastName.value.trim(),
             ethnicity: patientEthnicity.value.trim()
         };
 
-        if (!payload.firstName || !payload.lastName || !payload.ethnicity) {
+        if (!payload.emiratesID || !payload.firstName || !payload.lastName || !payload.ethnicity) {
             MedProUI.showToast("Please complete all patient fields.", "error");
             return;
         }
@@ -260,17 +270,17 @@
         }
     };
 
-    // This function searches patients by last name
+    // This function searches patients by Emirates ID
     // It loads all rows again when search is empty
     async function searchPatients() {
-        const lastName = searchInput.value.trim();
-        if (!lastName) {
+        const emiratesID = searchInput.value.trim();
+        if (!emiratesID) {
             loadPatients();
             return;
         }
 
         try {
-            const response = await fetch(`/api/patients/search?lastName=${encodeURIComponent(lastName)}`);
+            const response = await fetch(`/api/patients/search?emiratesID=${encodeURIComponent(emiratesID)}`);
             const patients = await response.json();
             renderRows(patients);
         } catch (error) {
