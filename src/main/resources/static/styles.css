@@ -1901,6 +1901,64 @@ button {
     margin-top: 18px;
 }
 
+/* ------------------- Doctors / Insurance Visual Alignment ----------------- */
+
+/* Doctors page keeps Bootstrap classes in existing JS-generated buttons */
+.doctors-page .table td .btn {
+    border: none;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+}
+
+.doctors-page .table td .btn-info {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.doctors-page .table td .btn-warning {
+    background: #fff4cc;
+    color: #8a6f00;
+}
+
+.doctors-page .table td .btn-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.insurance-form-wrap {
+    max-width: 100%;
+    margin-bottom: 16px;
+}
+
+/* Insurance page keeps plain buttons in existing JS-generated rows */
+.insurance-table td button {
+    border: none;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+}
+
+.insurance-table td button:hover {
+    filter: brightness(0.98);
+}
+
+.insurance-table td:nth-child(3) button {
+    background: #fff4cc;
+    color: #8a6f00;
+}
+
+.insurance-table td:nth-child(4) button {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
 /* ------------------- Shared Toast ----------------- */
 
 .toast-stack {
