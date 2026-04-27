@@ -29,8 +29,8 @@ public class MedicalRecordController {
 
     // search medical record using visit date
     @GetMapping("/search")
-    public List<MedicalRecord> getRecordsByEID(@RequestParam int emiratesID){
-        return medicalRecordService.findRecordByEmiratesID(emiratesID);
+    public List<MedicalRecord> getRecordsByPID(@RequestParam int patientID){
+        return medicalRecordService.findRecordByPatientID(patientID);
     }
 
     // post a new record
