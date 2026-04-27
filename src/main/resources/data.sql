@@ -20,17 +20,17 @@ INSERT INTO hospital (name, owner) VALUES
                                        ('NMC Royal Hospital', 'Private'),
                                        ('Saudi German Hospital', 'Private');
 
-INSERT INTO medical_record (visit_date, visit_time, conditions, treatment_given, effective, emiratesid, hospitalid) VALUES
-                                    ('2026-01-15', '09:00:00', 'Fever', 'Paracetamol', true, 784123456, 1),
-                                    ('2026-02-10', '14:30:00', 'Back Pain', 'Physiotherapy', true, 784654321, 2),
-                                    ('2026-03-05', '11:00:00', 'Flu', 'Rest and fluids', true, 784111222, 1),
-                                    ('2026-04-01', '16:00:00', 'Diabetes checkup', 'Insulin adjustment', true, 784333444, 3),
-                                    ('2026-01-20', '10:00:00', 'Hypertension', 'Blood pressure medication', true, 784555666, 4),
-                                    ('2026-02-15', '13:00:00', 'Asthma', 'Inhaler prescribed', true, 784777888, 5),
-                                    ('2026-03-10', '08:30:00', 'Broken Arm', 'Cast applied', true, 784999000, 6),
-                                    ('2026-03-20', '15:00:00', 'Migraine', 'Pain relief medication', false, 784111333, 7),
-                                    ('2026-04-05', '11:30:00', 'Allergies', 'Antihistamines', true, 784222444, 8),
-                                    ('2026-04-10', '09:30:00', 'Chest Pain', 'ECG and monitoring', true, 784555777, 9);
+INSERT INTO medical_record (visit_date, visit_time, conditions, treatment_given, effective, patientid, hospitalid) VALUES
+                                    ('2026-01-15', '09:00:00', 'Fever', 'Paracetamol', true, 2, 1),
+                                    ('2026-02-10', '14:30:00', 'Back Pain', 'Physiotherapy', true, 1, 2),
+                                    ('2026-03-05', '11:00:00', 'Flu', 'Rest and fluids', true, 3, 1),
+                                    ('2026-04-01', '16:00:00', 'Diabetes checkup', 'Insulin adjustment', true, 4, 3),
+                                    ('2026-01-20', '10:00:00', 'Hypertension', 'Blood pressure medication', true, 5, 4),
+                                    ('2026-02-15', '13:00:00', 'Asthma', 'Inhaler prescribed', true, 6, 5),
+                                    ('2026-03-10', '08:30:00', 'Broken Arm', 'Cast applied', true, 7, 6),
+                                    ('2026-03-20', '15:00:00', 'Migraine', 'Pain relief medication', false, 8, 7),
+                                    ('2026-04-05', '11:30:00', 'Allergies', 'Antihistamines', true, 9, 8),
+                                    ('2026-04-10', '09:30:00', 'Chest Pain', 'ECG and monitoring', true, 10, 9);
 
 
 INSERT INTO doctor (first_name, last_name, speciality, hospitalid) VALUES
@@ -84,7 +84,7 @@ INSERT INTO patient (patient_id, emiratesid, first_name, last_name, ethnicity) V
                                                                                    (14, 784789345, 'Faisal', 'Alotaibi', 'Saudi'),
                                                                                    (15, 784012678, 'Nadine', 'Khoury', 'Syrian');
 
-INSERT INTO appointment (date, time, reason, emiratesid, doctorid, hospitalid) VALUES
+INSERT INTO appointment (date, time, reason, patientid, doctorid, hospitalid) VALUES
                                                                                    ('2026-03-13', '09:00:00', 'Annual checkup', 784123456, 1, 1),
                                                                                    ('2026-03-14', '11:30:00', 'Follow-up visit', 784654321, 2, 3),
                                                                                    ('2026-03-16', '14:00:00', 'Blood test', 784111222, 1, 2),

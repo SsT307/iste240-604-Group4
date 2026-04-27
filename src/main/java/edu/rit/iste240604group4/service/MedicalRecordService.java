@@ -35,8 +35,8 @@ public class MedicalRecordService {
     }
 
     // find records by Emirates ID
-    public List<MedicalRecord> findRecordByEmiratesID(int emiratesID) {
-        return medicalRecordRepository.findByEmiratesID(emiratesID);
+    public List<MedicalRecord> findRecordByPatientID(int patientID) {
+        return medicalRecordRepository.findByPatientID(patientID);
     }
 
     // update the conditions of a medical record by its ID
