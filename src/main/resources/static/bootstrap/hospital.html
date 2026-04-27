@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!-- Tania Aziz - 418005117 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedPRO - Hospitals</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<!-- App shell -->
+<div class="app-shell">
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="../index.html" class="logo-link">
+                <img src="../medPro_logo1.png" alt="MedPRO" class="logo-icon"/>
+                <span class="sidebar-logo-text">MedPRO</span>
+            </a>
+        </div>
+
+        <!-- Sidebar links -->
+        <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-item active">DASHBOARD</a>
+            <a href="../calendar.html" class="nav-item">CALENDAR</a>
+            <a href="../specialists.html" class="nav-item">DOCTORS</a>
+            <a href="../reports.html" class="nav-item">MEDICAL RECORDS</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main page content -->
+    <main class="main-content">
+        <a href="../index.html" class="back-link">← Back to Dashboard</a>
+        <div class="page-header">
+            <h1 class="page-title">Hospitals</h1>
+        </div>
+
+        <div class="entity-page-wrap">
+            <!-- Search and action controls -->
+            <div class="entity-toolbar">
+                <input type="text" id="searchInput" class="form-input entity-search" placeholder="Search by name...">
+                <button class="btn-action secondary" id="searchBtn" type="button">Search</button>
+                <button class="btn-action ghost" id="viewAllBtn" type="button">View All</button>
+                <button class="btn-action primary" id="addBtn" type="button">Add Hospital</button>
+            </div>
+
+            <!-- Data table section -->
+            <div class="table-card">
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Owner</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="hospitalTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Footer section -->
+<footer class="app-footer">
+    <span class="footer-copy">&copy; 2026 MedPRO. All rights reserved.</span>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+<!-- Modal form for add and update -->
+<div class="modal-overlay" id="hospitalModal">
+    <div class="modal-card">
+        <h3 class="modal-title" id="hospitalModalTitle">Add Hospital</h3>
+
+        <input type="hidden" id="hospitalId">
+
+        <div class="form-grid">
+            <div class="form-group-field">
+                <label class="form-label" for="hospitalName">Hospital Name</label>
+                <input type="text" id="hospitalName" class="form-input" placeholder="Enter hospital name">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="hospitalOwner">Owner</label>
+                <input type="text" id="hospitalOwner" class="form-input" placeholder="Enter owner">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-action ghost" id="cancelBtn" type="button">Cancel</button>
+            <button class="btn-action primary" id="saveBtn" type="button">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="../shared-ui.js"></script>
+<script>
+    // Get references for hospital table and search input
+    const tableBody = document.getElementById("hospitalTableBody");
+    const searchInput = document.getElementById("searchInput");
+    const hospitalModalTitle = document.getElementById("hospitalModalTitle");
+
+    // Get references for hospital modal fields
+    const hospitalId = document.getElementById("hospitalId");
+    const hospitalName = document.getElementById("hospitalName");
+    const hospitalOwner = document.getElementById("hospitalOwner");
+
+    let hospitalsCache = [];
+
+    // Register click events for toolbar and modal buttons
+    document.getElementById("addBtn").addEventListener("click", openAddModal);
+    document.getElementById("searchBtn").addEventListener("click", searchHospitals);
+    document.getElementById("viewAllBtn").addEventListener("click", loadHospitals);
+    document.getElementById("cancelBtn").addEventListener("click", function () {
+        MedProUI.closeModal("hospitalModal");
+    });
+    document.getElementById("saveBtn").addEventListener("click", saveHospital);
+
+    // Allow modal close by clicking outside modal card
+    MedProUI.wireOverlayClose("hospitalModal");
+
+    // This function loads all hospitals from the API
+    // It refreshes the table data on the page
+    async function loadHospitals() {
+        try {
+            const response = await fetch("/api/hospitals");
+            const hospitals = await response.json();
+            renderRows(hospitals);
+        } catch (error) {
+            MedProUI.showToast("Could not load hospitals.", "error");
+        }
+    }
+
+    // This function renders hospital rows in the table
+    // It shows an empty message when no rows exist
+    function renderRows(hospitals) {
+        hospitalsCache = Array.isArray(hospitals) ? hospitals : [];
+
+        if (hospitalsCache.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" class="empty-state">No hospitals found.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = hospitalsCache.map(function (hospital) {
+            return `<tr>
+                <td>${hospital.hospitalID ?? ""}</td>
+                <td>${MedProUI.sanitize(hospital.name)}</td>
+                <td>${MedProUI.sanitize(hospital.owner)}</td>
+                <td>
+                    <div class="row-actions">
+                        <button class="btn-row edit" type="button" onclick="openEditModal(${hospital.hospitalID})">Edit</button>
+                        <button class="btn-row delete" type="button" onclick="deleteHospital(${hospital.hospitalID})">Delete</button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join("");
+    }
+
+    // This function clears the hospital form fields
+    function resetForm() {
+        hospitalId.value = "";
+        hospitalName.value = "";
+        hospitalOwner.value = "";
+    }
+
+    // This runs when user clicks Add Hospital
+    // It opens the modal in add mode
+    function openAddModal() {
+        resetForm();
+        hospitalModalTitle.textContent = "Add Hospital";
+        MedProUI.openModal("hospitalModal");
+    }
+
+    // This runs when user clicks Edit on one hospital row
+    // It fills the modal fields with selected values
+    window.openEditModal = function (id) {
+        const hospital = hospitalsCache.find(function (item) { return item.hospitalID === id; });
+        if (!hospital) {
+            MedProUI.showToast("Could not open selected hospital.", "error");
+            return;
+        }
+
+        hospitalModalTitle.textContent = "Update Hospital";
+        hospitalId.value = hospital.hospitalID ?? "";
+        hospitalName.value = hospital.name ?? "";
+        hospitalOwner.value = hospital.owner ?? "";
+        MedProUI.openModal("hospitalModal");
+    };
+
+    // This function saves add or update changes to API
+    // It sends POST for add and PUT for update
+    async function saveHospital() {
+        const id = hospitalId.value.trim();
+        const payload = {
+            name: hospitalName.value.trim(),
+            owner: hospitalOwner.value.trim()
+        };
+
+        if (!payload.name || !payload.owner) {
+            MedProUI.showToast("Please complete all hospital fields.", "error");
+            return;
+        }
+
+        const url = id ? `/api/hospitals/${id}` : "/api/hospitals";
+        const method = id ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error("Save failed");
+            }
+
+            MedProUI.closeModal("hospitalModal");
+            MedProUI.showToast(id ? "Hospital updated." : "Hospital added.");
+            loadHospitals();
+        } catch (error) {
+            MedProUI.showToast("Unable to save hospital.", "error");
+        }
+    }
+
+    // This function deletes the selected hospital by ID
+    // It asks for confirmation before deleting
+    window.deleteHospital = async function (id) {
+        if (!confirm("Delete this hospital?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/hospitals/${id}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Delete failed");
+            }
+            MedProUI.showToast("Hospital deleted.");
+            loadHospitals();
+        } catch (error) {
+            MedProUI.showToast("Unable to delete hospital.", "error");
+        }
+    };
+
+    // This function searches hospitals by name
+    // It loads all rows when search input is empty
+    async function searchHospitals() {
+        const name = searchInput.value.trim();
+        if (!name) {
+            loadHospitals();
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/hospitals/search?name=${encodeURIComponent(name)}`);
+            const hospitals = await response.json();
+            renderRows(hospitals);
+        } catch (error) {
+            MedProUI.showToast("Search failed.", "error");
+        }
+    }
+
+    // Initial table load for hospital page
+    loadHospitals();
+</script>
+
+</body>
+</html>

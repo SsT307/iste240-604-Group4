@@ -1,3 +1,5 @@
+/* Shaikha Alhajri 418008663 */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 /* This makes it easier for us to control customization across all pages */
@@ -940,8 +942,10 @@ button {
     background: #fff;
     border-radius: var(--radius-md);
     padding: 28px 32px;
-    width: 400px;
+    width: 500px;
     max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: var(--shadow-md);
     animation: appointPop 0.18s ease;
 }
@@ -1739,4 +1743,201 @@ button {
     .quick-access-title {
         font-size: 1.5rem;
     }
+}
+
+/* ------------------- Shared Entity CRUD Pages ----------------- */
+
+.entity-page-wrap {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.entity-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.entity-search {
+    flex: 1;
+    min-width: 220px;
+}
+
+.table-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.btn-action {
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.btn-action.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--light-text) 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
+}
+
+.btn-action.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(25, 118, 210, 0.3);
+}
+
+.btn-action.secondary {
+    background: var(--blue-light);
+    color: var(--light-text);
+}
+
+.btn-action.secondary:hover {
+    background: var(--blue-mid);
+}
+
+.btn-action.ghost {
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text-secondary);
+}
+
+.btn-action.ghost:hover {
+    border-color: var(--light-text);
+    color: var(--light-text);
+}
+
+.row-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-row {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.btn-row.edit {
+    background: var(--blue-light);
+    color: var(--light-text);
+}
+
+.btn-row.edit:hover {
+    background: var(--blue-mid);
+}
+
+.btn-row.delete {
+    background: #fdf0f0;
+    color: #a93226;
+}
+
+.btn-row.delete:hover {
+    background: #fadbd8;
+}
+
+.empty-state {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+/* ------------------- Shared Modal ----------------- */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    z-index: 110;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    padding: 14px;
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 26px 28px;
+    width: 560px;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    animation: appointPop 0.18s ease;
+}
+
+.modal-title {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 16px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+/* ------------------- Shared Toast ----------------- */
+
+.toast-stack {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 140;
+}
+
+.toast-item {
+    min-width: 250px;
+    max-width: 360px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--dark-text);
+    padding: 11px 14px;
+    box-shadow: var(--shadow-md);
+    font-size: 0.82rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.toast-item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-item.success {
+    border-left: 4px solid #1f9d55;
+}
+
+.toast-item.error {
+    border-left: 4px solid #c0392b;
 }

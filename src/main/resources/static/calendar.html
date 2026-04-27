@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Shaikha Alhajri 418008663 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -8,9 +9,9 @@
 </head>
 <body>
 
+<!-- App shell -->
 <div class="app-shell">
-
-    <!-- Sidebar -->
+    <!-- Sidebar navigation -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <a href="index.html" class="logo-link">
@@ -19,69 +20,29 @@
             </a>
         </div>
 
-        <!-- Navigation Links -->
+        <!-- Sidebar links -->
         <nav class="sidebar-nav">
             <a href="index.html" class="nav-item">DASHBOARD</a>
-            <a href="reports.html" class="nav-item">MEDICAL REPORTS</a>
             <a href="calendar.html" class="nav-item active">CALENDAR</a>
-            <a href="specialists.html" class="nav-item">MY SPECIALISTS</a>
+            <a href="specialists.html" class="nav-item">DOCTORS</a>
+            <a href="reports.html" class="nav-item">MEDICAL RECORDS</a>
         </nav>
 
-        <!-- Profile & Logout -->
-        <div class="sidebar-user" id="userProfile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="8" r="4"/>
-                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-            <span class="sidebar-user-name">First Last</span>
-            <span class="sidebar-user-caret">▲</span>
-
-            <div class="user-dropdown" id="userDropdown">
-                <div class="dropdown-item">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="8" r="4"/>
-                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                    </svg>
-                    My Profile
-                </div>
-                <div class="dropdown-item">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M12 2v2m0 16v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                    </svg>
-                    Settings
-                </div>
-                <div class="dropdown-item logout" id="logoutBtn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                        <polyline points="16 17 21 12 16 7"/>
-                        <line x1="21" y1="12" x2="9" y2="12"/>
-                    </svg>
-                    Log Out
-                </div>
-            </div>
-        </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main page content -->
     <main class="main-content">
 
         <div class="page-header">
             <h1 class="page-title">Calendar</h1>
         </div>
-        <p class="assignment2-label">NOT ASSIGNMENT 2</p>
 
         <div class="calendar-layout">
-
-            <!-- Monthly Calendar -->
             <div class="calendar-main">
-
-                <!-- Add Appointment Button -->
                 <div class="calendar-toolbar">
                     <button class="btn-add-apt" id="addAptBtn" title="Add appointment">+</button>
                 </div>
 
-                <!-- Calendar Grid -->
                 <div class="month-grid-wrapper">
                     <div class="month-nav">
                         <button class="month-nav-btn" id="prevMonth">&#8249;</button>
@@ -99,16 +60,15 @@
                     </div>
                     <div class="month-days" id="monthDays"></div>
                 </div>
-
             </div>
         </div>
 
     </main>
 </div>
 
-<!-- Footer -->
+<!-- Footer section -->
 <footer class="app-footer">
-    <span class="footer-copy">© 2026 MedPRO. All rights reserved.</span>
+    <span class="footer-copy">&copy; 2026 MedPRO. All rights reserved.</span>
     <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Use</a>
@@ -116,10 +76,13 @@
     </div>
 </footer>
 
-<!-- Add Appointment -->
+<!-- Modal for adding or updating appointments -->
 <div class="appoint-overlay" id="addAppoint">
     <div class="appoint">
-        <div class="appoint-title">Add Appointment</div>
+        <div class="appoint-title" id="appointmentFormTitle">Add Appointment</div>
+
+        <input type="hidden" id="appointmentId" />
+
         <div class="form-grid">
             <div class="form-group-field">
                 <label class="form-label" for="aptDate">Date</label>
@@ -133,34 +96,20 @@
                 <label class="form-label" for="aptReason">Reason</label>
                 <input type="text" class="form-input" id="aptReason" placeholder="e.g. Annual checkup" />
             </div>
-            <div class="form-group-field full-width">
-                <label class="form-label" for="aptHospital">Hospital</label>
-                <select class="form-select" id="aptHospital">
-                    <option value="">Select hospital...</option>
-                    <option>Dubai Hospital</option>
-                    <option>Rashid Hospital</option>
-                    <option>American Hospital Dubai</option>
-                    <option>Cleveland Clinic Abu Dhabi</option>
-                    <option>Mediclinic City Hospital</option>
-                    <option>Al Zahra Hospital Dubai</option>
-                </select>
+            <div class="form-group-field">
+                <label class="form-label" for="aptPatient">Emirates ID</label>
+                <input type="number" class="form-input" id="aptPatient" placeholder="Enter Emirates ID" />
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="aptDoctor">Doctor ID</label>
+                <input type="number" class="form-input" id="aptDoctor" placeholder="Enter doctor ID" />
             </div>
             <div class="form-group-field full-width">
-                <label class="form-label" for="aptDoctor">Doctor</label>
-                <select class="form-select" id="aptDoctor">
-                    <option value="">Select doctor...</option>
-                    <option>Dr. Al Mansoori - Cardiology</option>
-                    <option>Dr. Hassan - Neurology</option>
-                    <option>Dr. Patel - General Practice</option>
-                    <option>Dr. Khalil - Orthopedics</option>
-                    <option>Dr. Nguyen - Dermatology</option>
-                </select>
-            </div>
-            <div class="form-group-field full-width">
-                <label class="form-label" for="aptPatient">Patient ID</label>
-                <input type="text" class="form-input" id="aptPatient" placeholder="784-YYYY-XXXXXXX-X" maxlength="18" inputmode="numeric" />
+                <label class="form-label" for="aptHospital">Hospital ID</label>
+                <input type="number" class="form-input" id="aptHospital" placeholder="Enter hospital ID" />
             </div>
         </div>
+
         <div class="appoint-actions">
             <button class="btn-cancel" id="addCancelBtn">Cancel</button>
             <button class="btn-primary" id="saveAptBtn">Save</button>
@@ -168,7 +117,7 @@
     </div>
 </div>
 
-<!-- Appointment Details -->
+<!-- Modal for viewing appointment details -->
 <div class="appoint-overlay" id="detailsAppoint">
     <div class="appoint">
         <div class="appoint-title" id="detailsTitle">Appointment Details</div>
@@ -186,288 +135,338 @@
                 <span class="detail-value" id="dReason"></span>
             </div>
             <div class="detail-row full-width">
-                <span class="detail-label">Patient ID</span>
+                <span class="detail-label">Emirates ID</span>
                 <span class="detail-value" id="dPatient"></span>
             </div>
-            <div class="detail-row full-width">
-                <span class="detail-label">Doctor</span>
+            <div class="detail-row">
+                <span class="detail-label">Doctor ID</span>
                 <span class="detail-value" id="dDoctor"></span>
             </div>
-            <div class="detail-row full-width">
-                <span class="detail-label">Hospital</span>
-                <div class="hospital-badge">
-                    <span class="hospital-badge-dot"></span>
-                    <span id="dHospital"></span>
-                </div>
+            <div class="detail-row">
+                <span class="detail-label">Hospital ID</span>
+                <span class="detail-value" id="dHospital"></span>
             </div>
         </div>
         <hr class="appoint-divider" />
         <div class="appoint-actions">
             <button class="btn-cancel" id="detailsCloseBtn">Close</button>
+            <button class="btn-secondary" id="detailsEditBtn">Edit</button>
+            <button class="btn-cancel" id="detailsDeleteBtn">Delete</button>
         </div>
     </div>
 </div>
 
-<!-- JavaScript -->
+<script src="shared-ui.js"></script>
 <script>
+    // Get references for calendar header and month grid
+    const monthNavLabel = document.getElementById("monthNavLabel");
+    const monthDays = document.getElementById("monthDays");
+    const prevMonthBtn = document.getElementById("prevMonth");
+    const nextMonthBtn = document.getElementById("nextMonth");
 
-    const userProfile = document.getElementById('userProfile');
-    const userDropdown = document.getElementById('userDropdown');
-    const logoutBtn = document.getElementById('logoutBtn');
+    // Get references for add appointment modal controls
+    const addAptBtn = document.getElementById("addAptBtn");
+    const addAppointOverlay = document.getElementById("addAppoint");
+    const addCancelBtn = document.getElementById("addCancelBtn");
+    const saveAptBtn = document.getElementById("saveAptBtn");
 
-    const monthNavLabel = document.getElementById('monthNavLabel');
-    const monthDays = document.getElementById('monthDays');
-    const prevMonthBtn = document.getElementById('prevMonth');
-    const nextMonthBtn = document.getElementById('nextMonth');
+    // Get references for appointment form inputs
+    const appointmentFormTitle = document.getElementById("appointmentFormTitle");
+    const appointmentIdInput = document.getElementById("appointmentId");
+    const aptDateInput = document.getElementById("aptDate");
+    const aptTimeInput = document.getElementById("aptTime");
+    const aptReasonInput = document.getElementById("aptReason");
+    const aptHospitalInput = document.getElementById("aptHospital");
+    const aptDoctorInput = document.getElementById("aptDoctor");
+    const aptPatientInput = document.getElementById("aptPatient");
 
-    const addAptBtn = document.getElementById('addAptBtn');
-    const addAppointOverlay = document.getElementById('addAppoint');
-    const addCancelBtn = document.getElementById('addCancelBtn');
-    const saveAptBtn = document.getElementById('saveAptBtn');
+    // Get references for details modal controls
+    const detailsAppointOverlay = document.getElementById("detailsAppoint");
+    const detailsCloseBtn = document.getElementById("detailsCloseBtn");
+    const detailsEditBtn = document.getElementById("detailsEditBtn");
+    const detailsDeleteBtn = document.getElementById("detailsDeleteBtn");
+    const detailsTitle = document.getElementById("detailsTitle");
+    const dDate = document.getElementById("dDate");
+    const dTime = document.getElementById("dTime");
+    const dReason = document.getElementById("dReason");
+    const dPatient = document.getElementById("dPatient");
+    const dDoctor = document.getElementById("dDoctor");
+    const dHospital = document.getElementById("dHospital");
 
-    const aptDateInput = document.getElementById('aptDate');
-    const aptTimeInput = document.getElementById('aptTime');
-    const aptReasonInput = document.getElementById('aptReason');
-    const aptHospitalSelect = document.getElementById('aptHospital');
-    const aptDoctorSelect = document.getElementById('aptDoctor');
-    const aptPatientInput = document.getElementById('aptPatient');
-
-    const detailsAppointOverlay = document.getElementById('detailsAppoint');
-    const detailsCloseBtn = document.getElementById('detailsCloseBtn');
-    const detailsTitle = document.getElementById('detailsTitle');
-    const dDate = document.getElementById('dDate');
-    const dTime = document.getElementById('dTime');
-    const dReason = document.getElementById('dReason');
-    const dPatient = document.getElementById('dPatient');
-    const dDoctor = document.getElementById('dDoctor');
-    const dHospital = document.getElementById('dHospital');
-
-    // - - - - - - - - - - - DATE - MONTH - YEAR - - - - - - - - - - -
+    // Shared month names for month title rendering
+    const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const today = new Date();
     let monthDate = new Date(today);
+    let appointments = [];
+    let activeAppointment = null;
 
-    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-    // - - - - - - - - - - - SAMPLE DATA - - - - - - - - - - -
-    const appointments = [
-        { date: getDateOffset(0), time: '09:00', reason: 'Annual checkup',    patient: '784-1993-4821736-0', doctor: 'Dr. Patel - General Practice',     hospital: 'Dubai Hospital' },
-        { date: getDateOffset(1), time: '11:30', reason: 'Follow-up visit',   patient: '784-1982-2871336-0', doctor: 'Dr. Hassan - Neurology',            hospital: 'Rashid Hospital' },
-        { date: getDateOffset(3), time: '14:00', reason: 'Blood test',        patient: '784-2001-7739482-0', doctor: 'Dr. Al Mansoori - Cardiology',      hospital: 'American Hospital Dubai' },
-        { date: getDateOffset(7), time: '08:30', reason: 'Skin consultation', patient: '784-1987-3056214-1', doctor: 'Dr. Nguyen - Dermatology',          hospital: 'Mediclinic City Hospital' }
-    ];
-
-    // - - - - - - - - - - - HELPER FUNCTIONS - - - - - - - - - - -
-
-    // Get a date string offset by the given number of days from today
-    function getDateOffset(offset = 0) {
-        const date = new Date(today);
-        date.setDate(date.getDate() + offset);
-        return date.toISOString().slice(0, 10);
-    }
-
-    // Convert 24-hour time to 12-hour format with AM/PM
+    // This helper converts time from 24-hour to AM/PM format
     function formatTime(time) {
-        let [hours, minutes] = time.split(':').map(Number);
-        const period = hours >= 12 ? 'PM' : 'AM';
+        const cleanTime = String(time || "").slice(0, 5);
+        if (!cleanTime.includes(":")) return "";
+        const parts = cleanTime.split(":");
+        let hours = Number(parts[0]);
+        const minutes = Number(parts[1]);
+        const period = hours >= 12 ? "PM" : "AM";
         hours = hours % 12 || 12;
-        return `${hours}:${String(minutes).padStart(2, '0')} ${period}`;
+        return `${hours}:${String(minutes).padStart(2, "0")} ${period}`;
     }
 
-    // Show or hide appointment overlay modals
-    function toggleOverlay(overlayElement, shouldOpen) {
-        overlayElement.classList.toggle('open', shouldOpen);
+    // This helper creates a readable date text for the details modal
+    function formatDateLabel(dateValue) {
+        const parsed = new Date(dateValue);
+        if (Number.isNaN(parsed.getTime())) {
+            return dateValue || "";
+        }
+        return parsed.toLocaleDateString("en-GB", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
     }
 
-    // - - - - - - - - - - - CALENDAR RENDERING - - - - - - - - - - -
+    // This function loads all appointments from the API
+    // It keeps calendar data connected to the database
+    async function loadAppointments() {
+        try {
+            const response = await fetch("/api/appointments");
+            const data = await response.json();
+            appointments = Array.isArray(data) ? data : [];
+            buildMonthView();
+        } catch (error) {
+            MedProUI.showToast("Could not load appointments.", "error");
+        }
+    }
 
+    // This function builds the full month calendar grid
+    // It places appointment pills inside matching dates
     function buildMonthView() {
-        // Update the month/year label in the header
-        monthNavLabel.textContent = MONTHS[monthDate.getMonth()] + ' ' + monthDate.getFullYear();
+        monthNavLabel.textContent = `${MONTHS[monthDate.getMonth()]} ${monthDate.getFullYear()}`;
 
-        // Calculate calendar grid parameters
-        const firstDayOfMonth = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
-        const lastDayOfMonth = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0).getDate();
+        const year = monthDate.getFullYear();
+        const month = monthDate.getMonth();
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
         const startPadding = firstDayOfMonth.getDay();
 
-        // Clear existing calendar cells
-        monthDays.innerHTML = '';
+        monthDays.innerHTML = "";
 
-        // Build a 6-week grid (42 cells total)
         const totalCells = 42;
         for (let i = 0; i < totalCells; i++) {
             const dayOffset = i - startPadding;
-            const currentDate = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1 + dayOffset);
+            const currentDate = new Date(year, month, 1 + dayOffset);
             const dateString = currentDate.toISOString().slice(0, 10);
             const isOtherMonth = dayOffset < 0 || dayOffset >= lastDayOfMonth;
 
-            // Create the calendar cell
-            const cell = document.createElement('div');
-            cell.className = 'month-cell'
-                + (isOtherMonth ? ' other-month' : '')
-                + (currentDate.toDateString() === today.toDateString() ? ' today' : '');
+            const cell = document.createElement("div");
+            cell.className = "month-cell"
+                + (isOtherMonth ? " other-month" : "")
+                + (currentDate.toDateString() === today.toDateString() ? " today" : "");
 
-            // Add the day number
-            const dayNumber = document.createElement('div');
-            dayNumber.className = 'month-cell-num';
+            const dayNumber = document.createElement("div");
+            dayNumber.className = "month-cell-num";
             dayNumber.textContent = currentDate.getDate();
             cell.appendChild(dayNumber);
 
-            // Add appointment pills for this day
-            appointments.filter(apt => apt.date === dateString).forEach(apt => {
-                const pill = document.createElement('div');
-                pill.className = 'month-apt';
-                pill.innerHTML = `<span class="month-apt-reason">${apt.reason}</span>
-                                  <span class="month-apt-time">${formatTime(apt.time)} · ${apt.hospital}</span>`;
-                pill.addEventListener('click', e => {
-                    e.stopPropagation();
+            const dayAppointments = appointments.filter(function (apt) {
+                return String(apt.date).slice(0, 10) === dateString;
+            });
+
+            dayAppointments.forEach(function (apt) {
+                const pill = document.createElement("div");
+                pill.className = "month-apt";
+                pill.innerHTML = `<span class="month-apt-reason">${MedProUI.sanitize(apt.reason)}</span>
+                                  <span class="month-apt-time">${formatTime(apt.time)} · Doctor ${apt.doctorID ?? "-"}</span>`;
+                pill.addEventListener("click", function (event) {
+                    event.stopPropagation();
                     showAppointmentDetails(apt);
                 });
                 cell.appendChild(pill);
             });
 
-            // Clicking an empty cell opens the add form
-            cell.addEventListener('click', () => openAddForm(dateString));
+            cell.addEventListener("click", function () {
+                openAddForm(dateString);
+            });
+
             monthDays.appendChild(cell);
         }
     }
 
-    // - - - - - - - - - - - APPOINTMENT FORMS - - - - - - - - - - -
-
-    function openAddForm(selectedDate = '') {
-        // Clear all form fields
-        aptDateInput.value = '';
-        aptTimeInput.value = '';
-        aptReasonInput.value = '';
-        aptPatientInput.value = '';
-        aptHospitalSelect.value = '';
-        aptDoctorSelect.value = '';
-
-        // Pre-fill the date if provided
-        aptDateInput.value = selectedDate;
-
-        // Show the add appointment modal
-        toggleOverlay(addAppointOverlay, true);
+    // This function clears all form inputs before opening the modal
+    function resetAppointmentForm() {
+        appointmentIdInput.value = "";
+        aptDateInput.value = "";
+        aptTimeInput.value = "";
+        aptReasonInput.value = "";
+        aptHospitalInput.value = "";
+        aptDoctorInput.value = "";
+        aptPatientInput.value = "";
     }
 
-    function saveNewAppointment() {
-        // Collect all form values
-        const newAppointment = {
-            date: aptDateInput.value.trim(),
-            time: aptTimeInput.value.trim(),
+    // This runs when user adds a new appointment
+    // It opens the modal and can prefill the clicked date
+    function openAddForm(selectedDate = "") {
+        resetAppointmentForm();
+        appointmentFormTitle.textContent = "Add Appointment";
+        aptDateInput.value = selectedDate;
+        addAppointOverlay.classList.add("open");
+    }
+
+    // This runs when user edits an appointment from details modal
+    // It fills the form with existing values
+    function openEditForm(appointment) {
+        appointmentFormTitle.textContent = "Update Appointment";
+        appointmentIdInput.value = appointment.appointmentID ?? "";
+        aptDateInput.value = String(appointment.date || "").slice(0, 10);
+        aptTimeInput.value = String(appointment.time || "").slice(0, 5);
+        aptReasonInput.value = appointment.reason ?? "";
+        aptHospitalInput.value = appointment.hospitalID ?? "";
+        aptDoctorInput.value = appointment.doctorID ?? "";
+        aptPatientInput.value = appointment.emiratesID ?? "";
+        addAppointOverlay.classList.add("open");
+    }
+
+    // This function saves a new or updated appointment
+    // It sends POST or PUT to the appointments API
+    async function saveAppointment() {
+        const appointmentID = appointmentIdInput.value.trim();
+        const payload = {
+            date: aptDateInput.value,
+            time: aptTimeInput.value,
             reason: aptReasonInput.value.trim(),
-            hospital: aptHospitalSelect.value.trim(),
-            doctor: aptDoctorSelect.value.trim(),
-            patient: aptPatientInput.value.trim()
+            emiratesID: Number(aptPatientInput.value),
+            doctorID: Number(aptDoctorInput.value),
+            hospitalID: Number(aptHospitalInput.value)
         };
 
-        // Validate that all fields are filled
-        const allFieldsFilled = Object.values(newAppointment).every(val => val !== '');
-        if (!allFieldsFilled) {
-            alert('Please fill in all fields.');
+        if (!payload.date || !payload.time || !payload.reason || !payload.emiratesID || !payload.doctorID || !payload.hospitalID) {
+            MedProUI.showToast("Please fill all appointment fields.", "error");
             return;
         }
 
-        // Add to appointments array and refresh calendar
-        appointments.push(newAppointment);
-        toggleOverlay(addAppointOverlay, false);
-        buildMonthView();
+        if (appointmentID) {
+            payload.appointmentID = Number(appointmentID);
+        }
+
+        const url = appointmentID ? `/api/appointments/${appointmentID}` : "/api/appointments";
+        const method = appointmentID ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error("Save failed");
+            }
+
+            addAppointOverlay.classList.remove("open");
+            MedProUI.showToast(appointmentID ? "Appointment updated." : "Appointment added.");
+            await loadAppointments();
+        } catch (error) {
+            MedProUI.showToast("Unable to save appointment.", "error");
+        }
     }
 
+    // This function opens the details modal for one appointment
     function showAppointmentDetails(appointment) {
-        // Format the date nicely
-        const formattedDate = new Date(appointment.date).toLocaleDateString('en-GB', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
+        activeAppointment = appointment;
 
-        // Populate the details modal
-        detailsTitle.textContent = appointment.reason;
-        dDate.textContent = formattedDate;
+        detailsTitle.textContent = appointment.reason || "Appointment Details";
+        dDate.textContent = formatDateLabel(appointment.date);
         dTime.textContent = formatTime(appointment.time);
-        dReason.textContent = appointment.reason;
-        dPatient.textContent = appointment.patient;
-        dDoctor.textContent = appointment.doctor;
-        dHospital.textContent = appointment.hospital;
+        dReason.textContent = appointment.reason || "";
+        dPatient.textContent = appointment.emiratesID ?? "";
+        dDoctor.textContent = appointment.doctorID ?? "";
+        dHospital.textContent = appointment.hospitalID ?? "";
 
-        // Show the details modal
-        toggleOverlay(detailsAppointOverlay, true);
+        detailsAppointOverlay.classList.add("open");
     }
 
-    // - - - - - - - - - - - EVENT LISTENERS - - - - - - - - - - -
-    // User profile dropdown toggle
-    userProfile.addEventListener('click', e => {
-        e.stopPropagation();
-        userProfile.classList.toggle('open');
-        userDropdown.classList.toggle('open');
-    });
+    // This function deletes the selected appointment
+    // It calls DELETE only after user confirmation
+    async function deleteActiveAppointment() {
+        if (!activeAppointment || !activeAppointment.appointmentID) {
+            return;
+        }
 
-    // Close dropdown when clicking anywhere else
-    document.addEventListener('click', () => {
-        userProfile.classList.remove('open');
-        userDropdown.classList.remove('open');
-    });
+        if (!confirm("Delete this appointment?")) {
+            return;
+        }
 
-    // Logout button
-    logoutBtn.addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
+        try {
+            const response = await fetch(`/api/appointments/${activeAppointment.appointmentID}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Delete failed");
+            }
+            detailsAppointOverlay.classList.remove("open");
+            MedProUI.showToast("Appointment deleted.");
+            await loadAppointments();
+        } catch (error) {
+            MedProUI.showToast("Unable to delete appointment.", "error");
+        }
+    }
 
-    // Month navigation buttons
-    prevMonthBtn.addEventListener('click', () => {
+    // Move to previous month
+    prevMonthBtn.addEventListener("click", function () {
         monthDate.setMonth(monthDate.getMonth() - 1);
         buildMonthView();
     });
 
-    nextMonthBtn.addEventListener('click', () => {
+    // Move to next month
+    nextMonthBtn.addEventListener("click", function () {
         monthDate.setMonth(monthDate.getMonth() + 1);
         buildMonthView();
     });
 
-    // Add appointment button (top toolbar)
-    addAptBtn.addEventListener('click', () => {
-        openAddForm(getDateOffset(0));
+    // Open add modal from the main plus button
+    addAptBtn.addEventListener("click", function () {
+        openAddForm(today.toISOString().slice(0, 10));
     });
 
-    // Add appointment modal controls
-    addCancelBtn.addEventListener('click', () => {
-        toggleOverlay(addAppointOverlay, false);
+    // Close add modal from cancel button
+    addCancelBtn.addEventListener("click", function () {
+        addAppointOverlay.classList.remove("open");
     });
 
-    addAppointOverlay.addEventListener('click', e => {
-        if (e.target.id === 'addAppoint') {
-            toggleOverlay(addAppointOverlay, false);
+    // Close add modal when user clicks outside modal card
+    addAppointOverlay.addEventListener("click", function (event) {
+        if (event.target === addAppointOverlay) {
+            addAppointOverlay.classList.remove("open");
         }
     });
 
-    saveAptBtn.addEventListener('click', saveNewAppointment);
+    // Save button action for add/update form
+    saveAptBtn.addEventListener("click", saveAppointment);
 
-    // - - - - - - - - - - - CONTROLS - - - - - - - - - - -
-    detailsCloseBtn.addEventListener('click', () => {
-        toggleOverlay(detailsAppointOverlay, false);
+    // Close details modal from close button
+    detailsCloseBtn.addEventListener("click", function () {
+        detailsAppointOverlay.classList.remove("open");
     });
 
-    detailsAppointOverlay.addEventListener('click', e => {
-        if (e.target.id === 'detailsAppoint') {
-            toggleOverlay(detailsAppointOverlay, false);
+    // Open edit form from details modal
+    detailsEditBtn.addEventListener("click", function () {
+        if (!activeAppointment) return;
+        detailsAppointOverlay.classList.remove("open");
+        openEditForm(activeAppointment);
+    });
+
+    // Delete current appointment from details modal
+    detailsDeleteBtn.addEventListener("click", deleteActiveAppointment);
+
+    // Close details modal when user clicks outside modal card
+    detailsAppointOverlay.addEventListener("click", function (event) {
+        if (event.target === detailsAppointOverlay) {
+            detailsAppointOverlay.classList.remove("open");
         }
     });
 
-    // Auto-format Emirates ID as user types (784-YYYY-XXXXXXX-X)
-    aptPatientInput.addEventListener('input', function() {
-        const digitsOnly = this.value.replace(/\D/g, '').slice(0, 15);
-        const parts = [
-            digitsOnly.slice(0, 3),
-            digitsOnly.slice(3, 7),
-            digitsOnly.slice(7, 14),
-            digitsOnly.slice(14, 15)
-        ];
-        this.value = parts.filter(part => part.length).join('-');
-    });
-
-    buildMonthView();
+    // Initial load for calendar appointments
+    loadAppointments();
 </script>
 </body>
 </html>
