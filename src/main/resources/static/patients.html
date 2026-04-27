@@ -273,14 +273,14 @@
     // This function searches patients by Emirates ID
     // It loads all rows again when search is empty
     async function searchPatients() {
-        const emiratesID = searchInput.value.trim();
-        if (!emiratesID) {
+        const lastName = searchInput.value.trim();
+        if (!lastName) {
             loadPatients();
             return;
         }
 
         try {
-            const response = await fetch(`/api/patients/search?emiratesID=${encodeURIComponent(emiratesID)}`);
+            const response = await fetch(`/api/patients/search?lastName=${encodeURIComponent(lastName)}`);
             const patients = await response.json();
             renderRows(patients);
         } catch (error) {
