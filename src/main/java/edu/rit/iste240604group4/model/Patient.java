@@ -31,7 +31,7 @@ public class Patient {
     public Patient() { }
 
     // CONSTRUCTOR for creating rows
-    public Patient(Integer emiratesID, firstName, String lastName, String ethnicity) {
+    public Patient(Integer emiratesID, String firstName, String lastName, String ethnicity) {
         this.emiratesID = emiratesID;
         this.firstName = firstName;
         this.lastName = lastName;
