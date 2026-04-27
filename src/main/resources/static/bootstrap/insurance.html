@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!-- Fatma Almadani - 421009269 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedPRO - Insurance</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<!-- App shell -->
+<div class="app-shell">
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="../index.html" class="logo-link">
+                <img src="../medPro_logo1.png" alt="MedPRO" class="logo-icon"/>
+                <span class="sidebar-logo-text">MedPRO</span>
+            </a>
+        </div>
+
+        <!-- Sidebar links -->
+        <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-item active">DASHBOARD</a>
+            <a href="../calendar.html" class="nav-item">CALENDAR</a>
+            <a href="../specialists.html" class="nav-item">DOCTORS</a>
+            <a href="../reports.html" class="nav-item">MEDICAL RECORDS</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main page content -->
+    <main class="main-content">
+        <a href="../index.html" class="back-link">← Back to Dashboard</a>
+        <div class="page-header">
+            <h1 class="page-title">Insurance</h1>
+        </div>
+
+        <div class="entity-page-wrap">
+            <!-- Search and action controls -->
+            <div class="entity-toolbar">
+                <input type="text" id="searchInput" class="form-input entity-search" placeholder="Search insurance by name...">
+                <button class="btn-action secondary" id="searchBtn" type="button">Search</button>
+                <button class="btn-action ghost" id="viewAllBtn" type="button">View All</button>
+                <button class="btn-action primary" id="addBtn" type="button">Add Insurance</button>
+            </div>
+
+            <!-- Data table section -->
+            <div class="table-card">
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="insuranceTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Footer section -->
+<footer class="app-footer">
+    <span class="footer-copy">&copy; 2026 MedPRO. All rights reserved.</span>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+<!-- Modal form for add and update -->
+<div class="modal-overlay" id="insuranceModal">
+    <div class="modal-card">
+        <h3 class="modal-title" id="insuranceModalTitle">Add Insurance</h3>
+        <input type="hidden" id="insuranceID">
+
+        <div class="form-grid">
+            <div class="form-group-field full-width">
+                <label class="form-label" for="insuranceName">Insurance Name</label>
+                <input type="text" id="insuranceName" class="form-input" placeholder="Enter insurance name">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-action ghost" id="cancelBtn" type="button">Cancel</button>
+            <button class="btn-action primary" id="saveBtn" type="button">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="../shared-ui.js"></script>
+<script>
+    // Get references for search and table controls
+    const searchInput = document.getElementById("searchInput");
+    const tableBody = document.getElementById("insuranceTableBody");
+    // Get references for modal form fields
+    const insuranceID = document.getElementById("insuranceID");
+    const insuranceName = document.getElementById("insuranceName");
+    const insuranceModalTitle = document.getElementById("insuranceModalTitle");
+
+    let insuranceCache = [];
+
+    // Register click actions for toolbar and modal buttons
+    document.getElementById("addBtn").addEventListener("click", openAddModal);
+    document.getElementById("searchBtn").addEventListener("click", searchInsurance);
+    document.getElementById("viewAllBtn").addEventListener("click", loadAllInsurance);
+    document.getElementById("cancelBtn").addEventListener("click", function () {
+        MedProUI.closeModal("insuranceModal");
+    });
+    document.getElementById("saveBtn").addEventListener("click", saveInsurance);
+
+    // Allow user to close modal by clicking outside the modal card
+    MedProUI.wireOverlayClose("insuranceModal");
+
+    // This function loads all insurance rows from the API
+    // It refreshes the table with latest records
+    async function loadAllInsurance() {
+        try {
+            const response = await fetch("/api/insurance");
+            const data = await response.json();
+            displayInsurance(data);
+        } catch (error) {
+            MedProUI.showToast("Could not load insurance records.", "error");
+        }
+    }
+
+    // This function renders insurance rows in the table
+    // It shows an empty message when no rows exist
+    function displayInsurance(response) {
+        insuranceCache = Array.isArray(response) ? response : [];
+
+        if (insuranceCache.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="3" class="empty-state">No insurance records found.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = insuranceCache.map(function (item) {
+            return `<tr>
+                <td>${item.insuranceID ?? ""}</td>
+                <td>${MedProUI.sanitize(item.insuranceName)}</td>
+                <td>
+                    <div class="row-actions">
+                        <button class="btn-row edit" type="button" onclick="editInsurance(${item.insuranceID})">Edit</button>
+                        <button class="btn-row delete" type="button" onclick="deleteInsurance(${item.insuranceID})">Delete</button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join("");
+    }
+
+    // This function clears values inside the insurance modal form
+    function resetForm() {
+        insuranceID.value = "";
+        insuranceName.value = "";
+    }
+
+    // This runs when the user clicks the add button
+    // It opens the insurance modal in add mode
+    function openAddModal() {
+        resetForm();
+        insuranceModalTitle.textContent = "Add Insurance";
+        MedProUI.openModal("insuranceModal");
+    }
+
+    // This runs when the user clicks edit in the table
+    // It fills modal fields using selected row data
+    window.editInsurance = function (id) {
+        const selected = insuranceCache.find(function (item) { return item.insuranceID === id; });
+        if (!selected) {
+            MedProUI.showToast("Could not open selected insurance.", "error");
+            return;
+        }
+
+        insuranceID.value = selected.insuranceID;
+        insuranceName.value = selected.insuranceName ?? "";
+        insuranceModalTitle.textContent = "Update Insurance";
+        MedProUI.openModal("insuranceModal");
+    };
+
+    // This function saves a new or updated insurance record
+    // It sends POST for add and PUT for update
+    async function saveInsurance() {
+        const id = insuranceID.value.trim();
+        const name = insuranceName.value.trim();
+
+        if (!name) {
+            MedProUI.showToast("Insurance name is required.", "error");
+            return;
+        }
+
+        const payload = { insuranceName: name };
+        const url = id ? `/api/insurance/${id}` : "/api/insurance";
+        const method = id ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error("Save failed");
+            }
+
+            MedProUI.closeModal("insuranceModal");
+            MedProUI.showToast(id ? "Insurance updated." : "Insurance added.");
+            loadAllInsurance();
+        } catch (error) {
+            MedProUI.showToast("Unable to save insurance.", "error");
+        }
+    }
+
+    // This function deletes a selected insurance record
+    // It asks for confirmation before API delete call
+    window.deleteInsurance = async function (id) {
+        if (!confirm("Delete this insurance record?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/insurance/${id}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Delete failed");
+            }
+            MedProUI.showToast("Insurance deleted.");
+            loadAllInsurance();
+        } catch (error) {
+            MedProUI.showToast("Unable to delete insurance.", "error");
+        }
+    };
+
+    // This function searches insurance by name
+    // If input is empty, all rows are loaded
+    async function searchInsurance() {
+        const name = searchInput.value.trim();
+        if (!name) {
+            loadAllInsurance();
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/insurance/search?insuranceName=${encodeURIComponent(name)}`);
+            const data = await response.json();
+            displayInsurance(data);
+        } catch (error) {
+            MedProUI.showToast("Search failed.", "error");
+        }
+    }
+
+    // Initial data load when page opens
+    loadAllInsurance();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- Shaikha Alhajri - 418008663 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedPRO - Patients</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<!-- App shell -->
+<div class="app-shell">
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <a href="../index.html" class="logo-link">
+                <img src="../medPro_logo1.png" alt="MedPRO" class="logo-icon"/>
+                <span class="sidebar-logo-text">MedPRO</span>
+            </a>
+        </div>
+
+        <!-- Sidebar links -->
+        <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-item active">DASHBOARD</a>
+            <a href="../calendar.html" class="nav-item">CALENDAR</a>
+            <a href="../specialists.html" class="nav-item">DOCTORS</a>
+            <a href="../reports.html" class="nav-item">MEDICAL RECORDS</a>
+        </nav>
+
+    </aside>
+
+    <!-- Main page content -->
+    <main class="main-content">
+        <a href="../index.html" class="back-link">← Back to Dashboard</a>
+        <div class="page-header">
+            <h1 class="page-title">Patients</h1>
+        </div>
+
+        <div class="entity-page-wrap">
+            <!-- Search and action controls -->
+            <div class="entity-toolbar">
+                <input type="text" id="searchInput" class="form-input entity-search" placeholder="Search by last name...">
+                <button class="btn-action secondary" id="searchBtn" type="button">Search</button>
+                <button class="btn-action ghost" id="viewAllBtn" type="button">View All</button>
+                <button class="btn-action primary" id="addBtn" type="button">Add Patient</button>
+            </div>
+
+            <!-- Data table section -->
+            <div class="table-card">
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Emirates ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Ethnicity</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="patientTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Footer section -->
+<footer class="app-footer">
+    <span class="footer-copy">&copy; 2026 MedPRO. All rights reserved.</span>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+<!-- Modal form for add and update -->
+<div class="modal-overlay" id="patientModal">
+    <div class="modal-card">
+        <h3 class="modal-title" id="patientModalTitle">Add Patient</h3>
+
+        <input type="hidden" id="patientId">
+
+        <div class="form-grid">
+            <div class="form-group-field">
+                <label class="form-label" for="patientFirstName">First Name</label>
+                <input type="text" id="patientFirstName" class="form-input" placeholder="Enter first name">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="patientLastName">Last Name</label>
+                <input type="text" id="patientLastName" class="form-input" placeholder="Enter last name">
+            </div>
+            <div class="form-group-field full-width">
+                <label class="form-label" for="patientEthnicity">Ethnicity</label>
+                <input type="text" id="patientEthnicity" class="form-input" placeholder="Enter ethnicity">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-action ghost" id="cancelBtn" type="button">Cancel</button>
+            <button class="btn-action primary" id="saveBtn" type="button">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="../shared-ui.js"></script>
+<script>
+    // Get references for table and search controls
+    const tableBody = document.getElementById("patientTableBody");
+    const searchInput = document.getElementById("searchInput");
+    const patientModalTitle = document.getElementById("patientModalTitle");
+
+    // Get references for modal form values
+    const patientId = document.getElementById("patientId");
+    const patientFirstName = document.getElementById("patientFirstName");
+    const patientLastName = document.getElementById("patientLastName");
+    const patientEthnicity = document.getElementById("patientEthnicity");
+
+    let patientsCache = [];
+
+    // Register click handlers for page actions
+    document.getElementById("addBtn").addEventListener("click", openAddModal);
+    document.getElementById("searchBtn").addEventListener("click", searchPatients);
+    document.getElementById("viewAllBtn").addEventListener("click", loadPatients);
+    document.getElementById("cancelBtn").addEventListener("click", function () {
+        MedProUI.closeModal("patientModal");
+    });
+    document.getElementById("saveBtn").addEventListener("click", savePatient);
+
+    // Allow modal close when clicking outside the modal card
+    MedProUI.wireOverlayClose("patientModal");
+
+    // This function loads all patients from the API
+    // It updates the table with current records
+    async function loadPatients() {
+        try {
+            const response = await fetch("/api/patients");
+            const patients = await response.json();
+            renderRows(patients);
+        } catch (error) {
+            MedProUI.showToast("Could not load patients.", "error");
+        }
+    }
+
+    // This function renders patient rows in the table
+    // It shows a message when no data is found
+    function renderRows(patients) {
+        patientsCache = Array.isArray(patients) ? patients : [];
+
+        if (patientsCache.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="5" class="empty-state">No patients found.</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = patientsCache.map(function (patient) {
+            return `<tr>
+                <td>${patient.emiratesID ?? ""}</td>
+                <td>${MedProUI.sanitize(patient.firstName)}</td>
+                <td>${MedProUI.sanitize(patient.lastName)}</td>
+                <td>${MedProUI.sanitize(patient.ethnicity)}</td>
+                <td>
+                    <div class="row-actions">
+                        <button class="btn-row edit" type="button" onclick="openEditModal(${patient.emiratesID})">Edit</button>
+                        <button class="btn-row delete" type="button" onclick="deletePatient(${patient.emiratesID})">Delete</button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join("");
+    }
+
+    // This function clears modal form fields
+    function resetForm() {
+        patientId.value = "";
+        patientFirstName.value = "";
+        patientLastName.value = "";
+        patientEthnicity.value = "";
+    }
+
+    // This runs when user clicks Add Patient
+    // It opens the modal in add mode
+    function openAddModal() {
+        resetForm();
+        patientModalTitle.textContent = "Add Patient";
+        MedProUI.openModal("patientModal");
+    }
+
+    // This runs when user clicks Edit in a table row
+    // It fills the form with selected patient data
+    window.openEditModal = function (id) {
+        const patient = patientsCache.find(function (item) { return item.emiratesID === id; });
+        if (!patient) {
+            MedProUI.showToast("Could not open selected patient.", "error");
+            return;
+        }
+
+        patientModalTitle.textContent = "Update Patient";
+        patientId.value = patient.emiratesID ?? "";
+        patientFirstName.value = patient.firstName ?? "";
+        patientLastName.value = patient.lastName ?? "";
+        patientEthnicity.value = patient.ethnicity ?? "";
+        MedProUI.openModal("patientModal");
+    };
+
+    // This function saves patient changes using API
+    // It sends POST for new and PUT for updates
+    async function savePatient() {
+        const id = patientId.value.trim();
+        const payload = {
+            firstName: patientFirstName.value.trim(),
+            lastName: patientLastName.value.trim(),
+            ethnicity: patientEthnicity.value.trim()
+        };
+
+        if (!payload.firstName || !payload.lastName || !payload.ethnicity) {
+            MedProUI.showToast("Please complete all patient fields.", "error");
+            return;
+        }
+
+        const url = id ? `/api/patients/${id}` : "/api/patients";
+        const method = id ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error("Save failed");
+            }
+
+            MedProUI.closeModal("patientModal");
+            MedProUI.showToast(id ? "Patient updated." : "Patient added.");
+            loadPatients();
+        } catch (error) {
+            MedProUI.showToast("Unable to save patient.", "error");
+        }
+    }
+
+    // This function deletes a selected patient
+    // It asks user confirmation before delete
+    window.deletePatient = async function (id) {
+        if (!confirm("Delete this patient?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/patients/${id}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Delete failed");
+            }
+            MedProUI.showToast("Patient deleted.");
+            loadPatients();
+        } catch (error) {
+            MedProUI.showToast("Unable to delete patient.", "error");
+        }
+    };
+
+    // This function searches patients by last name
+    // It loads all rows again when search is empty
+    async function searchPatients() {
+        const lastName = searchInput.value.trim();
+        if (!lastName) {
+            loadPatients();
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/patients/search?lastName=${encodeURIComponent(lastName)}`);
+            const patients = await response.json();
+            renderRows(patients);
+        } catch (error) {
+            MedProUI.showToast("Search failed.", "error");
+        }
+    }
+
+    // Initial table load when page starts
+    loadPatients();
+</script>
+
+</body>
+</html>

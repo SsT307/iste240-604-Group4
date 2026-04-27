@@ -1,81 +1,282 @@
 <!DOCTYPE html>
+<!-- Shaikha Alhajri - 418008663 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedPRO - My Specialists</title>
+    <title>MedPRO - Doctors</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- App shell -->
 <div class="app-shell">
 
-    <!-- Sidebar -->
+    <!-- Sidebar navigation -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <a href="index.html" class="logo-link">
-               <img src="medPro_logo1.png" alt="MedPRO" class="logo-icon" />
+                <img src="medPro_logo1.png" alt="MedPRO" class="logo-icon" />
                 <span class="sidebar-logo-text">MedPRO</span>
             </a>
         </div>
 
-        <!-- Navigation Links -->
+        <!-- Sidebar links -->
         <nav class="sidebar-nav">
             <a href="index.html" class="nav-item">DASHBOARD</a>
-            <a href="reports.html" class="nav-item">MEDICAL REPORTS</a>
             <a href="calendar.html" class="nav-item">CALENDAR</a>
-            <a href="specialists.html" class="nav-item active">MY SPECIALISTS</a>
+            <a href="specialists.html" class="nav-item active">DOCTORS</a>
+            <a href="reports.html" class="nav-item">MEDICAL RECORDS</a>
         </nav>
 
-        <div class="sidebar-user">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="8" r="4"/>
-                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-            <span class="sidebar-user-name">First Last</span>
-        </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main page content -->
     <main class="main-content">
-
-        <!-- Header -->
         <div class="page-header">
-            <h1 class="page-title">My Specialists</h1>
+            <h1 class="page-title">Doctors</h1>
         </div>
 
-        <p class="assignment2-label">NOT ASSIGNMENT 2</p>
-
-
-        <!-- Specialists Grid -->
-        <div class="specialists-grid-container">
-
-            <!-- Doctor Card -->
-            <div class="doctor-card">
-                <span class="doctor-rating">4.9</span>
-                <div class="doctor-avatar"></div>
-                <h3 class="doctor-name">Dr. First Last</h3>
-                <p class="doctor-specialty">SPECIALIST</p>
-                <div class="doctor-actions">
-                    <button class="btn-doctor-action">Contact</button>
-                </div>
+        <div class="entity-page-wrap">
+            <!-- Search and action controls -->
+            <div class="entity-toolbar">
+                <input type="text" id="searchInput" class="form-input entity-search" placeholder="Search by speciality...">
+                <button class="btn-action secondary" id="searchBtn" type="button">Search</button>
+                <button class="btn-action ghost" id="viewAllBtn" type="button">View All</button>
+                <button class="btn-action primary" id="addBtn" type="button">Add Doctor</button>
             </div>
 
+            <div class="specialists-grid-container" id="doctorGrid"></div>
         </div>
-
     </main>
-
 </div>
 
-<!-- Footer -->
+<!-- Footer section -->
 <footer class="app-footer">
-    <span class="footer-copy">© 2026 MedPRO. All rights reserved.</span>
+    <span class="footer-copy">&copy; 2026 MedPRO. All rights reserved.</span>
     <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Use</a>
         <a href="#">Support</a>
     </div>
 </footer>
+
+<!-- Modal form for add and update -->
+<div class="modal-overlay" id="doctorModal">
+    <div class="modal-card">
+        <h3 class="modal-title" id="doctorModalTitle">Add Doctor</h3>
+
+        <input type="hidden" id="doctorId">
+
+        <div class="form-grid">
+            <div class="form-group-field">
+                <label class="form-label" for="doctorFirstName">First Name</label>
+                <input type="text" id="doctorFirstName" class="form-input" placeholder="Enter first name">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="doctorLastName">Last Name</label>
+                <input type="text" id="doctorLastName" class="form-input" placeholder="Enter last name">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="doctorSpeciality">Speciality</label>
+                <input type="text" id="doctorSpeciality" class="form-input" placeholder="Enter speciality">
+            </div>
+            <div class="form-group-field">
+                <label class="form-label" for="doctorHospitalID">Hospital ID</label>
+                <input type="number" id="doctorHospitalID" class="form-input" placeholder="Enter hospital ID">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-action ghost" id="cancelDoctorBtn" type="button">Cancel</button>
+            <button class="btn-action primary" id="saveDoctorBtn" type="button">Save</button>
+        </div>
+    </div>
+</div>
+
+<script src="shared-ui.js"></script>
+<script>
+    // Get references for grid and search controls
+    const doctorGrid = document.getElementById("doctorGrid");
+    const doctorModalTitle = document.getElementById("doctorModalTitle");
+    const searchInput = document.getElementById("searchInput");
+
+    // Get references for doctor modal form fields
+    const doctorId = document.getElementById("doctorId");
+    const doctorFirstName = document.getElementById("doctorFirstName");
+    const doctorLastName = document.getElementById("doctorLastName");
+    const doctorSpeciality = document.getElementById("doctorSpeciality");
+    const doctorHospitalID = document.getElementById("doctorHospitalID");
+
+    let doctorsCache = [];
+
+    // Register button click actions for page controls
+    document.getElementById("addBtn").addEventListener("click", openAddModal);
+    document.getElementById("searchBtn").addEventListener("click", searchDoctors);
+    document.getElementById("viewAllBtn").addEventListener("click", loadDoctors);
+    document.getElementById("cancelDoctorBtn").addEventListener("click", function () {
+        MedProUI.closeModal("doctorModal");
+    });
+    document.getElementById("saveDoctorBtn").addEventListener("click", saveDoctor);
+
+    // Allow closing modal by clicking outside the modal card
+    MedProUI.wireOverlayClose("doctorModal");
+
+    // This function loads all doctors from the API
+    // It updates the cards on the page
+    async function loadDoctors() {
+        try {
+            const response = await fetch("/api/doctors");
+            const doctors = await response.json();
+            renderDoctors(doctors);
+        } catch (error) {
+            MedProUI.showToast("Could not load doctors.", "error");
+        }
+    }
+
+    // This function renders doctor cards
+    // It shows a simple message when no doctor exists
+    function renderDoctors(doctors) {
+        doctorsCache = Array.isArray(doctors) ? doctors : [];
+
+        if (doctorsCache.length === 0) {
+            doctorGrid.innerHTML = '<div class="card empty-state">No doctors found.</div>';
+            return;
+        }
+
+        doctorGrid.innerHTML = doctorsCache.map(function (doctor) {
+            const doctorName = `${MedProUI.sanitize(doctor.firstName)} ${MedProUI.sanitize(doctor.lastName)}`;
+            return `<div class="doctor-card">
+                <span class="doctor-rating">ID ${doctor.doctorID ?? "-"}</span>
+                <div class="doctor-avatar"></div>
+                <h3 class="doctor-name">Dr. ${doctorName}</h3>
+                <p class="doctor-specialty">${MedProUI.sanitize(doctor.speciality)}</p>
+                <p class="report-value">Hospital ID: ${doctor.hospitalID ?? "-"}</p>
+                <div class="row-actions">
+                    <button class="btn-row edit" type="button" onclick="openEditDoctor(${doctor.doctorID})">Edit</button>
+                    <button class="btn-row delete" type="button" onclick="deleteDoctor(${doctor.doctorID})">Delete</button>
+                </div>
+            </div>`;
+        }).join("");
+    }
+
+    // This function resets the modal form values
+    function resetDoctorForm() {
+        doctorId.value = "";
+        doctorFirstName.value = "";
+        doctorLastName.value = "";
+        doctorSpeciality.value = "";
+        doctorHospitalID.value = "";
+    }
+
+    // This runs when the user clicks the add button
+    // It opens the doctor modal in add mode
+    function openAddModal() {
+        resetDoctorForm();
+        doctorModalTitle.textContent = "Add Doctor";
+        MedProUI.openModal("doctorModal");
+    }
+
+    // This runs when the user clicks edit on a card
+    // It fills the form with selected doctor data
+    window.openEditDoctor = function (id) {
+        const doctor = doctorsCache.find(function (item) { return item.doctorID === id; });
+        if (!doctor) {
+            MedProUI.showToast("Could not open selected doctor.", "error");
+            return;
+        }
+
+        doctorModalTitle.textContent = "Update Doctor";
+        doctorId.value = doctor.doctorID ?? "";
+        doctorFirstName.value = doctor.firstName ?? "";
+        doctorLastName.value = doctor.lastName ?? "";
+        doctorSpeciality.value = doctor.speciality ?? "";
+        doctorHospitalID.value = doctor.hospitalID ?? "";
+        MedProUI.openModal("doctorModal");
+    };
+
+    // This function sends add or update requests
+    // It checks required values before saving
+    async function saveDoctor() {
+        const id = doctorId.value.trim();
+        const payload = {
+            firstName: doctorFirstName.value.trim(),
+            lastName: doctorLastName.value.trim(),
+            speciality: doctorSpeciality.value.trim(),
+            hospitalID: Number(doctorHospitalID.value)
+        };
+
+        if (!payload.firstName || !payload.lastName || !payload.speciality || !payload.hospitalID) {
+            MedProUI.showToast("Please fill all fields before saving.", "error");
+            return;
+        }
+
+        if (id) {
+            payload.doctorID = Number(id);
+        }
+
+        const url = id ? `/api/doctors/${id}` : "/api/doctors";
+        const method = id ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error("Save failed");
+            }
+
+            MedProUI.closeModal("doctorModal");
+            MedProUI.showToast(id ? "Doctor updated." : "Doctor added.");
+            loadDoctors();
+        } catch (error) {
+            MedProUI.showToast("Unable to save doctor.", "error");
+        }
+    }
+
+    // This function deletes a doctor by ID
+    // It asks for confirmation before deleting
+    window.deleteDoctor = async function (id) {
+        if (!confirm("Delete this doctor?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/doctors/${id}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Delete failed");
+            }
+            MedProUI.showToast("Doctor deleted.");
+            loadDoctors();
+        } catch (error) {
+            MedProUI.showToast("Unable to delete doctor.", "error");
+        }
+    };
+
+    // This function searches doctors by speciality
+    // It loads all doctors again when search is empty
+    async function searchDoctors() {
+        const speciality = searchInput.value.trim();
+        if (!speciality) {
+            loadDoctors();
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/doctors/search?speciality=${encodeURIComponent(speciality)}`);
+            const doctors = await response.json();
+            renderDoctors(doctors);
+        } catch (error) {
+            MedProUI.showToast("Search failed.", "error");
+        }
+    }
+
+    // Initial load for doctor cards
+    loadDoctors();
+</script>
 
 </body>
 </html>
