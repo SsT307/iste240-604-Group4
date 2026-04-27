@@ -43,7 +43,7 @@ public class PatientController {
     // update whole patient row
     @PutMapping("/{id}")
     public Patient updatePatient(@PathVariable Integer id, @RequestBody Patient patient) {
-        patient.setEmiratesID(id);
+        patient.setPatientId(id);
         return patientService.savePatient(patient);
     }
 

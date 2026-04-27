@@ -20,7 +20,7 @@ public class Appointment {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime time;
     private String reason;
-    private int emiratesID; // foreign key
+    private int patientID; // foreign key
     private int doctorID; // foreign key
     private int hospitalID; // foreign key
 
@@ -34,7 +34,7 @@ public class Appointment {
         this.reason = reason;
         this.date = date;
         this.time = time;
-        this.emiratesID = emiratesID;
+        this.patientID = patientID;
         this.doctorID = doctorID;
         this.hospitalID = hospitalID;
     }
@@ -56,9 +56,7 @@ public class Appointment {
         return reason;
     }
 
-    public int getEmiratesID() {
-        return emiratesID;
-    }
+    public int getPatientID() { return patientID; }
 
     public int getDoctorID() {
         return doctorID;
@@ -83,8 +81,8 @@ public class Appointment {
         this.reason = reason;
     }
 
-    public void setEmiratesID(int emiratesID) {
-        this.emiratesID = emiratesID;
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
     }
 
     public void setDoctorID(int doctorID) {

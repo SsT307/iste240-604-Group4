@@ -40,7 +40,7 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
     // update only ethnicity by id
     @Modifying
     @Transactional
-    @Query("UPDATE Patient p SET p.ethnicity = :ethnicity WHERE p.emiratesID = :id")
+    @Query("UPDATE Patient p SET p.ethnicity = :ethnicity WHERE p.patientId = :id")
     void updateEthnicityById(@Param("id") Integer id, @Param("ethnicity") String ethnicity);
 
 }
