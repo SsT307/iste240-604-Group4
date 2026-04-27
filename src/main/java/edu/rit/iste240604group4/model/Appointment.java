@@ -30,7 +30,7 @@ public class Appointment {
     public Appointment() {}
 
     // CONSTRUCTOR for creating rows
-    public Appointment(String reason, LocalDate date, LocalTime time, int emiratesID, int doctorID, int hospitalID) {
+    public Appointment(String reason, LocalDate date, LocalTime time, int patientID, int doctorID, int hospitalID) {
         this.reason = reason;
         this.date = date;
         this.time = time;

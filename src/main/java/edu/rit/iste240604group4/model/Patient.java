@@ -15,7 +15,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer patientId; // PRIMARY KEY
 
-    @Column(name = "emiratesID", nullable = false)
+    @Column(name = "emiratesid")
     private Integer emiratesID;
 
     @Column(name = "firstName", length = 50, nullable = false)
